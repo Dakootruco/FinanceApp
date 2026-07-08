@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-income: #10b981;
+  --color-income-bg: rgba(16, 185, 129, 0.08);
+  --color-expense: #f43f5e;
+  --color-expense-bg: rgba(244, 63, 94, 0.08);
+  
+  /* Soft blue and dark charcoal from the new mock */
+  --color-soft-blue: #72a5e4;
+  --color-charcoal: #1e2022;
+  
+  --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  
+  --animate-spin-slow: spin 3s linear infinite;
+  
+  --shadow-premium: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+  --shadow-glow: 0 0 20px rgba(114, 165, 228, 0.15);
+}
+
+/* Custom Base Layer adjustments for the light mode */
+@utility glass-card {
+  background: #ffffff;
+  border: 1px solid #eef0f3;
+  box-shadow: var(--shadow-premium);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility glass-card-hover {
+  background: #fafafa;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background-color: #f4f5f7;
+  color: #1e2022;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(114, 165, 228, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 32, 34, 0.01) 0%, transparent 45%);
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f4f5f7;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Estilos de impresión para PDF del Reporte Avanzado */
+@media print {
+  aside,
+  header,
+  .no-print,
+  button,
+  .no-print-area,
+  .filters-container {
+    display: none !important;
+  }
+  
+  body,
+  main,
+  #root,
+  .print-full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    color: #1e2022 !important;
+  }
+
+  .glass-card,
+  .card,
+  .Card {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  .print-page-break {
+    page-break-inside: avoid;
+  }
+}
+
+/* Soporte global para Modo Oscuro en cascada */
+html.dark {
+  filter: invert(0.9) hue-rotate(180deg);
+}
+
+/* Revertir inversión en elementos multimedia, gráficos e iconos para mantener colores originales */
+html.dark img,
+html.dark svg,
+html.dark canvas,
+html.dark iframe,
+html.dark .no-invert,
+html.dark [style*="background-image"] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Asegurar transiciones suaves al cambiar de tema */
+html, body, header, aside, main, .card, Card {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
