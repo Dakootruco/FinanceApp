@@ -12,6 +12,7 @@ if (initialTheme === 'dark') {
 export const useFinanceStore = create((set, get) => ({
   // Ajustes de Usuario
   userName: localStorage.getItem('user-name') || 'Dakoo',
+  userUsername: localStorage.getItem('user-username') || '',
   userCurrency: localStorage.getItem('user-currency') || 'USD',
   userTheme: initialTheme,
 
@@ -43,6 +44,33 @@ export const useFinanceStore = create((set, get) => ({
   loading: true,
   error: null,
   
+  // Alertas personalizadas globales
+  alertOpen: false,
+  alertConfig: { title: '', description: '', variant: 'error' },
+  showAlert: (title, description = '', variant = 'error') => {
+    let cleanDesc = description;
+    
+    // Filtro salvaguarda en frontend para traducir errores crudos de PostgreSQL
+    if (description.includes('unique constraint') || description.includes('duplicate key') || description.includes('23505')) {
+      if (description.includes('bank_accounts')) {
+        cleanDesc = 'Ya existe una cuenta bancaria con este nombre. Por favor, elige un nombre único.';
+      } else if (description.includes('categories')) {
+        cleanDesc = 'Ya existe una categoría con este nombre. Por favor, elige un nombre único.';
+      } else if (description.includes('credit_cards')) {
+        cleanDesc = 'Ya existe una tarjeta de crédito con este nombre. Por favor, elige un nombre único.';
+      } else if (description.includes('savings_goals')) {
+        cleanDesc = 'Ya existe una meta de ahorro con este nombre. Por favor, elige un nombre único.';
+      } else if (description.includes('budgets')) {
+        cleanDesc = 'Ya tienes un presupuesto activo configurado para esta categoría.';
+      } else {
+        cleanDesc = 'Ya existe un registro con este nombre o valor duplicado. Por favor, especifica un nombre único.';
+      }
+    }
+    
+    set({ alertOpen: true, alertConfig: { title, description: cleanDesc, variant } });
+  },
+  hideAlert: () => set({ alertOpen: false }),
+  
   // Filtros activos para la página de transacciones
   filters: {
     type: '',
@@ -63,6 +91,11 @@ export const useFinanceStore = create((set, get) => ({
   setUserName: (name) => {
     localStorage.setItem('user-name', name);
     set({ userName: name });
+  },
+  
+  setUserUsername: (username) => {
+    localStorage.setItem('user-username', username);
+    set({ userUsername: username });
   },
   
   setUserCurrency: (currency) => {
@@ -166,7 +199,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al registrar transacción:', err);
-      alert(err.message || 'Error al guardar la transacción');
+      get().showAlert('Error', err.message || 'Error al guardar la transacción');
       return false;
     }
   },
@@ -200,7 +233,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al purgar transacciones:', err);
-      alert(err.message || 'Error al eliminar todas las transacciones');
+      get().showAlert('Error', err.message || 'Error al eliminar todas las transacciones');
       return false;
     }
   },
@@ -213,7 +246,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al purgar todos los datos:', err);
-      alert(err.message || 'Error al restablecer la aplicación');
+      get().showAlert('Error', err.message || 'Error al restablecer la aplicación');
       return false;
     }
   },
@@ -230,7 +263,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al cambiar categoría de la transacción:', err);
-      alert(err.message || 'Error al cambiar la categoría');
+      get().showAlert('Error', err.message || 'Error al cambiar la categoría');
       return false;
     }
   },
@@ -242,7 +275,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al crear categoría:', err);
-      alert(err.message || 'Error al crear la categoría');
+      get().showAlert('Error', err.message || 'Error al crear la categoría');
       return false;
     }
   },
@@ -259,7 +292,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al actualizar categoría:', err);
-      alert(err.message || 'Error al actualizar la categoría');
+      get().showAlert('Error', err.message || 'Error al actualizar la categoría');
       return false;
     }
   },
@@ -296,7 +329,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al guardar presupuesto:', err);
-      alert(err.message || 'Error al guardar el presupuesto');
+      get().showAlert('Error', err.message || 'Error al guardar el presupuesto');
       return false;
     }
   },
@@ -331,7 +364,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al crear inversión:', err);
-      alert(err.message || 'Error al crear la inversión');
+      get().showAlert('Error', err.message || 'Error al crear la inversión');
       return false;
     }
   },
@@ -346,7 +379,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al actualizar inversión:', err);
-      alert(err.message || 'Error al actualizar la inversión');
+      get().showAlert('Error', err.message || 'Error al actualizar la inversión');
       return false;
     }
   },
@@ -375,7 +408,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al ajustar capital de inversión:', err);
-      alert(err.message || 'Error al ajustar el capital');
+      get().showAlert('Error', err.message || 'Error al ajustar el capital');
       return false;
     }
   },
@@ -390,7 +423,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al ajustar rendimiento de inversión:', err);
-      alert(err.message || 'Error al ajustar el rendimiento');
+      get().showAlert('Error', err.message || 'Error al ajustar el rendimiento');
       return false;
     }
   },
@@ -411,7 +444,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al registrar tarjeta de crédito:', err);
-      alert(err.message || 'Error al crear la tarjeta de crédito');
+      get().showAlert('Error', err.message || 'Error al crear la tarjeta de crédito');
       return false;
     }
   },
@@ -423,7 +456,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al actualizar tarjeta de crédito:', err);
-      alert(err.message || 'Error al actualizar la tarjeta de crédito');
+      get().showAlert('Error', err.message || 'Error al actualizar la tarjeta de crédito');
       return false;
     }
   },
@@ -455,7 +488,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al crear plan de ahorro:', err);
-      alert(err.message || 'Error al crear el plan de ahorro');
+      get().showAlert('Error', err.message || 'Error al crear el plan de ahorro');
       return false;
     }
   },
@@ -467,7 +500,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al actualizar plan de ahorro:', err);
-      alert(err.message || 'Error al actualizar el plan de ahorro');
+      get().showAlert('Error', err.message || 'Error al actualizar el plan de ahorro');
       return false;
     }
   },
@@ -490,7 +523,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al ajustar ahorro:', err);
-      alert(err.message || 'Error al ajustar el monto de ahorro');
+      get().showAlert('Error', err.message || 'Error al ajustar el monto de ahorro');
       return false;
     }
   },
@@ -501,7 +534,7 @@ export const useFinanceStore = create((set, get) => ({
       return response;
     } catch (err) {
       console.error('Error al importar PDF:', err);
-      alert(err.message || 'Error al procesar el archivo PDF');
+      get().showAlert('Error', err.message || 'Error al procesar el archivo PDF');
       return null;
     }
   },
@@ -521,7 +554,7 @@ export const useFinanceStore = create((set, get) => ({
       return false;
     } catch (err) {
       console.error('Error al guardar transacciones en lote:', err);
-      alert(err.message || 'Error al guardar las transacciones');
+      get().showAlert('Error', err.message || 'Error al guardar las transacciones');
       return false;
     }
   },
@@ -542,7 +575,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al crear cuenta bancaria:', err);
-      alert(err.message || 'Error al crear la cuenta bancaria');
+      get().showAlert('Error', err.message || 'Error al crear la cuenta bancaria');
       return false;
     }
   },
@@ -558,7 +591,7 @@ export const useFinanceStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error('Error al actualizar cuenta bancaria:', err);
-      alert(err.message || 'Error al actualizar la cuenta bancaria');
+      get().showAlert('Error', err.message || 'Error al actualizar la cuenta bancaria');
       return false;
     }
   },

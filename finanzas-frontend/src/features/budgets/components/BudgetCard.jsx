@@ -11,7 +11,8 @@ import {
   MinusCircle,
   Briefcase,
   AlertTriangle,
-  CheckCircle2
+  CheckCircle2,
+  Fuel
 } from 'lucide-react';
 import { Card, CardContent } from '../../../components/ui/Card.jsx';
 import { Progress } from '../../../components/ui/Progress.jsx';
@@ -29,7 +30,8 @@ const ICON_MAP = {
   heart: Heart,
   film: Film,
   'book-open': BookOpen,
-  'minus-circle': MinusCircle
+  'minus-circle': MinusCircle,
+  fuel: Fuel
 };
 
 export const BudgetCard = ({ 

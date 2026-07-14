@@ -1,23 +1,24 @@
 import { useState } from 'react';
-import { 
-  LineChart, 
-  Briefcase, 
-  Home, 
-  Zap, 
-  ShieldCheck, 
-  MinusCircle, 
-  Plus, 
-  Trash2, 
-  Edit3, 
-  TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
-  PieChart 
+import {
+  LineChart,
+  Briefcase,
+  Home,
+  Zap,
+  ShieldCheck,
+  MinusCircle,
+  Plus,
+  Trash2,
+  Edit3,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  PieChart
 } from 'lucide-react';
 import { useFinanceStore } from '../../store/useFinanceStore.js';
 import { Card, CardContent } from '../../components/ui/Card.jsx';
 import { Button } from '../../components/ui/Button.jsx';
 import { formatCurrency } from '../../utils/formatCurrency.js';
+import { ConfirmModal } from '../../components/ui/ConfirmModal.jsx';
 
 // Modales
 import { InvestmentModal } from './components/InvestmentModal.jsx';
@@ -55,11 +56,16 @@ export const InvestmentsPage = () => {
   const [isPercentageModalOpen, setIsPercentageModalOpen] = useState(false);
   const [investmentToAdjustPercentage, setInvestmentToAdjustPercentage] = useState(null);
 
+  // Estados para ConfirmModal de eliminación
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
+  const [deleteTargetName, setDeleteTargetName] = useState('');
+
   // --- CÁLCULOS GLOBALES ---
   const totalInvested = investments.reduce((sum, inv) => sum + parseFloat(inv.amount_invested || 0), 0);
   const totalCurrent = investments.reduce((sum, inv) => sum + parseFloat(inv.current_value || 0), 0);
   const totalReturn = investments.reduce((sum, inv) => sum + parseFloat(inv.net_return || 0), 0);
-  
+
   // Porcentaje de rendimiento global
   const globalYield = totalInvested > 0 ? (totalReturn / totalInvested) * 100 : 0;
   const isGlobalPositive = totalReturn >= 0;
@@ -100,17 +106,25 @@ export const InvestmentsPage = () => {
     setIsPercentageModalOpen(true);
   };
 
-  const handleDelete = async (id, name) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar la inversión "${name}"?`)) {
-      await deleteInvestment(id);
+  const handleDelete = (id, name) => {
+    setDeleteTargetId(id);
+    setDeleteTargetName(name);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteTargetId) {
+      await deleteInvestment(deleteTargetId);
+      setDeleteTargetId(null);
+      setDeleteTargetName('');
     }
   };
 
   return (
     <div className="flex flex-col gap-6 font-sans">
-      
+
       {/* Encabezado */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
             <LineChart className="text-indigo-400" size={24} />
@@ -120,7 +134,7 @@ export const InvestmentsPage = () => {
             Monitorea el valor actual, rentabilidad y distribución de tus activos financieros.
           </p>
         </div>
-        <Button variant="primary" onClick={handleCreate}>
+        <Button variant="primary" onClick={handleCreate} className="w-full sm:w-auto flex justify-center">
           <Plus size={16} />
           Nueva Inversión
         </Button>
@@ -128,7 +142,7 @@ export const InvestmentsPage = () => {
 
       {/* Tarjetas de Resumen KPI */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        
+
         {/* KPI: Total Capital Invertido */}
         <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
           <CardContent className="flex flex-col gap-1.5 p-0">
@@ -157,9 +171,8 @@ export const InvestmentsPage = () => {
               <span className={`text-2xl font-black tracking-tight ${isGlobalPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                 {isGlobalPositive ? '+' : ''}{formatCurrency(totalReturn)}
               </span>
-              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                isGlobalPositive ? 'bg-emerald-50 text-emerald-600 border border-emerald-100/30' : 'bg-rose-50 text-rose-600 border border-rose-100/30'
-              }`}>
+              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${isGlobalPositive ? 'bg-emerald-50 text-emerald-600 border border-emerald-100/30' : 'bg-rose-50 text-rose-600 border border-rose-100/30'
+                }`}>
                 {isGlobalPositive ? '↑' : '↓'}
               </span>
             </div>
@@ -180,7 +193,7 @@ export const InvestmentsPage = () => {
 
       {/* Grid Principal: Listado (70%) vs Distribución (30%) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-        
+
         {/* Sección de Listado de Inversiones */}
         <div className="lg:col-span-2 flex flex-col gap-5">
           <h3 className="text-base font-extrabold text-slate-800 flex items-center gap-2">
@@ -207,7 +220,7 @@ export const InvestmentsPage = () => {
               {investments.map(inv => {
                 const IconComponent = CATEGORY_ICON_MAP[inv.category] || MinusCircle;
                 const catColor = CATEGORY_COLOR_MAP[inv.category] || '#6b7280';
-                
+
                 const returnVal = parseFloat(inv.net_return || 0);
                 const isPositive = returnVal >= 0;
                 const changePct = parseFloat(inv.change_percentage || 0);
@@ -218,11 +231,11 @@ export const InvestmentsPage = () => {
                       {/* Cabecera del Activo */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div 
+                          <div
                             className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                            style={{ 
-                              backgroundColor: `${catColor}15`, 
-                              color: catColor 
+                            style={{
+                              backgroundColor: `${catColor}15`,
+                              color: catColor
                             }}
                           >
                             <IconComponent size={20} />
@@ -231,10 +244,10 @@ export const InvestmentsPage = () => {
                             <h4 className="font-bold text-sm text-slate-800 truncate max-w-[150px]" title={inv.name}>
                               {inv.name}
                             </h4>
-                            <span 
+                            <span
                               className="text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase border border-opacity-10/20"
-                              style={{ 
-                                backgroundColor: `${catColor}10`, 
+                              style={{
+                                backgroundColor: `${catColor}10`,
                                 color: catColor,
                                 borderColor: `${catColor}20`
                               }}
@@ -243,11 +256,10 @@ export const InvestmentsPage = () => {
                             </span>
                           </div>
                         </div>
-                        
+
                         {/* Rendimiento Badge */}
-                        <div className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-black ${
-                          isPositive ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
-                        }`}>
+                        <div className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-black ${isPositive ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
+                          }`}>
                           {isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
                           <span>{isPositive ? '+' : ''}{changePct.toFixed(2)}%</span>
                         </div>
@@ -327,7 +339,7 @@ export const InvestmentsPage = () => {
           <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full justify-between hover:shadow-md transition-shadow">
             <div className="flex flex-col gap-6">
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Asignación de Portafolio</span>
-              
+
               {allocationList.length === 0 ? (
                 <div className="text-center py-12 text-slate-400 font-semibold text-xs leading-relaxed">
                   No hay datos de asignación disponibles. Agrega activos para ver la distribución.
@@ -347,12 +359,12 @@ export const InvestmentsPage = () => {
                         </div>
                         {/* Progress Bar */}
                         <div className="relative w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                          <div 
-                            className="absolute left-0 top-0 h-full rounded-full transition-all duration-500" 
-                            style={{ 
+                          <div
+                            className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
+                            style={{
                               width: `${item.percentage}%`,
                               backgroundColor: catColor
-                            }} 
+                            }}
                           />
                         </div>
                       </div>
@@ -374,7 +386,7 @@ export const InvestmentsPage = () => {
       </div>
 
       {/* MODALES DE GESTIÓN */}
-      <InvestmentModal 
+      <InvestmentModal
         isOpen={isInvestmentModalOpen}
         onClose={() => {
           setIsInvestmentModalOpen(false);
@@ -383,7 +395,7 @@ export const InvestmentsPage = () => {
         investmentToEdit={investmentToEdit}
       />
 
-      <CapitalModal 
+      <CapitalModal
         isOpen={isCapitalModalOpen}
         onClose={() => {
           setIsCapitalModalOpen(false);
@@ -392,13 +404,27 @@ export const InvestmentsPage = () => {
         investment={investmentToAdjustCapital}
       />
 
-      <PercentageModal 
+      <PercentageModal
         isOpen={isPercentageModalOpen}
         onClose={() => {
           setIsPercentageModalOpen(false);
           setInvestmentToAdjustPercentage(null);
         }}
         investment={investmentToAdjustPercentage}
+      />
+
+      <ConfirmModal 
+        isOpen={deleteConfirmOpen}
+        onClose={() => {
+          setDeleteConfirmOpen(false);
+          setDeleteTargetId(null);
+          setDeleteTargetName('');
+        }}
+        onConfirm={handleDeleteConfirm}
+        title="¿Eliminar inversión?"
+        description={`¿Estás seguro de que deseas eliminar la inversión "${deleteTargetName}"?`}
+        confirmText="Eliminar"
+        variant="danger"
       />
 
     </div>

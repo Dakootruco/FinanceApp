@@ -27,12 +27,19 @@ export const getReportData = async (req, res, next) => {
       filterSql += ` AND t.bank_account_id = $${params.length}`;
     }
 
-    // 2. Query de Resumen (Ingresos, Gastos)
+    // 2. Query de Resumen (Ingresos, Gastos) - Excluyendo transferencias propias
     const summarySql = `
       SELECT 
-        SUM(CASE WHEN t.type = 'income' THEN t.amount ELSE 0 END) as total_income,
-        SUM(CASE WHEN t.type = 'expense' THEN t.amount ELSE 0 END) as total_expenses
+        SUM(CASE WHEN t.type = 'income' 
+          AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+          AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
+          THEN t.amount ELSE 0 END) as total_income,
+        SUM(CASE WHEN t.type = 'expense' 
+          AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+          AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
+          THEN t.amount ELSE 0 END) as total_expenses
       FROM transactions t
+      LEFT JOIN categories c ON t.category_id = c.id
       ${filterSql}
     `;
     const summaryResult = await query(summarySql, params);
@@ -49,12 +56,14 @@ export const getReportData = async (req, res, next) => {
     const totalDays = Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1, 1);
     const avgDailySpend = totalExpenses / totalDays;
 
-    // 3. Query de Categoría con Mayor Gasto
+    // 3. Query de Categoría con Mayor Gasto - Excluyendo transferencias propias
     const topCategorySql = `
       SELECT c.name, SUM(t.amount) as total
       FROM transactions t
       JOIN categories c ON t.category_id = c.id
       ${filterSql} AND t.type = 'expense'
+        AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+        AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
       GROUP BY c.name
       ORDER BY total DESC
       LIMIT 1
@@ -64,7 +73,7 @@ export const getReportData = async (req, res, next) => {
       ? { name: topCategoryResult.rows[0].name, amount: parseFloat(topCategoryResult.rows[0].total) }
       : { name: 'Ninguna', amount: 0 };
 
-    // 4. Query de Distribución de Gastos por Categoría
+    // 4. Query de Distribución de Gastos por Categoría - Excluyendo transferencias propias
     const categoriesSql = `
       SELECT 
         t.category_id as id,
@@ -78,6 +87,8 @@ export const getReportData = async (req, res, next) => {
       LEFT JOIN categories c ON t.category_id = c.id
       LEFT JOIN budgets b ON b.category_id = c.id AND b.user_id = $3
       ${filterSql} AND t.type = 'expense'
+        AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+        AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
       GROUP BY t.category_id, c.name, c.color, c.icon, b.limit_amount
       ORDER BY total DESC
     `;
@@ -92,13 +103,20 @@ export const getReportData = async (req, res, next) => {
       limit_amount: row.limit_amount ? parseFloat(row.limit_amount) : null
     }));
 
-    // 5. Query de Historial Mensual Comparativo (Agrupado por Mes)
+    // 5. Query de Historial Mensual Comparativo (Agrupado por Mes) - Excluyendo transferencias propias
     const monthlySql = `
       SELECT 
         TO_CHAR(t.date, 'YYYY-MM') as month_str,
-        SUM(CASE WHEN t.type = 'income' THEN t.amount ELSE 0 END) as income,
-        SUM(CASE WHEN t.type = 'expense' THEN t.amount ELSE 0 END) as expense
+        SUM(CASE WHEN t.type = 'income' 
+          AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+          AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
+          THEN t.amount ELSE 0 END) as income,
+        SUM(CASE WHEN t.type = 'expense' 
+          AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+          AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
+          THEN t.amount ELSE 0 END) as expense
       FROM transactions t
+      LEFT JOIN categories c ON t.category_id = c.id
       ${filterSql}
       GROUP BY TO_CHAR(t.date, 'YYYY-MM')
       ORDER BY month_str ASC
@@ -110,14 +128,17 @@ export const getReportData = async (req, res, next) => {
       expense: parseFloat(row.expense || 0)
     }));
 
-    // 6. Query de Métodos de Pago (Efectivo vs Bancos vs Sin Cuenta)
+    // 6. Query de Métodos de Pago (Efectivo vs Bancos vs Sin Cuenta) - Excluyendo transferencias propias
     const paymentMethodsSql = `
       SELECT 
         COALESCE(ba.name, 'Sin Cuenta') as name,
         SUM(t.amount) as total
       FROM transactions t
       LEFT JOIN bank_accounts ba ON t.bank_account_id = ba.id
+      LEFT JOIN categories c ON t.category_id = c.id
       ${filterSql} AND t.type = 'expense'
+        AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+        AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
       GROUP BY ba.name
       ORDER BY total DESC
     `;

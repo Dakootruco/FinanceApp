@@ -1,26 +1,28 @@
 import { useState } from 'react';
-import { 
-  Tags, 
-  Plus, 
-  Trash2, 
+import {
+  Tags,
+  Plus,
+  Trash2,
   Edit3,
-  Briefcase, 
-  TrendingUp, 
-  CreditCard, 
-  PlusCircle, 
-  ShoppingBag, 
-  Truck, 
-  Home, 
-  Zap, 
-  Heart, 
-  Film, 
-  BookOpen, 
-  MinusCircle
+  Briefcase,
+  TrendingUp,
+  CreditCard,
+  PlusCircle,
+  ShoppingBag,
+  Truck,
+  Home,
+  Zap,
+  Heart,
+  Film,
+  BookOpen,
+  MinusCircle,
+  Fuel
 } from 'lucide-react';
 import { useFinanceStore } from '../../store/useFinanceStore.js';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card.jsx';
 import { Button } from '../../components/ui/Button.jsx';
 import { CategoryModal } from './components/CategoryModal.jsx';
+import { ConfirmModal } from '../../components/ui/ConfirmModal.jsx';
 
 const ICON_MAP = {
   briefcase: Briefcase,
@@ -34,7 +36,8 @@ const ICON_MAP = {
   heart: Heart,
   film: Film,
   'book-open': BookOpen,
-  'minus-circle': MinusCircle
+  'minus-circle': MinusCircle,
+  fuel: Fuel
 };
 
 export const CategoriesPage = () => {
@@ -42,6 +45,10 @@ export const CategoriesPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState(null);
+
+  // Estados para ConfirmModal de eliminación
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const handleEdit = (cat) => {
     setCategoryToEdit(cat);
@@ -53,13 +60,15 @@ export const CategoriesPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (cat) => {
-    const confirmMessage = `¿Estás seguro de que deseas eliminar la categoría "${cat.name}"?\n\n` + 
-      `⚠️ Las transacciones asociadas no se borrarán, pero se quedarán "Sin Categoría".\n` +
-      `⚠️ Los presupuestos configurados para esta categoría se eliminarán automáticamente.`;
-      
-    if (confirm(confirmMessage)) {
-      await deleteCategory(cat.id);
+  const handleDelete = (cat) => {
+    setDeleteTarget(cat);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteTarget) {
+      await deleteCategory(deleteTarget.id);
+      setDeleteTarget(null);
     }
   };
 
@@ -69,18 +78,18 @@ export const CategoriesPage = () => {
 
   const renderCategoryCard = (cat) => {
     const IconComp = ICON_MAP[cat.icon] || MinusCircle;
-    
+
     return (
-      <div 
-        key={cat.id} 
+      <div
+        key={cat.id}
         className="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-slate-100/60 transition-all text-slate-800"
       >
         <div className="flex items-center gap-3.5">
-          <div 
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" 
-            style={{ 
-              backgroundColor: `${cat.color}15`, 
-              color: cat.color 
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+            style={{
+              backgroundColor: `${cat.color}15`,
+              color: cat.color
             }}
           >
             <IconComp size={18} />
@@ -111,9 +120,9 @@ export const CategoriesPage = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      
+
       {/* Encabezado */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
             <Tags className="text-indigo-400" size={24} />
@@ -123,7 +132,7 @@ export const CategoriesPage = () => {
             Administra y personaliza tus categorías para clasificar adecuadamente tus ingresos y gastos.
           </p>
         </div>
-        <Button variant="primary" onClick={handleCreate}>
+        <Button variant="primary" onClick={handleCreate} className="w-full sm:w-auto flex justify-center">
           <Plus size={16} />
           Nueva Categoría
         </Button>
@@ -131,7 +140,7 @@ export const CategoriesPage = () => {
 
       {/* Contenedores de Categorías */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-        
+
         {/* Categorías de Gastos */}
         <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm h-full flex flex-col">
           <CardHeader className="!border-none pb-0">
@@ -167,10 +176,23 @@ export const CategoriesPage = () => {
       </div>
 
       {/* Modal CRUD Categorías */}
-      <CategoryModal 
+      <CategoryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         categoryToEdit={categoryToEdit}
+      />
+
+      <ConfirmModal
+        isOpen={deleteConfirmOpen}
+        onClose={() => {
+          setDeleteConfirmOpen(false);
+          setDeleteTarget(null);
+        }}
+        onConfirm={handleDeleteConfirm}
+        title="¿Eliminar categoría?"
+        description={`¿Estás seguro de que deseas eliminar la categoría "${deleteTarget?.name}"? Las transacciones asociadas se quedarán "Sin Categoría" y sus presupuestos se eliminarán.`}
+        confirmText="Eliminar"
+        variant="danger"
       />
 
     </div>

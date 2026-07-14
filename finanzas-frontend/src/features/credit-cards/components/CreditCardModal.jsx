@@ -21,6 +21,7 @@ export const CreditCardModal = ({ isOpen, onClose, cardToEdit = null }) => {
   const [form, setForm] = useState({
     card_name: '',
     bank: '',
+    custom_bank: '',
     brand: 'Visa',
     last_digits: '',
     balance: '',
@@ -32,9 +33,12 @@ export const CreditCardModal = ({ isOpen, onClose, cardToEdit = null }) => {
   useEffect(() => {
     if (isOpen) {
       if (cardToEdit) {
+        const standardBanks = ['Banreservas', 'Banco Popular Dominicano', 'Banco BHD', 'Qik Banco Digital'];
+        const isStandard = standardBanks.includes(cardToEdit.bank);
         setForm({
           card_name: cardToEdit.card_name,
-          bank: cardToEdit.bank,
+          bank: isStandard ? cardToEdit.bank : 'Otro',
+          custom_bank: isStandard ? '' : cardToEdit.bank,
           brand: cardToEdit.brand,
           last_digits: cardToEdit.last_digits,
           balance: cardToEdit.balance.toString(),
@@ -44,6 +48,7 @@ export const CreditCardModal = ({ isOpen, onClose, cardToEdit = null }) => {
         setForm({
           card_name: '',
           bank: '',
+          custom_bank: '',
           brand: 'Visa',
           last_digits: '',
           balance: '',
@@ -60,7 +65,10 @@ export const CreditCardModal = ({ isOpen, onClose, cardToEdit = null }) => {
     e.preventDefault();
     setError('');
 
-    if (!form.card_name.trim() || !form.bank.trim() || !form.brand || !form.last_digits) {
+    const isOther = form.bank === 'Otro';
+    const finalBank = isOther ? form.custom_bank.trim() : form.bank.trim();
+
+    if (!form.card_name.trim() || !finalBank || !form.brand || !form.last_digits) {
       setError('Todos los campos son obligatorios.');
       return;
     }
@@ -86,7 +94,7 @@ export const CreditCardModal = ({ isOpen, onClose, cardToEdit = null }) => {
     if (cardToEdit) {
       success = await updateCreditCard(cardToEdit.id, {
         card_name: form.card_name.trim(),
-        bank: form.bank.trim(),
+        bank: finalBank,
         brand: form.brand,
         last_digits: form.last_digits,
         balance: balanceValue,
@@ -95,7 +103,7 @@ export const CreditCardModal = ({ isOpen, onClose, cardToEdit = null }) => {
     } else {
       success = await addCreditCard({
         card_name: form.card_name.trim(),
-        bank: form.bank.trim(),
+        bank: finalBank,
         brand: form.brand,
         last_digits: form.last_digits,
         balance: balanceValue,
@@ -147,14 +155,38 @@ export const CreditCardModal = ({ isOpen, onClose, cardToEdit = null }) => {
 
           {/* Banco Emisor */}
           <FormGroup label="Banco Emisor">
-            <Input 
-              type="text"
-              placeholder="Ej. Chase"
+            <Select 
               value={form.bank}
-              onChange={(e) => setForm(prev => ({ ...prev, bank: e.target.value }))}
+              onChange={(e) => {
+                const val = e.target.value;
+                setForm(prev => ({ 
+                  ...prev, 
+                  bank: val,
+                  custom_bank: val === 'Otro' ? prev.custom_bank : '' 
+                }));
+              }}
               required
-            />
+            >
+              <option value="" disabled>Selecciona un banco</option>
+              <option value="Banreservas">Banreservas</option>
+              <option value="Banco Popular Dominicano">Banco Popular Dominicano</option>
+              <option value="Banco BHD">Banco BHD</option>
+              <option value="Qik Banco Digital">Qik Banco Digital</option>
+              <option value="Otro">Otro (Especificar)</option>
+            </Select>
           </FormGroup>
+
+          {/* Input condicional para especificar otro banco emisor */}
+          {form.bank === 'Otro' && (
+            <FormGroup label="Especifica el banco emisor *">
+              <Input
+                placeholder="Ej. Banco BDI, Scotiabank, etc."
+                value={form.custom_bank}
+                onChange={(e) => setForm(prev => ({ ...prev, custom_bank: e.target.value }))}
+                required
+              />
+            </FormGroup>
+          )}
 
           <div className="grid grid-cols-2 gap-4">
             {/* Marca */}

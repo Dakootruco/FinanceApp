@@ -26,7 +26,8 @@ export const ImportStatementModal = () => {
     bankAccounts,
     importTransactionsFromPDF,
     saveBulkTransactions,
-    setCurrentPage
+    setCurrentPage,
+    showAlert
   } = useFinanceStore();
 
   const [step, setStep] = useState(1); // 1: Upload, 2: Preview
@@ -182,7 +183,7 @@ export const ImportStatementModal = () => {
   const handleConfirmImport = async () => {
     const listToImport = transactions.filter(t => selectedIds.has(t.localId));
     if (listToImport.length === 0) {
-      alert('Por favor selecciona al menos una transacción para importar.');
+      showAlert('Selección requerida', 'Por favor selecciona al menos una transacción para importar.', 'info');
       return;
     }
 
@@ -199,7 +200,7 @@ export const ImportStatementModal = () => {
       }
     } catch (err) {
       console.error(err);
-      alert('Error al importar las transacciones.');
+      showAlert('Error de Importación', 'Error al importar las transacciones.');
     } finally {
       setLoading(false);
     }
@@ -207,11 +208,21 @@ export const ImportStatementModal = () => {
 
   // --- CÁLCULOS PASO 2 ---
   const selectedTransactions = transactions.filter(t => selectedIds.has(t.localId));
+  
+  const isSelfTransfer = (tx) => {
+    const desc = (tx.description || '').toLowerCase();
+    const cat = categories.find(c => c.id === tx.category_id);
+    const catName = cat ? cat.name.toLowerCase() : '';
+    const keywords = ['propia', 'traspaso', 'pago tarjeta', 'tubancoap'];
+    
+    return keywords.some(kw => desc.includes(kw)) || keywords.some(kw => catName.includes(kw));
+  };
+
   const totalExpenses = selectedTransactions
-    .filter(t => t.type === 'expense')
+    .filter(t => t.type === 'expense' && !isSelfTransfer(t))
     .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
   const totalIncomes = selectedTransactions
-    .filter(t => t.type === 'income')
+    .filter(t => t.type === 'income' && !isSelfTransfer(t))
     .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
   const netBalance = totalIncomes - totalExpenses;
 

@@ -13,7 +13,8 @@ export const SettingsPage = () => {
     userTheme, 
     setUserName, 
     setUserCurrency, 
-    setUserTheme 
+    setUserTheme,
+    showAlert
   } = useFinanceStore();
 
   const [activeTab, setActiveTab] = useState('profile'); // 'profile', 'currency', 'appearance', 'danger'
@@ -28,7 +29,7 @@ export const SettingsPage = () => {
   const handleSaveProfile = (e) => {
     e.preventDefault();
     if (!name.trim()) {
-      alert('El nombre no puede estar vacío.');
+      showAlert('Campo requerido', 'El nombre no puede estar vacío.', 'info');
       return;
     }
     setUserName(name.trim());

@@ -15,7 +15,9 @@ import { SavingsGoalsPage } from './features/savings-goals/SavingsGoalsPage.jsx'
 import { SubscriptionsPage } from './features/subscriptions/SubscriptionsPage.jsx';
 import { ReportsPage } from './features/reports/ReportsPage.jsx';
 import { SettingsPage } from './features/settings/SettingsPage.jsx';
+import { ProfilePage } from './features/profile/ProfilePage.jsx';
 import { Button } from './components/ui/Button.jsx';
+import { AlertModal } from './components/ui/AlertModal.jsx';
 
 function App() {
   const { 
@@ -24,7 +26,8 @@ function App() {
     error, 
     apiOnline, 
     checkConnectionAndLoad,
-    setUserName
+    setUserName,
+    setUserUsername
   } = useFinanceStore();
 
   const [session, setSession] = useState(null);
@@ -37,6 +40,9 @@ function App() {
       if (session?.user?.user_metadata?.name) {
         setUserName(session.user.user_metadata.name);
       }
+      if (session?.user?.user_metadata?.username) {
+        setUserUsername(session.user.user_metadata.username);
+      }
       setAuthChecking(false);
     });
 
@@ -45,11 +51,14 @@ function App() {
       if (session?.user?.user_metadata?.name) {
         setUserName(session.user.user_metadata.name);
       }
+      if (session?.user?.user_metadata?.username) {
+        setUserUsername(session.user.user_metadata.username);
+      }
       setAuthChecking(false);
     });
 
     return () => subscription.unsubscribe();
-  }, [setUserName]);
+  }, [setUserName, setUserUsername]);
 
   // Cargar datos financieros solo cuando hay un usuario autenticado y conectado
   useEffect(() => {
@@ -83,6 +92,8 @@ function App() {
         return <ReportsPage />;
       case 'settings':
         return <SettingsPage />;
+      case 'profile':
+        return <ProfilePage />;
       default:
         return <DashboardPage />;
     }
@@ -151,6 +162,7 @@ function App() {
   return (
     <DashboardLayout>
       {renderPage()}
+      <AlertModal />
     </DashboardLayout>
   );
 }

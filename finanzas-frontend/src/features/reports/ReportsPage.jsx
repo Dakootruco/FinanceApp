@@ -39,7 +39,8 @@ export const ReportsPage = () => {
     reportsData, 
     fetchReportsData, 
     bankAccounts, 
-    transactions 
+    transactions,
+    showAlert
   } = useFinanceStore();
 
   // Fechas por defecto (Mes actual: desde el primer día hasta hoy)
@@ -131,7 +132,7 @@ export const ReportsPage = () => {
     });
 
     if (filteredTx.length === 0) {
-      alert('No hay movimientos en este rango de fechas para exportar.');
+      showAlert('Sin datos', 'No hay movimientos en este rango de fechas para exportar.', 'info');
       return;
     }
 
@@ -170,12 +171,12 @@ export const ReportsPage = () => {
             Analiza y visualiza en profundidad la distribución de tus ingresos, gastos y hábitos financieros.
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="secondary" onClick={handleExportCSV}>
+        <div className="flex gap-2 flex-wrap w-full sm:w-auto">
+          <Button variant="secondary" onClick={handleExportCSV} className="flex-grow sm:flex-grow-0 justify-center flex items-center gap-1.5">
             <Download size={14} />
             Exportar CSV
           </Button>
-          <Button variant="primary" onClick={() => window.print()}>
+          <Button variant="primary" onClick={() => window.print()} className="flex-grow sm:flex-grow-0 justify-center flex items-center gap-1.5">
             <Printer size={14} />
             Imprimir Reporte (PDF)
           </Button>

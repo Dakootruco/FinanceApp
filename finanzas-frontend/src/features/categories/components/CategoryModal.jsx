@@ -13,7 +13,8 @@ import {
   Heart, 
   Film, 
   BookOpen, 
-  MinusCircle
+  MinusCircle,
+  Fuel
 } from 'lucide-react';
 import { useFinanceStore } from '../../../store/useFinanceStore.js';
 import { Button } from '../../../components/ui/Button.jsx';
@@ -26,6 +27,7 @@ const ICON_OPTIONS = [
   { name: 'plus-circle', icon: PlusCircle, label: 'Otros Ingresos' },
   { name: 'shopping-bag', icon: ShoppingBag, label: 'Bolsa / Compras' },
   { name: 'truck', icon: Truck, label: 'Transporte' },
+  { name: 'fuel', icon: Fuel, label: 'Combustible' },
   { name: 'home', icon: Home, label: 'Hogar / Alquiler' },
   { name: 'zap', icon: Zap, label: 'Servicios / Energía' },
   { name: 'heart', icon: Heart, label: 'Salud' },

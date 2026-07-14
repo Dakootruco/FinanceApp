@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { 
-  Target, 
-  PiggyBank, 
-  Plus, 
-  Trash2, 
-  Edit3, 
+import {
+  Target,
+  PiggyBank,
+  Plus,
+  Trash2,
+  Edit3,
   TrendingUp,
   Award,
   BarChart3
@@ -17,6 +17,7 @@ import { formatCurrency } from '../../utils/formatCurrency.js';
 // Modales
 import { SavingsGoalModal } from './components/SavingsGoalModal.jsx';
 import { AdjustSavingsModal } from './components/AdjustSavingsModal.jsx';
+import { ConfirmModal } from '../../components/ui/ConfirmModal.jsx';
 
 export const SavingsGoalsPage = () => {
   const { savingsGoals, deleteSavingsGoal } = useFinanceStore();
@@ -28,6 +29,11 @@ export const SavingsGoalsPage = () => {
   const [isAdjustModalOpen, setIsAdjustModalOpen] = useState(false);
   const [goalToAdjust, setGoalToAdjust] = useState(null);
 
+  // Estados para ConfirmModal de eliminación
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
+  const [deleteTargetName, setDeleteTargetName] = useState('');
+
   // --- CÁLCULOS GLOBALES ---
   const totalSaved = savingsGoals.reduce((sum, g) => sum + parseFloat(g.current_amount || 0), 0);
   const totalTarget = savingsGoals.reduce((sum, g) => sum + parseFloat(g.target_amount || 0), 0);
@@ -38,8 +44,8 @@ export const SavingsGoalsPage = () => {
   const nearCompletion = [...savingsGoals]
     .map(g => ({
       ...g,
-      percentage: parseFloat(g.target_amount) > 0 
-        ? (parseFloat(g.current_amount) / parseFloat(g.target_amount)) * 100 
+      percentage: parseFloat(g.target_amount) > 0
+        ? (parseFloat(g.current_amount) / parseFloat(g.target_amount)) * 100
         : 0
     }))
     .filter(g => g.percentage < 100)
@@ -61,9 +67,17 @@ export const SavingsGoalsPage = () => {
     setIsAdjustModalOpen(true);
   };
 
-  const handleDelete = async (id, name) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar el plan de ahorro "${name}"?`)) {
-      await deleteSavingsGoal(id);
+  const handleDelete = (id, name) => {
+    setDeleteTargetId(id);
+    setDeleteTargetName(name);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteTargetId) {
+      await deleteSavingsGoal(deleteTargetId);
+      setDeleteTargetId(null);
+      setDeleteTargetName('');
     }
   };
 
@@ -71,17 +85,17 @@ export const SavingsGoalsPage = () => {
     <div className="flex flex-col gap-6 font-sans">
 
       {/* Encabezado */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
             <Target className="text-indigo-400" size={24} />
-            Objetivos de Ahorro
+            Planes y Metas de Ahorro
           </h2>
           <p className="text-xs text-slate-500 font-semibold mt-1">
             Define metas claras de ahorro y monitorea tu progreso en tiempo real.
           </p>
         </div>
-        <Button variant="primary" onClick={handleCreate}>
+        <Button variant="primary" onClick={handleCreate} className="w-full sm:w-auto flex justify-center">
           <Plus size={16} />
           Nuevo Plan
         </Button>
@@ -89,7 +103,7 @@ export const SavingsGoalsPage = () => {
 
       {/* Tarjetas de Resumen KPI */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        
+
         {/* KPI: Total Ahorrado */}
         <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
           <CardContent className="flex flex-col gap-1.5 p-0">
@@ -119,7 +133,7 @@ export const SavingsGoalsPage = () => {
                 {globalProgress}%
               </span>
               <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
-                <div 
+                <div
                   className="h-full bg-indigo-500 rounded-full transition-all duration-700"
                   style={{ width: `${Math.min(globalProgress, 100)}%` }}
                 />
@@ -141,7 +155,7 @@ export const SavingsGoalsPage = () => {
 
       {/* Grid Principal: Listado (70%) vs Resumen (30%) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-        
+
         {/* Sección de Listado de Planes de Ahorro */}
         <div className="lg:col-span-2 flex flex-col gap-5">
           <h3 className="text-base font-extrabold text-slate-800 flex items-center gap-2">
@@ -178,11 +192,11 @@ export const SavingsGoalsPage = () => {
                       {/* Cabecera del Plan */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div 
+                          <div
                             className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                            style={{ 
-                              backgroundColor: `${colorTheme}15`, 
-                              color: colorTheme 
+                            style={{
+                              backgroundColor: `${colorTheme}15`,
+                              color: colorTheme
                             }}
                           >
                             {isComplete ? <Award size={20} /> : <Target size={20} />}
@@ -191,10 +205,10 @@ export const SavingsGoalsPage = () => {
                             <h4 className="font-bold text-sm text-slate-800 truncate max-w-[160px]" title={goal.name}>
                               {goal.name}
                             </h4>
-                            <span 
+                            <span
                               className="text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase"
-                              style={{ 
-                                backgroundColor: `${colorTheme}10`, 
+                              style={{
+                                backgroundColor: `${colorTheme}10`,
                                 color: colorTheme,
                                 border: `1px solid ${colorTheme}20`
                               }}
@@ -205,7 +219,7 @@ export const SavingsGoalsPage = () => {
                         </div>
 
                         {/* Badge de progreso */}
-                        <div 
+                        <div
                           className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-black"
                           style={{
                             backgroundColor: isComplete ? '#10b98115' : `${colorTheme}15`,
@@ -235,9 +249,9 @@ export const SavingsGoalsPage = () => {
                         </div>
                         {/* Progress bar */}
                         <div className="relative w-full h-2 bg-slate-200/60 rounded-full overflow-hidden">
-                          <div 
+                          <div
                             className="absolute left-0 top-0 h-full rounded-full transition-all duration-700"
-                            style={{ 
+                            style={{
                               width: `${Math.min(percentage, 100)}%`,
                               backgroundColor: isComplete ? '#10b981' : colorTheme
                             }}
@@ -296,7 +310,7 @@ export const SavingsGoalsPage = () => {
           <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full justify-between hover:shadow-md transition-shadow">
             <div className="flex flex-col gap-6">
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Distribución de Planes</span>
-              
+
               {savingsGoals.length === 0 ? (
                 <div className="text-center py-12 text-slate-400 font-semibold text-xs leading-relaxed">
                   No hay planes de ahorro registrados. Crea uno para ver la distribución.
@@ -321,12 +335,12 @@ export const SavingsGoalsPage = () => {
                         </div>
                         {/* Progress Bar */}
                         <div className="relative w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                          <div 
-                            className="absolute left-0 top-0 h-full rounded-full transition-all duration-500" 
-                            style={{ 
+                          <div
+                            className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
+                            style={{
                               width: `${Math.min(percentage, 100)}%`,
                               backgroundColor: colorTheme
-                            }} 
+                            }}
                           />
                         </div>
                       </div>
@@ -343,12 +357,12 @@ export const SavingsGoalsPage = () => {
                   <div className="border-t border-slate-50 pt-5 mt-6 flex flex-col gap-1.5">
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Próximo a Completar</span>
                     <div className="flex items-center gap-2">
-                      <div 
+                      <div
                         className="w-2.5 h-2.5 rounded-full"
                         style={{ backgroundColor: nearCompletion.color_theme || '#6366f1' }}
                       />
                       <span className="text-xs font-bold text-slate-800">{nearCompletion.name}</span>
-                      <span 
+                      <span
                         className="text-[10px] font-extrabold ml-auto"
                         style={{ color: nearCompletion.color_theme || '#6366f1' }}
                       >
@@ -370,7 +384,7 @@ export const SavingsGoalsPage = () => {
       </div>
 
       {/* MODALES DE GESTIÓN */}
-      <SavingsGoalModal 
+      <SavingsGoalModal
         isOpen={isGoalModalOpen}
         onClose={() => {
           setIsGoalModalOpen(false);
@@ -386,6 +400,20 @@ export const SavingsGoalsPage = () => {
           setGoalToAdjust(null);
         }}
         savingsGoal={goalToAdjust}
+      />
+
+      <ConfirmModal 
+        isOpen={deleteConfirmOpen}
+        onClose={() => {
+          setDeleteConfirmOpen(false);
+          setDeleteTargetId(null);
+          setDeleteTargetName('');
+        }}
+        onConfirm={handleDeleteConfirm}
+        title="¿Eliminar plan de ahorro?"
+        description={`¿Estás seguro de que deseas eliminar el plan de ahorro "${deleteTargetName}"?`}
+        confirmText="Eliminar"
+        variant="danger"
       />
 
     </div>

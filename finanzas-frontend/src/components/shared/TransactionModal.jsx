@@ -19,7 +19,8 @@ export const TransactionModal = () => {
     categories,
     bankAccounts,
     addTransaction,
-    addCategory
+    addCategory,
+    showAlert
   } = useFinanceStore();
 
   const [showAddCategory, setShowAddCategory] = useState(false);
@@ -78,7 +79,7 @@ export const TransactionModal = () => {
   const handleSubmitTx = async (e) => {
     e.preventDefault();
     if (!txForm.amount || !txForm.description || !txForm.category_id) {
-      alert('Por favor completa todos los campos requeridos.');
+      showAlert('Campos requeridos', 'Por favor completa todos los campos requeridos.', 'info');
       return;
     }
 
@@ -103,7 +104,7 @@ export const TransactionModal = () => {
   // Crear Categoría
   const handleCreateCategory = async () => {
     if (!catForm.name) {
-      alert('El nombre de la categoría es obligatorio.');
+      showAlert('Nombre requerido', 'El nombre de la categoría es obligatorio.', 'info');
       return;
     }
 

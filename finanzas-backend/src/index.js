@@ -13,6 +13,7 @@ import savingsGoalRoutes from './routes/savingsGoalRoutes.js';
 import importRoutes from './routes/importRoutes.js';
 import bankAccountRoutes from './routes/bankAccountRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
+import profileRoutes from './routes/profileRoutes.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './config/swagger.js';
 import { requireAuth } from './middlewares/authMiddleware.js';
@@ -45,6 +46,23 @@ app.get('/health', async (req, res, next) => {
   }
 });
 
+// Endpoint público para resolver email por username (usado en login)
+app.get('/api/auth/email-by-username/:username', async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const result = await pool.query(
+      'SELECT email FROM public.users WHERE LOWER(username) = LOWER($1)',
+      [username.trim()]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    res.json({ email: result.rows[0].email });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Rutas de la API (protegidas con autenticación JWT de Supabase)
 app.use('/api/categories', requireAuth, categoryRoutes);
 app.use('/api/transactions', requireAuth, transactionRoutes);
@@ -56,6 +74,7 @@ app.use('/api/savings-goals', requireAuth, savingsGoalRoutes);
 app.use('/api/transactions-import', requireAuth, importRoutes);
 app.use('/api/bank-accounts', requireAuth, bankAccountRoutes);
 app.use('/api/reports', requireAuth, reportRoutes);
+app.use('/api/profile', requireAuth, profileRoutes);
 
 // Manejo de rutas no encontradas (404)
 app.use((req, res, next) => {
@@ -68,10 +87,30 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error('Error no controlado:', err);
   
-  const statusCode = err.statusCode || 500;
+  let errorMessage = err.message || 'Error interno del servidor';
+  let statusCode = err.statusCode || 500;
+
+  // Manejo y traducción de restricciones de base de datos PostgreSQL
+  if (err.code === '23505') {
+    statusCode = 400; // Bad Request para violación de unicidad
+    const constraint = err.constraint || '';
+    if (constraint.includes('bank_accounts')) {
+      errorMessage = 'Ya existe una cuenta bancaria con este nombre. Por favor, elige un nombre único.';
+    } else if (constraint.includes('categories')) {
+      errorMessage = 'Ya existe una categoría con este nombre. Por favor, elige un nombre único.';
+    } else if (constraint.includes('credit_cards')) {
+      errorMessage = 'Ya existe una tarjeta de crédito con este nombre. Por favor, elige un nombre único.';
+    } else if (constraint.includes('savings_goals')) {
+      errorMessage = 'Ya existe una meta de ahorro con este nombre. Por favor, elige un nombre único.';
+    } else if (constraint.includes('budgets')) {
+      errorMessage = 'Ya tienes un presupuesto activo configurado para esta categoría.';
+    } else {
+      errorMessage = 'Ya existe un registro con este nombre o valor duplicado. Por favor, especifica valores únicos.';
+    }
+  }
+
   res.status(statusCode).json({
-    error: err.message || 'Error interno del servidor',
-    // Solo enviamos el stack en desarrollo para facilitar la depuración
+    error: errorMessage,
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
   });
 });
