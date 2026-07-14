@@ -19,7 +19,7 @@ export const TransactionsPage = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-4">
-            <ClipboardList className="text-indigo-400" size={24} className="shrink-0" />
+            <ClipboardList className="text-indigo-400 shrink-0" size={24} />
             Historial de Movimientos
           </h2>
           <p className="text-xs text-slate-500 font-semibold mt-1">
