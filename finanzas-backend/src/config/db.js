@@ -20,8 +20,10 @@ const poolConfig = {
 // Si hay una URL de conexión completa (útil para servicios en la nube como Render/Neon/Supabase)
 if (process.env.DATABASE_URL) {
   poolConfig.connectionString = process.env.DATABASE_URL;
-  // Descomenta la siguiente línea en producción si tu proveedor de base de datos requiere SSL (e.g. Neon, Supabase)
-  // poolConfig.ssl = { rejectUnauthorized: false };
+  // Habilitar SSL si no es una conexión local
+  if (!process.env.DATABASE_URL.includes('localhost') && !process.env.DATABASE_URL.includes('127.0.0.1')) {
+    poolConfig.ssl = { rejectUnauthorized: false };
+  }
 }
 
 const pool = new Pool(poolConfig);
