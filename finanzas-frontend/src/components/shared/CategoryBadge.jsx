@@ -9,7 +9,8 @@ import {
   Heart, 
   Film, 
   BookOpen, 
-  MinusCircle 
+  MinusCircle,
+  Fuel
 } from 'lucide-react';
 
 const ICON_MAP = {
@@ -24,7 +25,8 @@ const ICON_MAP = {
   heart: Heart,
   film: Film,
   'book-open': BookOpen,
-  'minus-circle': MinusCircle
+  'minus-circle': MinusCircle,
+  fuel: Fuel
 };
 
 export const CategoryBadge = ({ icon, color = '#cccccc', name, className = '' }) => {

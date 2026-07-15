@@ -5,19 +5,28 @@ import { query } from '../config/db.js';
  */
 export const getDashboardData = async (req, res, next) => {
   try {
-    // 1. Resumen de totales (Ingresos, Gastos y Balance)
+    // 1. Resumen de totales (Ingresos, Gastos y Balance) - Excluyendo traspasos propios por categoría o descripción
     const summaryQuery = `
       SELECT 
-        COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END), 0) as total_income,
-        COALESCE(SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END), 0) as total_expenses
-      FROM transactions
-      WHERE user_id = $1;
+        COALESCE(SUM(CASE WHEN t.type = 'income' 
+          AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+          AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
+          THEN t.amount ELSE 0 END), 0) as total_income,
+        COALESCE(SUM(CASE WHEN t.type = 'expense' 
+          AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+          AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
+          THEN t.amount ELSE 0 END), 0) as total_expenses,
+        COALESCE(SUM(CASE WHEN t.bank_account_id IS NULL AND t.type = 'income' THEN t.amount ELSE 0 END), 0) -
+        COALESCE(SUM(CASE WHEN t.bank_account_id IS NULL AND t.type = 'expense' THEN t.amount ELSE 0 END), 0) as cash_balance
+      FROM transactions t
+      LEFT JOIN categories c ON t.category_id = c.id
+      WHERE t.user_id = $1;
     `;
     const summaryResult = await query(summaryQuery, [req.user.id]);
-    const { total_income, total_expenses } = summaryResult.rows[0];
+    const { total_income, total_expenses, cash_balance } = summaryResult.rows[0];
     const balance = parseFloat(total_income) - parseFloat(total_expenses);
 
-    // 2. Gastos agrupados por categoría (Ideal para un Gráfico de Pastel / Donut)
+    // 2. Gastos agrupados por categoría (Ideal para un Gráfico de Pastel / Donut) - Excluyendo traspasos propios
     const categoryExpensesQuery = `
       SELECT 
         t.category_id,
@@ -28,20 +37,29 @@ export const getDashboardData = async (req, res, next) => {
       FROM transactions t
       LEFT JOIN categories c ON t.category_id = c.id
       WHERE t.type = 'expense' AND t.user_id = $1
+        AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+        AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
       GROUP BY t.category_id, c.name, c.color, c.icon
       ORDER BY total DESC;
     `;
     const categoryExpensesResult = await query(categoryExpensesQuery, [req.user.id]);
 
-    // 3. Histórico mensual de los últimos 6 meses (Ideal para un Gráfico de Barras / Líneas)
+    // 3. Histórico mensual de los últimos 6 meses (Ideal para un Gráfico de Barras / Líneas) - Excluyendo traspasos propios
     const monthlyHistoryQuery = `
       SELECT 
-        TO_CHAR(date, 'YYYY-MM') as month,
-        COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END), 0) as income,
-        COALESCE(SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END), 0) as expense
-      FROM transactions
-      WHERE date >= CURRENT_DATE - INTERVAL '6 months' AND user_id = $1
-      GROUP BY TO_CHAR(date, 'YYYY-MM')
+        TO_CHAR(t.date, 'YYYY-MM') as month,
+        COALESCE(SUM(CASE WHEN t.type = 'income' 
+          AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+          AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
+          THEN t.amount ELSE 0 END), 0) as income,
+        COALESCE(SUM(CASE WHEN t.type = 'expense' 
+          AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
+          AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
+          THEN t.amount ELSE 0 END), 0) as expense
+      FROM transactions t
+      LEFT JOIN categories c ON t.category_id = c.id
+      WHERE t.date >= CURRENT_DATE - INTERVAL '6 months' AND t.user_id = $1
+      GROUP BY TO_CHAR(t.date, 'YYYY-MM')
       ORDER BY month ASC;
     `;
     const monthlyHistoryResult = await query(monthlyHistoryQuery, [req.user.id]);
@@ -50,7 +68,8 @@ export const getDashboardData = async (req, res, next) => {
       summary: {
         totalIncome: parseFloat(total_income),
         totalExpenses: parseFloat(total_expenses),
-        balance: balance
+        balance: balance,
+        cashBalance: parseFloat(cash_balance || 0)
       },
       expensesByCategory: categoryExpensesResult.rows.map(row => ({
         ...row,

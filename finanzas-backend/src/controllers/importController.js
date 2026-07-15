@@ -94,13 +94,47 @@ const suggestCategoryId = (description, categories) => {
   const desc = description.toLowerCase();
   
   const keywordMap = {
-    'comida': ['super', 'walmart', 'jumbo', 'lider', 'oxxo', 'tottus', 'comida', 'restaurante', 'mcdonald', 'starbucks', 'cafe', 'food', 'rappi', 'pedidosya', 'uber eats', 'delivery', 'sushi', 'pizza', 'burger', 'panaderia', 'almacen', 'minimarket', 'jumbo', 'unimarc', 'santa isabel'],
-    'transporte': ['uber', 'didi', 'cabify', 'taxi', 'metro', 'copec', 'shell', 'petrobras', 'gasol', 'combustible', 'peaje', 'autopista', 'transantiago', 'bip', 'tarjeta bip'],
-    'servicios': ['luz', 'agua', 'gas', 'electric', 'netlife', 'vtr', 'claro', 'entel', 'movistar', 'wom', 'telefon', 'internet', 'sencillito', 'servipag', 'enel', 'cge', 'aguas', 'netflix', 'spotify', 'hbo', 'disney', 'suscrip'],
-    'entretenimiento': ['cine', 'ticket', 'steam', 'playstation', 'nintendo', 'games', 'teatro', 'concierto', 'pub', 'bar', 'discoteca', 'evento'],
-    'salud': ['farmacia', 'cruz verde', 'ahumada', 'salcobrand', 'clinica', 'medico', 'dental', 'doctor', 'hospital', 'psicolog', 'optica', 'laboratorio', 'fonasa', 'isapre'],
-    'compras': ['tienda', 'retail', 'falabella', 'ripley', 'paris', 'h&m', 'zara', 'amazon', 'aliexpress', 'shein', 'mercadolibre', 'ml', 'decathlon', 'easy', 'sodimac', 'mall', 'ropa', 'calzado', 'bazar', 'comercio'],
-    'educacion': ['colegio', 'universidad', 'instituto', 'curso', 'udemy', 'coursera', 'libro', 'matricula', 'mensualidad', 'pension', 'escolar']
+    'comida': [
+      'super', 'walmart', 'jumbo', 'lider', 'oxxo', 'tottus', 'comida', 'restaurante', 'mcdonald', 'starbucks', 'cafe', 'food', 
+      'rappi', 'pedidosya', 'uber eats', 'delivery', 'sushi', 'pizza', 'burger', 'panaderia', 'almacen', 'minimarket', 'unimarc', 
+      'santa isabel', 'sirena', 'nacional', 'bravo', 'apreciado', 'carrefour', 'pola', 'sedano', 'ole', 'olme', 'grillo', 
+      'comercial', 'colmado', 'picadera', 'empanada', 'hotdog', 'hot dog', 'wendys', 'burger king', 'kfc', 'taco bell', 
+      'pica pollo', 'papas fritas', 'subway', 'pasteleria', 'reposteria', 'heladeria', 'bon', 'baskin', 'dunkin'
+    ],
+    'combustible': [
+      'shell', 'isla dom', 'total', 'sunix', 'marti petroleum', 'texaco', 'next', 'sigma', 'eco pet', 'petromovil', 
+      'petronan', 'tropigas', 'propagás', 'propagas', 'combustible', 'gasol', 'gasolina', 'gasoil', 'estacion de servicio', 
+      'estación de servicio', 'copec', 'petrobras'
+    ],
+    'transporte': [
+      'uber', 'didi', 'cabify', 'taxi', 'metro', 'peaje', 'autopista', 'transantiago', 'bip', 'tarjeta bip', 
+      'indrive', 'pasaje', 'concho', 'corredor'
+    ],
+    'servicios': [
+      'luz', 'agua', 'gas', 'electric', 'netlife', 'vtr', 'claro', 'entel', 'movistar', 'wom', 'telefon', 'internet', 
+      'sencillito', 'servipag', 'enel', 'cge', 'aguas', 'netflix', 'spotify', 'hbo', 'disney', 'suscrip', 'caasd', 
+      'edeeste', 'edesur', 'edenorte', 'altice', 'tricom', 'wind', 'seguro', 'basura', 'telecable', 'aster'
+    ],
+    'entretenimiento': [
+      'cine', 'ticket', 'steam', 'playstation', 'nintendo', 'games', 'teatro', 'concierto', 'pub', 'bar', 'discoteca', 
+      'evento', 'downtown', 'blue mall', 'sambil', 'galeria 360', 'galerias 360', 'acropolis', 'plaza central', 'megacentro', 
+      'bella vista mall', 'agora mall', 'agora', 'colinas mall', 'caribbean cinemas', 'cinemas', 'palacio del cine', 'imax', 
+      'drink', 'licor', 'liquor', 'cerveza', 'beer', 'club', 'loung', 'lounge', 'terraza', 'billar', 'karaoke', 'casino', 'boleta'
+    ],
+    'salud': [
+      'farmacia', 'cruz verde', 'ahumada', 'salcobrand', 'clinica', 'medico', 'dental', 'doctor', 'hospital', 'psicolog', 
+      'optica', 'laboratorio', 'fonasa', 'isapre', 'carol', 'gads', 'pps', 'medicamento', 'dentista', 'odontolog', 
+      'clínica', 'humano', 'senasa', 'universal'
+    ],
+    'compras': [
+      'tienda', 'retail', 'falabella', 'ripley', 'paris', 'h&m', 'zara', 'amazon', 'aliexpress', 'shein', 'mercadolibre', 
+      'ml', 'decathlon', 'easy', 'sodimac', 'mall', 'ropa', 'calzado', 'bazar', 'comercio', 'juguete', 'ferreteria', 
+      'ikea', 'miniso', 'novus', 'payless', 'multicentro', 'tiendas'
+    ],
+    'educacion': [
+      'colegio', 'universidad', 'instituto', 'curso', 'udemy', 'coursera', 'libro', 'matricula', 'mensualidad', 
+      'pension', 'escolar', 'escuela', 'colegiatura', 'utiles', 'útiles', 'papeleria', 'cuaderno'
+    ]
   };
 
   for (const [catName, keywords] of Object.entries(keywordMap)) {
@@ -374,13 +408,20 @@ export const parsePDFStatement = async (req, res, next) => {
       }
     }
 
+    // Filtrar y omitir traspasos propios (propia, traspaso, pago tarjeta, tubancoap)
+    const filteredTransactions = parsedTransactions.filter(t => {
+      const desc = (t.description || '').toLowerCase();
+      const keywords = ['propia', 'traspaso', 'pago tarjeta', 'tubancoap'];
+      return !keywords.some(kw => desc.includes(kw));
+    });
+
     // Ordenar de más reciente a más antiguo por defecto
-    parsedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+    filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     res.json({
       success: true,
-      count: parsedTransactions.length,
-      transactions: parsedTransactions
+      count: filteredTransactions.length,
+      transactions: filteredTransactions
     });
 
   } catch (error) {

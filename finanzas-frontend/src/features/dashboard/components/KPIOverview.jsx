@@ -4,7 +4,7 @@ import { Card, CardContent } from '../../../components/ui/Card.jsx';
 import { formatCurrency } from '../../../utils/formatCurrency.js';
 
 export const KPIOverview = ({ summary = {}, investments = [], bankAccounts = [] }) => {
-  const { totalIncome = 0, totalExpenses = 0, balance = 0 } = summary;
+  const { totalIncome = 0, totalExpenses = 0, balance = 0, cashBalance = 0 } = summary;
 
   // Cálculos dinámicos de inversiones reales de la base de datos
   const totalInvested = investments.reduce((sum, inv) => sum + parseFloat(inv.amount_invested || 0), 0);
@@ -14,13 +14,13 @@ export const KPIOverview = ({ summary = {}, investments = [], bankAccounts = [] 
   const yieldPercentage = totalInvested > 0 ? (totalReturn / totalInvested) * 100 : 0;
   const isInvestmentPositive = totalReturn >= 0;
 
-  // Si hay cuentas bancarias, el balance total es la sumatoria de sus saldos.
-  // Si no hay, hacemos fallback al balance calculado de transacciones.
-  const bankBalanceSum = bankAccounts.length > 0
-    ? bankAccounts.reduce((sum, acc) => sum + parseFloat(acc.balance || 0), 0)
+  // El balance de bancos más el balance de efectivo (transacciones sin cuenta)
+  const bankBalanceSum = bankAccounts.reduce((sum, acc) => sum + parseFloat(acc.balance || 0), 0);
+  
+  // Si hay cuentas registradas, sumamos los bancos + el efectivo. Si no, usamos el balance de transacciones.
+  const savingsValue = bankAccounts.length > 0
+    ? bankBalanceSum + cashBalance
     : balance;
-
-  const savingsValue = bankBalanceSum; // Reemplazamos ahorros con Balance Total (sumatoria de cuentas)
 
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">

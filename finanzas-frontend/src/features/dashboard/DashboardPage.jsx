@@ -24,11 +24,13 @@ import {
   CreditCard,
   Landmark,
   Target,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  Fuel
 } from 'lucide-react';
 import { useFinanceStore } from '../../store/useFinanceStore.js';
 import { KPIOverview } from './components/KPIOverview.jsx';
 import { EvolutionChart } from './components/EvolutionChart.jsx';
+import { getBankStyles } from '../../utils/bankStyles.jsx';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card.jsx';
 import { formatCurrency } from '../../utils/formatCurrency.js';
 import { formatDate } from '../../utils/formatDate.js';
@@ -46,7 +48,8 @@ const ICON_MAP = {
   heart: Heart,
   film: Film,
   'book-open': BookOpen,
-  'minus-circle': MinusCircle
+  'minus-circle': MinusCircle,
+  fuel: Fuel
 };
 
 export const DashboardPage = () => {
@@ -333,8 +336,20 @@ export const DashboardPage = () => {
 
   // --- Sub-componente: Límites de Presupuesto (Budget Limits) ---
   const BudgetLimits = () => {
-    // Obtener transacciones de gastos
-    const expenseTransactions = transactions.filter(t => t.type === 'expense');
+    // Obtener transacciones de gastos del mes en curso
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth(); // 0-11
+
+    const expenseTransactions = transactions.filter(t => {
+      if (t.type !== 'expense') return false;
+      if (!t.date) return false;
+      const parts = t.date.substring(0, 10).split('-');
+      if (parts.length < 2) return false;
+      const tYear = parseInt(parts[0], 10);
+      const tMonth = parseInt(parts[1], 10) - 1;
+      return tYear === currentYear && tMonth === currentMonth;
+    });
 
     // Construir los presupuestos consolidados
     const budgetsData = categories
@@ -492,39 +507,35 @@ export const DashboardPage = () => {
               <span className="text-2xl font-black text-slate-800 tracking-tight">{formatCurrency(totalBankBalance)}</span>
             </div>
 
-            <div className="flex flex-col gap-3 max-h-[260px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              {bankAccounts.map((acc, index) => {
+            <div className="grid grid-cols-2 gap-4 max-h-[300px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {bankAccounts.map((acc) => {
                 const isCash = acc.name.toLowerCase() === 'efectivo' || acc.bank_name.toLowerCase() === 'efectivo';
-                const colorClass = 'from-[#1e293b] to-[#0f172a] shadow-[0_4px_12px_rgba(15,23,42,0.08)]';
-                const label = isCash ? 'CASH' : 'BANK';
+                const { gradient, logo } = getBankStyles(acc.bank_name);
 
                 return (
                   <div
                     key={acc.id}
-                    className={`text-white p-4.5 rounded-2xl flex items-center justify-between border border-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.05)] relative overflow-hidden bg-gradient-to-br ${colorClass} group shrink-0`}
+                    className={`text-white p-3.5 rounded-2xl flex flex-col justify-between aspect-[1.15/1] border border-white/5 shadow-[0_4px_12px_rgba(0,0,0,0.05)] relative overflow-hidden bg-gradient-to-br ${gradient} group shrink-0`}
                   >
+                    {/* Fondo semitransparente de textura */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-                    <div className="absolute right-[-10px] bottom-[-20px] text-white/[0.03] text-6xl font-extrabold select-none pointer-events-none uppercase">
-                      {label}
+
+                    {/* Fila superior: Logo y últimos dígitos */}
+                    <div className="flex justify-between items-start z-10 w-full">
+                      <div className="scale-90 -origin-top-left shrink-0">{logo}</div>
+                      <span className="text-[8px] font-mono tracking-widest text-white/60">
+                        {isCash ? 'CASH' : `•• ${acc.last_digits}`}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-3.5 z-10 w-full justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="bg-[#0f172a]/60 border border-white/10 w-12 h-9 rounded-lg flex items-center justify-center font-bold text-[10px] text-white tracking-wider shrink-0">
-                          {label}
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[9px] text-white/70 font-bold uppercase tracking-wider line-clamp-1 max-w-[130px]" title={acc.name}>
-                            {acc.name}
-                          </span>
-                          <span className="text-[9px] text-white/50 font-mono tracking-widest mt-0.5">
-                            {isCash ? 'Dinero Efectivo' : `•••• ${acc.last_digits}`}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-end">
-                        <span className="text-sm font-black tracking-tight">{formatCurrency(acc.balance)}</span>
-                        <span className="text-[8px] text-white/40 font-bold uppercase tracking-wider">{isCash ? 'Efectivo' : acc.bank_name}</span>
-                      </div>
+
+                    {/* Fila inferior: Nombre y Balance */}
+                    <div className="z-10 flex flex-col mt-2">
+                      <span className="text-[8px] text-white/50 font-bold uppercase tracking-wider truncate" title={acc.name}>
+                        {acc.name}
+                      </span>
+                      <span className="text-sm font-black tracking-tight leading-none mt-1">
+                        {formatCurrency(acc.balance)}
+                      </span>
                     </div>
                   </div>
                 );
@@ -579,52 +590,105 @@ export const DashboardPage = () => {
               <span className="text-2xl font-black text-slate-800 tracking-tight">{formatCurrency(totalCreditCardsBalance)}</span>
             </div>
 
-            <div className="flex flex-col gap-3 max-h-[260px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="flex flex-col gap-4 max-h-[320px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {creditCards.map((card) => {
                 const isVisa = card.brand === 'Visa';
                 const isMC = card.brand === 'Mastercard';
                 const isAmex = card.brand === 'American Express';
                 
-                let brandLabel = 'OTRO';
-                let brandColor = 'text-slate-300';
+                let brandLogo = (
+                  <span className="text-[7px] font-black text-white bg-slate-700 px-1.5 py-0.5 rounded leading-none shrink-0 tracking-wider">OTRO</span>
+                );
+
                 if (isVisa) {
-                  brandLabel = 'VISA';
-                  brandColor = 'text-emerald-400';
+                  brandLogo = (
+                    <svg viewBox="0 0 24 24" className="h-4.5 w-auto select-none text-white fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.112 8.262L5.97 15.758H3.92L2.374 9.775c-.094-.368-.175-.503-.461-.658C1.447 8.864.677 8.627 0 8.479l.046-.217h3.3a.904.904 0 01.894.764l.817 4.338 2.018-5.102zm8.033 5.049c.008-1.979-2.736-2.088-2.717-2.972.006-.269.262-.555.822-.628a3.66 3.66 0 011.913.336l.34-1.59a5.207 5.207 0 00-1.814-.333c-1.917 0-3.266 1.02-3.278 2.479-.012 1.079.963 1.68 1.698 2.04.756.367 1.01.603 1.006.931-.005.504-.602.725-1.16.734-.975.015-1.54-.263-1.992-.473l-.351 1.642c.453.208 1.289.39 2.156.398 2.037 0 3.37-1.006 3.377-2.564m5.061 2.447H24l-1.565-7.496h-1.656a.883.883 0 00-.826.55l-2.909 6.946h2.036l.405-1.12h2.488zm-2.163-2.656l1.02-2.815.588 2.815zm-8.16-4.84l-1.603 7.496H8.34l1.605-7.496z"/>
+                    </svg>
+                  );
                 } else if (isMC) {
-                  brandLabel = 'MC';
-                  brandColor = 'text-[#72a5e4]';
+                  brandLogo = (
+                    <svg viewBox="0 0 40 24" className="h-5 select-none shrink-0" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="12" fill="#eb001b" />
+                      <circle cx="28" cy="12" r="12" fill="#ff5f00" />
+                      <path d="M20,2.9 A12,12 0 0,0 20,21.1 A12,12 0 0,0 20,2.9 Z" fill="#f79e1b" />
+                    </svg>
+                  );
                 } else if (isAmex) {
-                  brandLabel = 'AMEX';
-                  brandColor = 'text-cyan-400';
+                  brandLogo = (
+                    <span className="text-[7px] font-black text-white bg-blue-600 px-1.5 py-0.5 rounded leading-none shrink-0 tracking-wider">AMEX</span>
+                  );
                 }
+
+                const mockMonth = String((card.id % 12) + 1).padStart(2, '0');
+                const mockYear = String(28 + (card.id % 5));
+                const expiryDate = `${mockMonth}/${mockYear}`;
 
                 return (
                   <div
                     key={card.id}
-                    className="text-white p-4.5 rounded-2xl flex items-center justify-between border border-white/5 shadow-[0_4px_15px_rgba(0,0,0,0.1)] relative overflow-hidden group shrink-0"
+                    className="text-white p-4.5 rounded-2xl h-36 flex flex-col justify-between relative overflow-hidden border border-white/5 shadow-md shrink-0 w-full"
                     style={{ backgroundColor: card.color_theme || '#121620' }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-                    <div className="absolute right-[-10px] bottom-[-20px] text-white/[0.02] text-6xl font-extrabold select-none pointer-events-none uppercase">
-                      {brandLabel}
-                    </div>
-                    <div className="flex items-center gap-3.5 z-10 w-full justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`bg-[#0f172a]/60 border border-white/10 w-12 h-9 rounded-lg flex items-center justify-center font-bold text-[9px] ${brandColor} tracking-wider shrink-0`}>
-                          {brandLabel}
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[9px] text-white/60 font-bold uppercase tracking-wider line-clamp-1 max-w-[150px]">
-                            {card.card_name}
-                          </span>
-                          <span className="text-[9px] text-white/40 font-mono tracking-widest mt-0.5">
-                            •••• {card.last_digits}
-                          </span>
-                        </div>
+                    {/* Capa de división curva bicolor */}
+                    <div className="absolute right-0 top-0 bottom-0 w-[40%] bg-white/[0.04] rounded-l-full pointer-events-none" />
+                    <div className="absolute right-[-10%] top-[-20%] w-[50%] h-[140%] rounded-full bg-white/[0.02] blur-xl pointer-events-none" />
+
+                    {/* Fila Superior: Banco y Nombre de Tarjeta */}
+                    <div className="flex justify-between items-start z-10 w-full">
+                      <div className="flex flex-col">
+                        <span className="text-xs font-semibold tracking-tight text-white/95 leading-none">{card.bank}</span>
+                        <span className="text-[8px] text-white/50 font-medium uppercase tracking-wider mt-0.5 leading-none">{card.card_name}</span>
                       </div>
+                    </div>
+
+                    {/* Fila Central: Chip y Contactless en la izquierda, Saldo deudor en la derecha */}
+                    <div className="flex justify-between items-center z-10 w-full mt-1">
+                      {/* Chip & Waves */}
+                      <div className="flex items-center gap-2 shrink-0">
+                        {/* Chip dorado */}
+                        <div className="w-8 h-5.5 rounded bg-gradient-to-br from-[#e5c060] via-[#ffd97d] to-[#b39239] opacity-95 border border-white/15 relative p-0.5 flex flex-col justify-between shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]">
+                          <div className="flex justify-between h-1">
+                            <div className="w-2 h-full border-r border-b border-black/10" />
+                            <div className="w-2 h-full border-l border-b border-black/10" />
+                          </div>
+                          <div className="w-full h-0.5 border-y border-black/10" />
+                          <div className="flex justify-between h-1">
+                            <div className="w-2 h-full border-r border-t border-black/10" />
+                            <div className="w-2 h-full border-l border-t border-black/10" />
+                          </div>
+                        </div>
+
+                        {/* Contactless waves SVG */}
+                        <svg viewBox="0 0 24 24" className="w-4 h-4 text-white/60 rotate-90" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                          <path d="M12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+                          <path d="M16.24 16.24a6 6 0 0 0-8.49 0" />
+                          <path d="M19.07 13.41a10 10 0 0 0-14.14 0" />
+                        </svg>
+                      </div>
+
+                      {/* Saldo deudor en la derecha */}
                       <div className="flex flex-col items-end">
-                        <span className="text-sm font-black tracking-tight">{formatCurrency(card.balance)}</span>
-                        <span className="text-[8px] text-white/30 font-bold uppercase tracking-wider">{card.bank}</span>
+                        <span className="text-xs font-black tracking-tight text-white">{formatCurrency(card.balance)}</span>
+                        <span className="text-[7px] text-white/45 font-bold uppercase tracking-widest leading-none mt-0.5">Saldo deudor</span>
+                      </div>
+                    </div>
+
+                    {/* Número de tarjeta en el centro */}
+                    <div className="z-10 -mt-1">
+                      <span className="text-xs font-mono text-white/95 tracking-[0.2em] block leading-none">
+                        ••••  ••••  ••••  {card.last_digits}
+                      </span>
+                    </div>
+
+                    {/* Fila Inferior: Vencimiento y Marca */}
+                    <div className="flex justify-between items-end z-10 w-full border-t border-white/10 pt-2">
+                      <div className="flex flex-col leading-none">
+                        <span className="text-[6px] text-white/40 font-bold uppercase tracking-widest">Valid Thru</span>
+                        <span className="text-[8px] font-semibold text-white/85 tracking-wide mt-0.5">Vence {expiryDate}</span>
+                      </div>
+                      <div className="flex items-center h-4.5">
+                        {brandLogo}
                       </div>
                     </div>
                   </div>
@@ -700,121 +764,129 @@ export const DashboardPage = () => {
     );
   };
 
+  // --- Sub-componente: Tabla de Transacciones Recientes (Recent Transactions Card) ---
+  const RecentTransactionsCard = () => {
+    return (
+      <Card className="flex flex-col h-full !bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+        <CardHeader className="flex justify-between items-center w-full !mb-4 !p-6">
+          <CardTitle>Transacciones Recientes</CardTitle>
+        </CardHeader>
+        <CardContent className="!p-0 overflow-x-auto">
+          {latestTransactions.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-slate-400 gap-3 text-center">
+              <MinusCircle size={36} className="text-slate-500" />
+              <p className="text-sm">No hay movimientos registrados.</p>
+              <Button variant="secondary" onClick={() => setImportModalOpen(true)} className="!py-2 !px-4 mt-2">
+                Añadir Uno
+              </Button>
+            </div>
+          ) : (
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  <th className="py-3.5 px-6">Nombre de Transacción</th>
+                  <th className="py-3.5 px-4">Cuenta</th>
+                  <th className="py-3.5 px-4">Fecha y Hora</th>
+                  <th className="py-3.5 px-4">Monto</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-50 text-slate-800 text-xs font-semibold">
+                {latestTransactions.map((tx) => {
+                  const isIncome = tx.type === 'income';
+                  const hasAccount = !!tx.bank_account_name;
+                  const accountLabel = hasAccount
+                    ? { type: 'Banco', name: `${tx.bank_account_name} (•••• ${tx.bank_account_digits})` }
+                    : { type: 'Efectivo', name: 'Efectivo' };
+
+                  const cat = categories.find(c => c.id === tx.category_id);
+                  const catName = cat ? cat.name : (isIncome ? 'Ingresos' : 'Gastos');
+
+                  return (
+                    <tr key={tx.id} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="py-4 px-6 flex items-center gap-3">
+                        {renderCategoryIcon(tx.category_icon, tx.category_color)}
+                        <div className="flex flex-col">
+                          <span className="font-bold text-slate-800 text-[13px]">{tx.description}</span>
+                          <span className="text-[10px] text-slate-400 font-bold tracking-wide mt-0.5">{catName}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded ${
+                            !hasAccount 
+                              ? 'bg-emerald-50 text-emerald-600 border border-emerald-100/30' 
+                              : hasAccount 
+                              ? 'bg-indigo-50 text-indigo-600 border border-indigo-100/30' 
+                              : 'bg-slate-100 text-slate-55 border border-slate-200/30'
+                            }`}>
+                            {accountLabel.type}
+                          </span>
+                          <span className="text-slate-55 font-bold text-[11px] max-w-[150px] truncate" title={accountLabel.name}>
+                            {accountLabel.name}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 text-slate-400 font-bold text-[11px]">
+                        {formatDate(tx.date)}
+                      </td>
+                      <td className={`py-4 px-4 font-bold text-sm ${isIncome ? 'text-emerald-500' : 'text-rose-500'}`}>
+                        {isIncome ? '+' : '-'} {formatCurrency(tx.amount)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </CardContent>
+      </Card>
+    );
+  };
+
   return (
-    <div className="flex flex-col gap-6 font-sans">
+    <div className="flex flex-col gap-6 font-sans w-full">
 
-      {/* Grid del Dashboard en 3 Columnas según la maqueta */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch w-full">
-
-        {/* Columna 1 (Izquierda): 4 KPIs (2x2) + Cashflow Chart + Recent Transactions */}
-        <div className="col-span-1 lg:col-span-6 flex flex-col gap-6">
+      {/* VISTA ESCRITORIO (3 Columnas Perfectas sin Gaps Verticales de Fila) */}
+      <div className="hidden lg:grid lg:grid-cols-12 gap-6 items-start w-full">
+        {/* Columna 1 (Izquierda): KPIs + Flujo de Caja + Transacciones Recientes */}
+        <div className="col-span-6 flex flex-col gap-6">
           <KPIOverview summary={dashboard.summary} investments={investments} bankAccounts={bankAccounts} />
-
           <div className="h-[385px] shrink-0">
             <EvolutionChart monthlyHistory={dashboard.monthlyHistory} />
           </div>
-
-          <Card className="flex flex-col h-full !bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-            <CardHeader className="flex justify-between items-center w-full !mb-4 !p-6">
-              <CardTitle>Transacciones Recientes</CardTitle>
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1 bg-slate-50 border border-slate-200/60 rounded-xl px-3 py-1.5 text-xs text-slate-600 font-bold cursor-pointer hover:bg-slate-100 transition-colors">
-                  <span>Este Mes</span>
-                  <span className="text-[10px] text-slate-400">▼</span>
-                </div>
-                <button className="bg-slate-50 border border-slate-200/60 hover:bg-slate-100 p-2 rounded-xl text-slate-500 cursor-pointer transition-colors">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                  </svg>
-                </button>
-              </div>
-            </CardHeader>
-            <CardContent className="!p-0 overflow-x-auto">
-              {latestTransactions.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-slate-400 gap-3 text-center">
-                  <MinusCircle size={36} className="text-slate-500" />
-                  <p className="text-sm">No hay movimientos registrados.</p>
-                  <Button variant="secondary" onClick={() => setImportModalOpen(true)} className="!py-2 !px-4 mt-2">
-                    Añadir Uno
-                  </Button>
-                </div>
-              ) : (
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      <th className="py-3.5 px-6">Nombre de Transacción</th>
-                      <th className="py-3.5 px-4">Cuenta</th>
-                      <th className="py-3.5 px-4">Fecha y Hora</th>
-                      <th className="py-3.5 px-4">Monto</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-50 text-slate-800 text-xs font-semibold">
-                    {latestTransactions.map((tx) => {
-                      const isIncome = tx.type === 'income';
-                      const hasAccount = !!tx.bank_account_name;
-                      const accountLabel = hasAccount
-                        ? { type: 'Banco', name: `${tx.bank_account_name} (•••• ${tx.bank_account_digits})` }
-                        : { type: 'Efectivo', name: 'Efectivo' };
-
-                      const cat = categories.find(c => c.id === tx.category_id);
-                      const catName = cat ? cat.name : (isIncome ? 'Ingresos' : 'Gastos');
-
-                      return (
-                        <tr key={tx.id} className="hover:bg-slate-50/50 transition-colors">
-                          <td className="py-4 px-6 flex items-center gap-3">
-                            {renderCategoryIcon(tx.category_icon, tx.category_color)}
-                            <div className="flex flex-col">
-                              <span className="font-bold text-slate-800 text-[13px]">{tx.description}</span>
-                              <span className="text-[10px] text-slate-400 font-bold tracking-wide mt-0.5">{catName}</span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-4">
-                            <div className="flex items-center gap-2">
-                              <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded ${
-                                !hasAccount 
-                                  ? 'bg-emerald-50 text-emerald-600 border border-emerald-100/30' 
-                                  : hasAccount 
-                                  ? 'bg-indigo-50 text-indigo-600 border border-indigo-100/30' 
-                                  : 'bg-slate-100 text-slate-500 border border-slate-200/30'
-                                }`}>
-                                {accountLabel.type}
-                              </span>
-                              <span className="text-slate-500 font-bold text-[11px] max-w-[150px] truncate" title={accountLabel.name}>
-                                {accountLabel.name}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-4 text-slate-400 font-bold text-[11px]">
-                            {formatDate(tx.date)}
-                          </td>
-                          <td className={`py-4 px-4 font-bold text-sm ${isIncome ? 'text-emerald-500' : 'text-rose-500'}`}>
-                            {isIncome ? '+' : '-'} {formatCurrency(tx.amount)}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              )}
-            </CardContent>
-          </Card>
+          <RecentTransactionsCard />
         </div>
 
-        {/* Columna 2 (Medio): Expense Breakdown + Saving Plans */}
-        <div className="col-span-1 lg:col-span-3 flex flex-col gap-6">
+        {/* Columna 2 (Medio): Gastos + Metas de Ahorro */}
+        <div className="col-span-3 flex flex-col gap-6">
           <ExpenseBreakdown />
           <SavingPlans />
         </div>
 
-        {/* Columna 3 (Derecha): Finance Score + Balance + Recent Activities */}
-        <div className="col-span-1 lg:col-span-3 flex flex-col gap-6">
-          <BudgetLimits />
-          <BankAccountsCard />
+        {/* Columna 3 (Derecha): Tarjetas + Bancos + Presupuestos + Actividades */}
+        <div className="col-span-3 flex flex-col gap-6">
           <BalanceCards />
+          <BankAccountsCard />
+          <BudgetLimits />
           <RecentActivities />
         </div>
-
       </div>
+
+      {/* VISTA MÓVIL (Orden Secuencial Personalizado) */}
+      <div className="flex flex-col gap-6 lg:hidden w-full">
+        <KPIOverview summary={dashboard.summary} investments={investments} bankAccounts={bankAccounts} />
+        <ExpenseBreakdown />
+        <RecentTransactionsCard />
+        <BalanceCards />
+        <BankAccountsCard />
+        <BudgetLimits />
+        <SavingPlans />
+        <div className="h-[385px] shrink-0">
+          <EvolutionChart monthlyHistory={dashboard.monthlyHistory} />
+        </div>
+        <RecentActivities />
+      </div>
+
     </div>
   );
 };

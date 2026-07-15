@@ -98,25 +98,17 @@ export const updateBankAccount = async (req, res, next) => {
     return next(err);
   }
 
-  const numericBalance = parseFloat(balance);
-  if (isNaN(numericBalance)) {
-    const err = new Error('El saldo (balance) debe ser un número válido');
-    err.statusCode = 400;
-    return next(err);
-  }
-
   try {
     const sql = `
       UPDATE bank_accounts
-      SET name = $1, bank_name = $2, last_digits = $3, balance = $4, updated_at = CURRENT_TIMESTAMP
-      WHERE id = $5 AND user_id = $6
+      SET name = $1, bank_name = $2, last_digits = $3, updated_at = CURRENT_TIMESTAMP
+      WHERE id = $4 AND user_id = $5
       RETURNING *
     `;
     const result = await query(sql, [
       name.trim(),
       bank_name.trim(),
       last_digits,
-      numericBalance,
       id,
       req.user.id
     ]);
