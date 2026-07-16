@@ -5,6 +5,29 @@ import { query } from '../config/db.js';
  */
 export const getDashboardData = async (req, res, next) => {
   try {
+    const { timeframe } = req.query;
+
+    let dateFilter = '';
+    let monthlyInterval = "INTERVAL '6 months'";
+
+    if (timeframe === '30d') {
+      dateFilter = "AND t.date >= CURRENT_DATE - INTERVAL '30 days'";
+      monthlyInterval = "INTERVAL '30 days'";
+    } else if (timeframe === '3m') {
+      dateFilter = "AND t.date >= CURRENT_DATE - INTERVAL '3 months'";
+      monthlyInterval = "INTERVAL '3 months'";
+    } else if (timeframe === '1y') {
+      dateFilter = "AND t.date >= DATE_TRUNC('year', CURRENT_DATE)";
+      monthlyInterval = "INTERVAL '12 months'";
+    } else if (timeframe === 'all') {
+      dateFilter = '';
+      monthlyInterval = "INTERVAL '10 years'";
+    } else {
+      // Valor por defecto: 6m
+      dateFilter = "AND t.date >= CURRENT_DATE - INTERVAL '6 months'";
+      monthlyInterval = "INTERVAL '6 months'";
+    }
+
     // 1. Resumen de totales (Ingresos, Gastos y Balance) - Excluyendo traspasos propios por categoría o descripción
     const summaryQuery = `
       SELECT 
@@ -20,7 +43,7 @@ export const getDashboardData = async (req, res, next) => {
         COALESCE(SUM(CASE WHEN t.bank_account_id IS NULL AND t.type = 'expense' THEN t.amount ELSE 0 END), 0) as cash_balance
       FROM transactions t
       LEFT JOIN categories c ON t.category_id = c.id
-      WHERE t.user_id = $1;
+      WHERE t.user_id = $1 ${dateFilter};
     `;
     const summaryResult = await query(summaryQuery, [req.user.id]);
     const { total_income, total_expenses, cash_balance } = summaryResult.rows[0];
@@ -36,7 +59,7 @@ export const getDashboardData = async (req, res, next) => {
         COALESCE(SUM(t.amount), 0) as total
       FROM transactions t
       LEFT JOIN categories c ON t.category_id = c.id
-      WHERE t.type = 'expense' AND t.user_id = $1
+      WHERE t.type = 'expense' AND t.user_id = $1 ${dateFilter}
         AND (c.name IS NULL OR (LOWER(c.name) NOT LIKE '%propia%' AND LOWER(c.name) NOT LIKE '%traspaso%' AND LOWER(c.name) NOT LIKE '%pago tarjeta%' AND LOWER(c.name) NOT LIKE '%tubancoap%'))
         AND (LOWER(t.description) NOT LIKE '%propia%' AND LOWER(t.description) NOT LIKE '%traspaso%' AND LOWER(t.description) NOT LIKE '%pago tarjeta%' AND LOWER(t.description) NOT LIKE '%tubancoap%')
       GROUP BY t.category_id, c.name, c.color, c.icon
@@ -58,7 +81,7 @@ export const getDashboardData = async (req, res, next) => {
           THEN t.amount ELSE 0 END), 0) as expense
       FROM transactions t
       LEFT JOIN categories c ON t.category_id = c.id
-      WHERE t.date >= CURRENT_DATE - INTERVAL '6 months' AND t.user_id = $1
+      WHERE t.date >= CURRENT_DATE - ${monthlyInterval} AND t.user_id = $1
       GROUP BY TO_CHAR(t.date, 'YYYY-MM')
       ORDER BY month ASC;
     `;

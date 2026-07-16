@@ -1,6 +1,35 @@
 import pool from '../config/db.js';
 
 /**
+ * Obtener el perfil del usuario actual.
+ */
+export const getProfile = async (req, res, next) => {
+  const userId = req.user.id;
+  try {
+    const result = await pool.query(
+      'SELECT id, name, email, username, currency, theme, created_at FROM public.users WHERE id = $1',
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      const email = req.user.email;
+      const name = req.user.user_metadata?.name || 'Usuario';
+      const username = req.user.user_metadata?.username || email.split('@')[0];
+
+      const insertResult = await pool.query(
+        'INSERT INTO public.users (id, name, email, username) VALUES ($1, $2, $3, $4) RETURNING id, name, email, username, currency, theme, created_at',
+        [userId, name, email, username]
+      );
+      return res.json(insertResult.rows[0]);
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * Actualizar el perfil del usuario (nombre y nombre de usuario).
  */
 export const updateProfile = async (req, res, next) => {
