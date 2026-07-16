@@ -219,7 +219,10 @@ export const BankAccountsPage = () => {
 
                 {/* Saldo disponible en el centro */}
                 <div className="z-10 flex flex-col mt-4">
-                  <span className="text-[9px] uppercase font-bold tracking-wider text-white/50">
+                  <span className="text-sm font-bold text-white/95 truncate max-w-[220px] tracking-wide" title={acc.name}>
+                    {acc.name}
+                  </span>
+                  <span className="text-[9px] uppercase font-bold tracking-wider text-white/50 mt-0.5">
                     Saldo Disponible
                   </span>
                   <span className="text-2xl font-black font-sans tracking-tight leading-none mt-1.5">
