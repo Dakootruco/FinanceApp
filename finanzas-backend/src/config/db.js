@@ -20,7 +20,7 @@ const poolConfig = {
   port: parseInt(process.env.DB_PORT || '5432', 10),
   max: parseInt(process.env.DB_MAX_CONNECTIONS || '20', 10),
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+  connectionTimeoutMillis: 10000,
 };
 
 // Si hay una URL de conexión completa (útil para servicios en la nube como Render/Neon/Supabase)

@@ -168,12 +168,28 @@ export const parsePDFStatement = async (req, res, next) => {
     const fs = require('fs');
     fs.writeFileSync('parsed_text.txt', text, 'utf8');
 
+    // Inicializar log para diagnóstico
+    let debugLog = `--- PDF Parsing Diagnostic ---\nTimestamp: ${new Date().toISOString()}\n`;
+    debugLog += `User: ${JSON.stringify(req.user)}\n`;
+    debugLog += `Text length: ${text.length} chars\n`;
+
     // 2. Obtener categorías activas de la base de datos para sugerencias de categorización
-    const categoriesResult = await query('SELECT id, name, type FROM categories WHERE user_id = $1 OR user_id IS NULL', [req.user.id]);
+    let categoriesResult;
+    try {
+      categoriesResult = await query('SELECT id, name, type FROM categories WHERE user_id = $1 OR user_id IS NULL', [req.user.id]);
+      debugLog += `Database query succeeded. Found ${categoriesResult.rows.length} categories.\n`;
+    } catch (dbErr) {
+      debugLog += `Database query FAILED: ${dbErr.message}\n`;
+      fs.writeFileSync('import_debug.log', debugLog, 'utf8');
+      throw dbErr;
+    }
     const categories = categoriesResult.rows;
 
     const otherExpenseCat = categories.find(c => c.name.toLowerCase().includes('otros') && c.type === 'expense') || categories.find(c => c.type === 'expense');
     const otherIncomeCat = categories.find(c => c.name.toLowerCase().includes('otros') && c.type === 'income') || categories.find(c => c.type === 'income');
+    
+    debugLog += `otherExpenseCat: ${JSON.stringify(otherExpenseCat)}\n`;
+    debugLog += `otherIncomeCat: ${JSON.stringify(otherIncomeCat)}\n`;
 
     const getImportCategoryId = (type, description) => {
       if (type === 'expense') {
@@ -193,61 +209,62 @@ export const parsePDFStatement = async (req, res, next) => {
     };
 
     if (text.includes('\t')) {
-      // --- MODO TAB-DELIMITED (Popular, Banreservas, etc.) ---
-      const lines = text.split('\n');
-      let currentTx = null;
-      const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/;
+      const isBHD = text.toLowerCase().includes('bhd');
+      if (isBHD) {
+        // --- MODO TAB-DELIMITED ESPECÍFICO BHD ---
+        const lines = text.split('\n');
+        let currentTx = null;
+        const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/;
 
-      for (let i = 0; i < lines.length; i++) {
-        const rawLine = lines[i];
-        const line = rawLine.trim();
-        if (!line) continue;
+        const isMoney = (str) => {
+          if (!str) return false;
+          return str.includes('$') || /^\s*[\-\+]?\s*\d+(?:[.,]\d{3})*(?:[.,]\d{2})?\s*$/.test(str);
+        };
 
-        // Omitir cabeceras o líneas de paginación
-        if (line.includes('Fecha \tComentarios') || 
-            line.includes('--') || 
-            line.toLowerCase().includes('titular:') || 
-            line.toLowerCase().includes('número de cuenta') || 
-            line.toLowerCase().includes('movimientos') || 
-            line.toLowerCase().includes('fecha del reporte') ||
-            line.toLowerCase().includes('saldo anterior') ||
-            line.toLowerCase().includes('resumen de su') ||
-            line.toLowerCase().includes('alias') ||
-            line.includes('Estado de Cuenta')) {
-          continue;
-        }
+        for (let i = 0; i < lines.length; i++) {
+          const rawLine = lines[i];
+          const line = rawLine.trim();
+          if (!line) continue;
 
-        const columns = rawLine.split('\t').map(c => c.trim());
-        const dateMatch = columns[0] ? columns[0].match(dateRegex) : null;
+          // Omitir cabeceras o líneas de paginación no transaccionales
+          if (line.includes('Fecha \tRef.') || 
+              line.includes('--') || 
+              line.toLowerCase().includes('balance al inicial:') ||
+              line.toLowerCase().includes('balance final:') ||
+              line.toLowerCase().includes('pagina:') ||
+              line.toLowerCase().includes('total:') ||
+              line.toLowerCase().includes('verifique la autenticidad') ||
+              line.toLowerCase().includes('documento emitido por') ||
+              line.toLowerCase().includes('escanéame') ||
+              line.toLowerCase().includes('numero de cuenta') ||
+              line.toLowerCase().includes('fecha de corte') ||
+              line.toLowerCase().includes('rnc:')) {
+            continue;
+          }
 
-        if (dateMatch) {
-          currentTx = null;
+          const columns = rawLine.split('\t').map(c => c.trim());
+          if (columns.length === 0) continue;
 
-          const dateStr = dateMatch[0];
-          const parsedDate = parseDate(dateStr);
-          
-          const extraDesc = columns[0].substring(dateStr.length).trim();
-          let description = extraDesc ? extraDesc + ' ' + (columns[1] || '') : (columns[1] || '');
+          const dateMatch = columns[0] ? columns[0].match(dateRegex) : null;
+          const hasAmounts = columns.length >= 3 && 
+                             isMoney(columns[columns.length - 3]) && 
+                             isMoney(columns[columns.length - 2]) && 
+                             isMoney(columns[columns.length - 1]);
 
-          const currencyIndices = [];
-          columns.forEach((col, idx) => {
-            if (col === 'RD$' || col === '$') {
-              currencyIndices.push(idx);
-            }
-          });
+          if (dateMatch) {
+            currentTx = null;
+            const dateStr = dateMatch[0];
+            const parsedDate = parseDate(dateStr);
 
-          if (currencyIndices.length >= 2) {
-            const amountIdx = currencyIndices[0] + 1;
-            const balanceIdx = currencyIndices[1] + 1;
-            
-            const rawAmount = columns[amountIdx];
-            const rawBalance = columns[balanceIdx];
-            
-            if (rawAmount && rawBalance) {
-              const amountVal = parseMoneyAmount(rawAmount);
-              const isExpense = rawAmount.includes('-');
-              const type = isExpense ? 'expense' : 'income';
-              
+            if (hasAmounts) {
+              const debitVal = parseMoneyAmount(columns[columns.length - 3]);
+              const creditVal = parseMoneyAmount(columns[columns.length - 2]);
+              const detail = columns[2] || '';
+              const comment = columns[3] || '';
+              const description = `${detail} ${comment}`.trim();
+
+              const type = creditVal > 0 ? 'income' : 'expense';
+              const amountVal = creditVal > 0 ? creditVal : debitVal;
               const category_id = getImportCategoryId(type, description);
 
               parsedTransactions.push({
@@ -257,15 +274,83 @@ export const parsePDFStatement = async (req, res, next) => {
                 type,
                 category_id
               });
+            } else {
+              currentTx = {
+                date: parsedDate,
+                detail: columns[2] || '',
+                comments: [columns[3] || '']
+              };
             }
           } else {
-            currentTx = {
-              date: parsedDate,
-              descriptionParts: [description]
-            };
+            if (currentTx) {
+              if (hasAmounts) {
+                const debitVal = parseMoneyAmount(columns[columns.length - 3]);
+                const creditVal = parseMoneyAmount(columns[columns.length - 2]);
+                const extraComments = columns.slice(0, columns.length - 3).join(' ').trim();
+                if (extraComments) {
+                  currentTx.comments.push(extraComments);
+                }
+
+                const description = `${currentTx.detail} ${currentTx.comments.join(' ').trim()}`.trim();
+                const type = creditVal > 0 ? 'income' : 'expense';
+                const amountVal = creditVal > 0 ? creditVal : debitVal;
+                const category_id = getImportCategoryId(type, description);
+
+                parsedTransactions.push({
+                  date: currentTx.date,
+                  description: cleanDescription(description),
+                  amount: Math.abs(amountVal),
+                  type,
+                  category_id
+                });
+
+                currentTx = null;
+              } else {
+                const extraText = columns.join(' ').trim();
+                if (extraText) {
+                  currentTx.comments.push(extraText);
+                }
+              }
+            }
           }
-        } else {
-          if (currentTx) {
+        }
+      } else {
+        // --- MODO TAB-DELIMITED ORIGINAL (Popular, Banreservas, etc.) ---
+        const lines = text.split('\n');
+        let currentTx = null;
+        const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/;
+
+        for (let i = 0; i < lines.length; i++) {
+          const rawLine = lines[i];
+          const line = rawLine.trim();
+          if (!line) continue;
+
+          // Omitir cabeceras o líneas de paginación
+          if (line.includes('Fecha \tComentarios') || 
+              line.includes('--') || 
+              line.toLowerCase().includes('titular:') || 
+              line.toLowerCase().includes('número de cuenta') || 
+              line.toLowerCase().includes('movimientos') || 
+              line.toLowerCase().includes('fecha del reporte') ||
+              line.toLowerCase().includes('saldo anterior') ||
+              line.toLowerCase().includes('resumen de su') ||
+              line.toLowerCase().includes('alias') ||
+              line.includes('Estado de Cuenta')) {
+            continue;
+          }
+
+          const columns = rawLine.split('\t').map(c => c.trim());
+          const dateMatch = columns[0] ? columns[0].match(dateRegex) : null;
+
+          if (dateMatch) {
+            currentTx = null;
+
+            const dateStr = dateMatch[0];
+            const parsedDate = parseDate(dateStr);
+            
+            const extraDesc = columns[0].substring(dateStr.length).trim();
+            let description = extraDesc ? extraDesc + ' ' + (columns[1] || '') : (columns[1] || '');
+
             const currencyIndices = [];
             columns.forEach((col, idx) => {
               if (col === 'RD$' || col === '$') {
@@ -284,24 +369,63 @@ export const parsePDFStatement = async (req, res, next) => {
                 const amountVal = parseMoneyAmount(rawAmount);
                 const isExpense = rawAmount.includes('-');
                 const type = isExpense ? 'expense' : 'income';
-                const description = currentTx.descriptionParts.join(' ');
-
-                const category_id = getImportCategoryId(type, description);
                 
+                const category_id = getImportCategoryId(type, description);
+
                 parsedTransactions.push({
-                  date: currentTx.date,
+                  date: parsedDate,
                   description: cleanDescription(description),
                   amount: Math.abs(amountVal),
                   type,
                   category_id
                 });
-                
-                currentTx = null;
               }
             } else {
-              const descText = columns.join(' ').trim();
-              if (descText && !descText.includes('Fecha') && !descText.includes('Balance')) {
-                currentTx.descriptionParts.push(descText);
+              currentTx = {
+                date: parsedDate,
+                descriptionParts: [description],
+                amount: null
+              };
+            }
+          } else {
+            if (currentTx) {
+              const currencyIndices = [];
+              columns.forEach((col, idx) => {
+                if (col === 'RD$' || col === '$') {
+                  currencyIndices.push(idx);
+                }
+              });
+
+              if (currencyIndices.length >= 2) {
+                const amountIdx = currencyIndices[0] + 1;
+                const balanceIdx = currencyIndices[1] + 1;
+                
+                const rawAmount = columns[amountIdx];
+                const rawBalance = columns[balanceIdx];
+                
+                if (rawAmount && rawBalance) {
+                  const amountVal = parseMoneyAmount(rawAmount);
+                  const isExpense = rawAmount.includes('-');
+                  const type = isExpense ? 'expense' : 'income';
+                  const description = currentTx.descriptionParts.join(' ');
+
+                  const category_id = getImportCategoryId(type, description);
+                  
+                  parsedTransactions.push({
+                    date: currentTx.date,
+                    description: cleanDescription(description),
+                    amount: Math.abs(amountVal),
+                    type,
+                    category_id
+                  });
+                  
+                  currentTx = null;
+                }
+              } else {
+                const descText = columns.join(' ').trim();
+                if (descText && !descText.includes('Fecha') && !descText.includes('Balance')) {
+                  currentTx.descriptionParts.push(descText);
+                }
               }
             }
           }
@@ -417,6 +541,12 @@ export const parsePDFStatement = async (req, res, next) => {
 
     // Ordenar de más reciente a más antiguo por defecto
     filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    debugLog += `Total parsedTransactions count: ${parsedTransactions.length}\n`;
+    debugLog += `Parsed list: ${JSON.stringify(parsedTransactions, null, 2)}\n`;
+    debugLog += `Total filteredTransactions count: ${filteredTransactions.length}\n`;
+    debugLog += `Filtered list: ${JSON.stringify(filteredTransactions, null, 2)}\n`;
+    fs.writeFileSync('import_debug.log', debugLog, 'utf8');
 
     res.json({
       success: true,

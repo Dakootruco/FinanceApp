@@ -1,0 +1,1021 @@
+--- PDF Parsing Diagnostic ---
+Timestamp: 2026-07-17T17:25:07.876Z
+User: {"id":"dab2f012-3494-4b98-9ead-10277b1800e4","aud":"authenticated","role":"authenticated","email":"daco010203@gmail.com","email_confirmed_at":"2026-07-16T14:56:08.402126Z","phone":"","confirmed_at":"2026-07-16T14:56:08.402126Z","last_sign_in_at":"2026-07-17T17:01:47.24546Z","app_metadata":{"provider":"email","providers":["email"]},"user_metadata":{"email":"daco010203@gmail.com","email_verified":true,"name":"Dacarlos","phone_verified":false,"sub":"dab2f012-3494-4b98-9ead-10277b1800e4","username":"dakoo"},"identities":[{"identity_id":"2892b4dd-9eea-4f8e-8474-24a5a79abac1","id":"dab2f012-3494-4b98-9ead-10277b1800e4","user_id":"dab2f012-3494-4b98-9ead-10277b1800e4","identity_data":{"email":"daco010203@gmail.com","email_verified":false,"name":"Dacarlos","phone_verified":false,"sub":"dab2f012-3494-4b98-9ead-10277b1800e4","username":"dakoo"},"provider":"email","last_sign_in_at":"2026-07-16T14:56:08.397021Z","created_at":"2026-07-16T14:56:08.39707Z","updated_at":"2026-07-16T14:56:08.39707Z","email":"daco010203@gmail.com"}],"created_at":"2026-07-16T14:56:08.371354Z","updated_at":"2026-07-17T17:01:47.272347Z","is_anonymous":false}
+Text length: 10460 chars
+Database query succeeded. Found 12 categories.
+otherExpenseCat: {"id":12,"name":"Otros Gastos","type":"expense"}
+otherIncomeCat: {"id":4,"name":"Otros Ingresos","type":"income"}
+Total parsedTransactions count: 72
+Parsed list: [
+  {
+    "date": "2026-04-01",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 2000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-02",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ ALVAHA GAS FEC. ORIG 20260331",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-02",
+    "description": "Cargo Mensual Uso VD Cargo Mensual Uso VD 3235 ABR/2026",
+    "amount": 25,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-02",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.75",
+    "amount": 0.75,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-02",
+    "description": "Debito Pago Domiciliacion RD$ PASO RAPIDO RD VIAL 01136074",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Retiro Visa Debito en US$ Ret. VISA Sirena Market Ind. FEC. ORIG 20260401",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260401",
+    "amount": 196,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ RDVIAL 896635 FEC. ORIG 20260402",
+    "amount": 1,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ LUSERGAS 30 DE MAY FEC. ORIG 20260402",
+    "amount": 1000,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 1600,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 1000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.60",
+    "amount": 0.6,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Debito Pago Domiciliacion RD$ PASO RAPIDO RD VIAL 01136074",
+    "amount": 400,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 1000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Impuesto Art.12 Ley No.288 04 $3.00",
+    "amount": 3,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Debito por transferencia $2,000.00",
+    "amount": 2000,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-07",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.18",
+    "amount": 0.18,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-07",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 121,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-08",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ FIXO GAS VERON FEC. ORIG 20260406",
+    "amount": 1000,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-08",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 500,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ RAIGAS KENNEDY FEC. ORIG 20260409",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260411",
+    "amount": 629,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.15",
+    "amount": 0.15,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 100,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 750,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.15",
+    "amount": 0.15,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 100,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-14",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 500,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-14",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.25",
+    "amount": 0.25,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-14",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 170,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-16",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ CBP BODEGA LA MARI FEC. ORIG 20260414",
+    "amount": 205,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-16",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE MONZON GONZALEZ, ANGEL R",
+    "amount": 2000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-17",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 2000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-17",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.12",
+    "amount": 0.12,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-17",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 80,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ NICE PRINT TTG FEC. ORIG 20260416",
+    "amount": 113.97,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ ALVAHA GAS FEC. ORIG 20260416",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ BRAVO AV INDEPENDE FEC. ORIG 20260416",
+    "amount": 1299,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 85000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ UNPHU 8ERYbN FEC. ORIG 20260420",
+    "amount": 1,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Rev.Dr. Pto Venta RD$ Visa Deb REV UNPHU 8ERYbN FEC. ORIG 20260420",
+    "amount": 1,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.34",
+    "amount": 0.34,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Debito por transferencia $230.00",
+    "amount": 230,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-21",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ KRISPY KREME DTC FEC. ORIG 20260419",
+    "amount": 210,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-21",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260419",
+    "amount": 202,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Impuesto Art.12 Ley No.288 04 $1.27",
+    "amount": 1.27,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Debito por transferencia $850.00",
+    "amount": 850,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Debito ACH / en BHD CEBALLOS DIAZ, E",
+    "amount": 1650,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Impuesto Art.12 Ley No.288 04 CEBALLOS DIAZ, E",
+    "amount": 2.47,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ ALVAHA GAS FEC. ORIG 20260420",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-23",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ UNPHU WB FEC. ORIG 20260420",
+    "amount": 80861.07,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-24",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260422",
+    "amount": 665,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Debito ACH / en BHD CEBALLOS DIAZ, E",
+    "amount": 350,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Impuesto Art.12 Ley No.288 04 CEBALLOS DIAZ, E",
+    "amount": 0.52,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ MANHATTAN BAR FEC. ORIG 20260422",
+    "amount": 300.01,
+    "type": "expense",
+    "category_id": 10
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ TROPIGAS LA PLANTI FEC. ORIG 20260422",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260424",
+    "amount": 576,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.15",
+    "amount": 0.15,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 100,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 1000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE ERIANNA LOPEZ",
+    "amount": 140,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ CBP BODEGA LA MARI FEC. ORIG 20260422",
+    "amount": 125,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.18",
+    "amount": 0.18,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8299653045",
+    "amount": 121,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 500,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 500,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-29",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ LUSERGAS FEC. ORIG 20260427",
+    "amount": 400,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-29",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260427",
+    "amount": 512,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-29",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.03",
+    "amount": 0.03,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-29",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 25,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-30",
+    "description": "Reten.ley 253 12 10% DGII RD$ $0.36",
+    "amount": 0.36,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-30",
+    "description": "Pago Intereses CA $0.00",
+    "amount": 3.57,
+    "type": "income",
+    "category_id": 4
+  }
+]
+Total filteredTransactions count: 72
+Filtered list: [
+  {
+    "date": "2026-04-30",
+    "description": "Reten.ley 253 12 10% DGII RD$ $0.36",
+    "amount": 0.36,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-30",
+    "description": "Pago Intereses CA $0.00",
+    "amount": 3.57,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-29",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ LUSERGAS FEC. ORIG 20260427",
+    "amount": 400,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-29",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260427",
+    "amount": 512,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-29",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.03",
+    "amount": 0.03,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-29",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 25,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ CBP BODEGA LA MARI FEC. ORIG 20260422",
+    "amount": 125,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.18",
+    "amount": 0.18,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8299653045",
+    "amount": 121,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 500,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-28",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 500,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Debito ACH / en BHD CEBALLOS DIAZ, E",
+    "amount": 350,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Impuesto Art.12 Ley No.288 04 CEBALLOS DIAZ, E",
+    "amount": 0.52,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ MANHATTAN BAR FEC. ORIG 20260422",
+    "amount": 300.01,
+    "type": "expense",
+    "category_id": 10
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ TROPIGAS LA PLANTI FEC. ORIG 20260422",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260424",
+    "amount": 576,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.15",
+    "amount": 0.15,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 100,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 1000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-27",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE ERIANNA LOPEZ",
+    "amount": 140,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-24",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260422",
+    "amount": 665,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-23",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ UNPHU WB FEC. ORIG 20260420",
+    "amount": 80861.07,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Impuesto Art.12 Ley No.288 04 $1.27",
+    "amount": 1.27,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Debito por transferencia $850.00",
+    "amount": 850,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Debito ACH / en BHD CEBALLOS DIAZ, E",
+    "amount": 1650,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Impuesto Art.12 Ley No.288 04 CEBALLOS DIAZ, E",
+    "amount": 2.47,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-22",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ ALVAHA GAS FEC. ORIG 20260420",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-21",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ KRISPY KREME DTC FEC. ORIG 20260419",
+    "amount": 210,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-21",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260419",
+    "amount": 202,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ NICE PRINT TTG FEC. ORIG 20260416",
+    "amount": 113.97,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ ALVAHA GAS FEC. ORIG 20260416",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ BRAVO AV INDEPENDE FEC. ORIG 20260416",
+    "amount": 1299,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 85000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ UNPHU 8ERYbN FEC. ORIG 20260420",
+    "amount": 1,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Rev.Dr. Pto Venta RD$ Visa Deb REV UNPHU 8ERYbN FEC. ORIG 20260420",
+    "amount": 1,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.34",
+    "amount": 0.34,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-20",
+    "description": "Debito por transferencia $230.00",
+    "amount": 230,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-17",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 2000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-17",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.12",
+    "amount": 0.12,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-17",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 80,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-16",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ CBP BODEGA LA MARI FEC. ORIG 20260414",
+    "amount": 205,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-16",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE MONZON GONZALEZ, ANGEL R",
+    "amount": 2000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-14",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 500,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-14",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.25",
+    "amount": 0.25,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-14",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 170,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ RAIGAS KENNEDY FEC. ORIG 20260409",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260411",
+    "amount": 629,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.15",
+    "amount": 0.15,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 100,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 750,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.15",
+    "amount": 0.15,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-13",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 100,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-08",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ FIXO GAS VERON FEC. ORIG 20260406",
+    "amount": 1000,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-08",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 500,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-07",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.18",
+    "amount": 0.18,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-07",
+    "description": "Debito Pago Domiciliacion RD$ CLARO 8295225409",
+    "amount": 121,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Retiro Visa Debito en US$ Ret. VISA Sirena Market Ind. FEC. ORIG 20260401",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ HIPER OLE INDEPEND FEC. ORIG 20260401",
+    "amount": 196,
+    "type": "expense",
+    "category_id": 5
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ RDVIAL 896635 FEC. ORIG 20260402",
+    "amount": 1,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ LUSERGAS 30 DE MAY FEC. ORIG 20260402",
+    "amount": 1000,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 1600,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE CEBALLOS, ANEURYS",
+    "amount": 1000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.60",
+    "amount": 0.6,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Debito Pago Domiciliacion RD$ PASO RAPIDO RD VIAL 01136074",
+    "amount": 400,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 1000,
+    "type": "income",
+    "category_id": 4
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Impuesto Art.12 Ley No.288 04 $3.00",
+    "amount": 3,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-06",
+    "description": "Debito por transferencia $2,000.00",
+    "amount": 2000,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-02",
+    "description": "Dr. Punto de Venta VisaDeb.RD$ ALVAHA GAS FEC. ORIG 20260331",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 8
+  },
+  {
+    "date": "2026-04-02",
+    "description": "Cargo Mensual Uso VD Cargo Mensual Uso VD 3235 ABR/2026",
+    "amount": 25,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-02",
+    "description": "Impuesto Art.12 Ley No.288 04 $0.75",
+    "amount": 0.75,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-02",
+    "description": "Debito Pago Domiciliacion RD$ PASO RAPIDO RD VIAL 01136074",
+    "amount": 500,
+    "type": "expense",
+    "category_id": 12
+  },
+  {
+    "date": "2026-04-01",
+    "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",
+    "amount": 2000,
+    "type": "income",
+    "category_id": 4
+  }
+]
