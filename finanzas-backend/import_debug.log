@@ -7,6 +7,7 @@ otherExpenseCat: {"id":12,"name":"Otros Gastos","type":"expense"}
 otherIncomeCat: {"id":4,"name":"Otros Ingresos","type":"income"}
 Total parsedTransactions count: 72
 Parsed list: [
+
   {
     "date": "2026-04-01",
     "description": "Credito por Transferencia TRANSFERENCIA RECIBIDA DE DIAZ BRITO, FANI ESMELIN",

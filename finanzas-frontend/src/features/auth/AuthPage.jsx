@@ -24,6 +24,23 @@ export const AuthPage = () => {
 
     try {
       if (isRegistering) {
+        // Validar formato del correo
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email.trim())) {
+          throw new Error('El correo electrónico ingresado no tiene un formato válido.');
+        }
+
+        // Bloquear dominios de correo temporales o desechables comunes
+        const disposableDomains = [
+          'yopmail.com', 'mailinator.com', 'tempmail.com', 'guerrillamail.com', 
+          'sharklasers.com', 'dispostable.com', 'getairmail.com', 'maildrop.cc', 
+          '10minutemail.com', 'trashmail.com', 'yopmail.fr', 'yopmail.net'
+        ];
+        const emailDomain = email.trim().split('@')[1]?.toLowerCase();
+        if (disposableDomains.includes(emailDomain)) {
+          throw new Error('No se permiten correos electrónicos temporales o desechables.');
+        }
+
         // Validar username
         if (!username.trim()) {
           throw new Error('El nombre de usuario es obligatorio.');
@@ -56,7 +73,7 @@ export const AuthPage = () => {
 
         if (signUpError) throw signUpError;
         
-        setSuccessMsg('¡Registro exitoso! Ya puedes iniciar sesión.');
+        setSuccessMsg('¡Registro exitoso! Hemos enviado un enlace de confirmación a tu correo. Por favor verifícalo antes de iniciar sesión.');
         setIsRegistering(false);
         setPassword('');
         setUsername('');
