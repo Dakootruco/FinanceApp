@@ -70,7 +70,7 @@ export const CreditCardsPage = () => {
         );
       default:
         return (
-          <span className="bg-white/10 border border-white/5 px-2 py-0.5 rounded text-[8px] font-black text-slate-200 tracking-wider shrink-0">
+          <span className="bg-white dark:bg-[#12131A]/10 border border-white/5 px-2 py-0.5 rounded text-[8px] font-black text-slate-200 tracking-wider shrink-0">
             {brand.toUpperCase()}
           </span>
         );
@@ -83,11 +83,11 @@ export const CreditCardsPage = () => {
       {/* Encabezado */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <CreditCard className="text-indigo-400" size={24} />
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff] tracking-tight flex items-center gap-2.5">
+            <CreditCard className="text-indigo-400 dark:text-[#FB00FF]" size={24} />
             Mis Tarjetas de Crédito
           </h2>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+          <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold mt-1">
             Administra tus plásticos de crédito, saldos y configura sus apariencias personalizadas.
           </p>
         </div>
@@ -101,20 +101,20 @@ export const CreditCardsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {/* KPI: Saldo Deudor Total */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
           <CardContent className="flex flex-col gap-1.5 p-0">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Deuda Total Acumulada</span>
-            <span className="text-2xl font-black text-slate-800 tracking-tight">
+            <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Deuda Total Acumulada</span>
+            <span className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">
               {formatCurrency(totalBalance)}
             </span>
           </CardContent>
         </Card>
 
         {/* KPI: Tarjetas Activas */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
           <CardContent className="flex flex-col gap-1.5 p-0">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Tarjetas de Crédito Activas</span>
-            <span className="text-2xl font-black text-slate-800 tracking-tight">
+            <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Tarjetas de Crédito Activas</span>
+            <span className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">
               {creditCards.length}
             </span>
           </CardContent>
@@ -123,13 +123,13 @@ export const CreditCardsPage = () => {
 
       {/* Listado de Tarjetas */}
       {creditCards.length === 0 ? (
-        <div className="bg-white border border-slate-100 p-12 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center gap-4 min-h-[300px] animate-fade-in">
-          <div className="w-16 h-16 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center border border-indigo-100 shadow-sm animate-pulse">
+        <div className="bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] p-12 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center gap-4 min-h-[300px] animate-fade-in">
+          <div className="w-16 h-16 bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-[#FB00FF]/20 shadow-sm animate-pulse">
             <CreditCard size={32} />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">No hay tarjetas registradas</h3>
-            <p className="text-slate-400 text-xs font-semibold max-w-sm mt-1 mx-auto leading-relaxed">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-[#ffffff]">No hay tarjetas registradas</h3>
+            <p className="text-slate-400 dark:text-[#94a3b8] text-xs font-semibold max-w-sm mt-1 mx-auto leading-relaxed">
               Agrega tus tarjetas de crédito para visualizar tus deudas y configurar sus límites en el panel principal.
             </p>
           </div>
@@ -155,8 +155,8 @@ export const CreditCardsPage = () => {
                 style={{ backgroundColor: card.color_theme || '#121620' }}
               >
                 {/* Capa de división curva bicolor como en la imagen */}
-                <div className="absolute right-0 top-0 bottom-0 w-[45%] bg-white/[0.04] rounded-l-full pointer-events-none" />
-                <div className="absolute right-[-10%] top-[-20%] w-[60%] h-[140%] rounded-full bg-white/[0.02] blur-xl pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-[45%] bg-white dark:bg-[#12131A]/[0.04] rounded-l-full pointer-events-none" />
+                <div className="absolute right-[-10%] top-[-20%] w-[60%] h-[140%] rounded-full bg-white dark:bg-[#12131A]/[0.02] blur-xl pointer-events-none" />
 
                 {/* Fila Superior: Banco, Nombre y Acciones */}
                 <div className="flex justify-between items-start z-10 w-full">
@@ -169,14 +169,14 @@ export const CreditCardsPage = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleEdit(card)}
-                      className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/5 text-white/90 transition-all cursor-pointer inline-flex items-center justify-center"
+                      className="p-1.5 rounded-lg bg-white dark:bg-[#12131A]/10 hover:bg-white dark:bg-[#12131A] dark:hover:bg-[#1C1D2A]/20 border border-white/5 text-white/90 transition-all cursor-pointer inline-flex items-center justify-center"
                       title="Editar tarjeta"
                     >
                       <Edit3 size={13} />
                     </button>
                     <button
                       onClick={() => handleDelete(card.id, card.card_name)}
-                      className="p-1.5 rounded-lg bg-white/10 hover:bg-rose-500/80 border border-white/5 text-white/90 hover:text-white transition-all cursor-pointer inline-flex items-center justify-center"
+                      className="p-1.5 rounded-lg bg-white dark:bg-[#12131A]/10 hover:bg-rose-500/80 border border-white/5 text-white/90 hover:text-white transition-all cursor-pointer inline-flex items-center justify-center"
                       title="Eliminar tarjeta"
                     >
                       <Trash2 size={13} />

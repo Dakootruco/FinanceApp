@@ -126,11 +126,11 @@ export const InvestmentsPage = () => {
       {/* Encabezado */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <LineChart className="text-indigo-400" size={24} />
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff] tracking-tight flex items-center gap-2.5">
+            <LineChart className="text-indigo-400 dark:text-[#FB00FF]" size={24} />
             Portafolio de Inversiones
           </h2>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+          <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold mt-1">
             Monitorea el valor actual, rentabilidad y distribución de tus activos financieros.
           </p>
         </div>
@@ -144,29 +144,29 @@ export const InvestmentsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
         {/* KPI: Total Capital Invertido */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
           <CardContent className="flex flex-col gap-1.5 p-0">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Capital Invertido</span>
-            <span className="text-2xl font-black text-slate-800 tracking-tight">
+            <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Capital Invertido</span>
+            <span className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">
               {formatCurrency(totalInvested)}
             </span>
           </CardContent>
         </Card>
 
         {/* KPI: Valor de Mercado Actual */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
           <CardContent className="flex flex-col gap-1.5 p-0">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Valor del Portafolio</span>
-            <span className="text-2xl font-black text-slate-800 tracking-tight">
+            <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Valor del Portafolio</span>
+            <span className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">
               {formatCurrency(totalCurrent)}
             </span>
           </CardContent>
         </Card>
 
         {/* KPI: Retorno Neto */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
           <CardContent className="flex flex-col gap-1.5 p-0">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Retorno Neto Total</span>
+            <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Retorno Neto Total</span>
             <div className="flex items-center gap-1.5">
               <span className={`text-2xl font-black tracking-tight ${isGlobalPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                 {isGlobalPositive ? '+' : ''}{formatCurrency(totalReturn)}
@@ -180,9 +180,9 @@ export const InvestmentsPage = () => {
         </Card>
 
         {/* KPI: Rendimiento Promedio */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 hover:shadow-md transition-shadow">
           <CardContent className="flex flex-col gap-1.5 p-0">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Rendimiento Promedio</span>
+            <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Rendimiento Promedio</span>
             <span className={`text-2xl font-black tracking-tight ${isGlobalPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
               {isGlobalPositive ? '+' : ''}{globalYield.toFixed(2)}%
             </span>
@@ -196,19 +196,19 @@ export const InvestmentsPage = () => {
 
         {/* Sección de Listado de Inversiones */}
         <div className="lg:col-span-2 flex flex-col gap-5">
-          <h3 className="text-base font-extrabold text-slate-800 flex items-center gap-2">
-            <Briefcase size={18} className="text-indigo-400" />
+          <h3 className="text-base font-extrabold text-slate-800 dark:text-[#ffffff] flex items-center gap-2">
+            <Briefcase size={18} className="text-indigo-400 dark:text-[#FB00FF]" />
             Tus Activos Financieros
           </h3>
 
           {investments.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 text-slate-500 gap-3.5 bg-white border border-slate-100 rounded-3xl shadow-sm">
-              <div className="w-14 h-14 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center border border-indigo-100 shadow-sm">
+            <div className="flex flex-col items-center justify-center py-16 text-slate-500 dark:text-[#94a3b8] gap-3.5 bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm">
+              <div className="w-14 h-14 bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-[#FB00FF]/20 shadow-sm">
                 <LineChart size={28} />
               </div>
               <div className="text-center flex flex-col gap-0.5 mt-1">
-                <p className="font-bold text-sm text-slate-800">No hay inversiones registradas</p>
-                <span className="text-xs text-slate-400 font-semibold">Agrega tus fondos, acciones o criptoactivos para comenzar.</span>
+                <p className="font-bold text-sm text-slate-800 dark:text-[#ffffff]">No hay inversiones registradas</p>
+                <span className="text-xs text-slate-400 dark:text-[#94a3b8] font-semibold">Agrega tus fondos, acciones o criptoactivos para comenzar.</span>
               </div>
               <Button variant="primary" onClick={handleCreate} className="mt-2">
                 <Plus size={16} />
@@ -226,7 +226,7 @@ export const InvestmentsPage = () => {
                 const changePct = parseFloat(inv.change_percentage || 0);
 
                 return (
-                  <Card key={inv.id} className="!bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between h-[250px]">
+                  <Card key={inv.id} className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between h-[250px]">
                     <div className="flex flex-col gap-4">
                       {/* Cabecera del Activo */}
                       <div className="flex items-center justify-between">
@@ -241,7 +241,7 @@ export const InvestmentsPage = () => {
                             <IconComponent size={20} />
                           </div>
                           <div>
-                            <h4 className="font-bold text-sm text-slate-800 truncate max-w-[150px]" title={inv.name}>
+                            <h4 className="font-bold text-sm text-slate-800 dark:text-[#ffffff] truncate max-w-[150px]" title={inv.name}>
                               {inv.name}
                             </h4>
                             <span
@@ -266,16 +266,16 @@ export const InvestmentsPage = () => {
                       </div>
 
                       {/* Montos */}
-                      <div className="grid grid-cols-2 gap-3 bg-slate-50/50 border border-slate-100/50 rounded-2xl p-3 text-xs">
+                      <div className="grid grid-cols-2 gap-3 bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)]/50 rounded-2xl p-3 text-xs">
                         <div>
-                          <span className="text-slate-400 font-bold block text-[9px] uppercase tracking-wider">Capital Invertido</span>
-                          <span className="font-extrabold text-slate-700 mt-0.5 block">
+                          <span className="text-slate-400 dark:text-[#94a3b8] font-bold block text-[9px] uppercase tracking-wider">Capital Invertido</span>
+                          <span className="font-extrabold text-slate-700 dark:text-[#ffffff] mt-0.5 block">
                             {formatCurrency(inv.amount_invested)}
                           </span>
                         </div>
                         <div className="text-right">
-                          <span className="text-slate-400 font-bold block text-[9px] uppercase tracking-wider">Valor Actual</span>
-                          <span className="font-black text-slate-800 mt-0.5 block">
+                          <span className="text-slate-400 dark:text-[#94a3b8] font-bold block text-[9px] uppercase tracking-wider">Valor Actual</span>
+                          <span className="font-black text-slate-800 dark:text-[#ffffff] mt-0.5 block">
                             {formatCurrency(inv.current_value)}
                           </span>
                         </div>
@@ -283,9 +283,9 @@ export const InvestmentsPage = () => {
                     </div>
 
                     {/* Acciones y Retorno Neto */}
-                    <div className="flex items-center justify-between border-t border-slate-50 pt-3.5 mt-2">
+                    <div className="flex items-center justify-between border-t border-slate-50 dark:border-[rgba(255,255,255,0.07)] pt-3.5 mt-2">
                       <div>
-                        <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block">Retorno</span>
+                        <span className="text-[9px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider block">Retorno</span>
                         <span className={`font-black text-xs ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                           {isPositive ? '+' : ''}{formatCurrency(returnVal)}
                         </span>
@@ -294,28 +294,28 @@ export const InvestmentsPage = () => {
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={() => handleAdjustCapital(inv)}
-                          className="py-1.5 px-2.5 rounded-lg text-[10px] font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100/80 transition-all cursor-pointer border border-indigo-100/20"
+                          className="py-1.5 px-2.5 rounded-lg text-[10px] font-bold text-indigo-600 dark:text-[#FB00FF] hover:text-indigo-700 dark:hover:text-[#d900dc] dark:text-[#d900dc] bg-indigo-50 dark:bg-[#FB00FF]/10 hover:bg-indigo-100 dark:bg-[#FB00FF]/15/80 dark:hover:bg-[#FB00FF]/20 dark:bg-[#FB00FF]/20 transition-all cursor-pointer border border-indigo-100 dark:border-[#FB00FF]/20/20"
                           title="Inyectar o retirar capital"
                         >
                           Capital
                         </button>
                         <button
                           onClick={() => handleAdjustPercentage(inv)}
-                          className="py-1.5 px-2.5 rounded-lg text-[10px] font-bold text-slate-600 hover:text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all cursor-pointer"
+                          className="py-1.5 px-2.5 rounded-lg text-[10px] font-bold text-slate-600 dark:text-[#94a3b8] hover:text-slate-800 dark:text-[#ffffff] dark:hover:text-white dark:text-[#ffffff] bg-slate-50 dark:bg-[#1C1D2A] hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] transition-all cursor-pointer"
                           title="Actualizar rentabilidad"
                         >
                           % Rend.
                         </button>
                         <button
                           onClick={() => handleEdit(inv)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
+                          className="p-1.5 rounded-lg text-slate-400 dark:text-[#94a3b8] hover:text-slate-600 dark:text-[#94a3b8] hover:bg-slate-50 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] transition-all cursor-pointer"
                           title="Editar"
                         >
                           <Edit3 size={14} />
                         </button>
                         <button
                           onClick={() => handleDelete(inv.id, inv.name)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
+                          className="p-1.5 rounded-lg text-slate-400 dark:text-[#94a3b8] hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
                           title="Eliminar"
                         >
                           <Trash2 size={14} />
@@ -331,17 +331,17 @@ export const InvestmentsPage = () => {
 
         {/* Sección de Distribución del Portafolio */}
         <div className="flex flex-col gap-5">
-          <h3 className="text-base font-extrabold text-slate-800 flex items-center gap-2">
-            <PieChart size={18} className="text-indigo-400" />
+          <h3 className="text-base font-extrabold text-slate-800 dark:text-[#ffffff] flex items-center gap-2">
+            <PieChart size={18} className="text-indigo-400 dark:text-[#FB00FF]" />
             Asignación de Activos
           </h3>
 
-          <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full justify-between hover:shadow-md transition-shadow">
+          <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 flex flex-col h-full justify-between hover:shadow-md transition-shadow">
             <div className="flex flex-col gap-6">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Asignación de Portafolio</span>
+              <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Asignación de Portafolio</span>
 
               {allocationList.length === 0 ? (
-                <div className="text-center py-12 text-slate-400 font-semibold text-xs leading-relaxed">
+                <div className="text-center py-12 text-slate-400 dark:text-[#94a3b8] font-semibold text-xs leading-relaxed">
                   No hay datos de asignación disponibles. Agrega activos para ver la distribución.
                 </div>
               ) : (
@@ -351,14 +351,14 @@ export const InvestmentsPage = () => {
                     return (
                       <div key={item.category} className="flex flex-col gap-2">
                         <div className="flex justify-between items-center text-xs">
-                          <span className="font-bold text-slate-700">{item.category}</span>
+                          <span className="font-bold text-slate-700 dark:text-[#ffffff]">{item.category}</span>
                           <div className="flex items-center gap-2">
-                            <span className="font-extrabold text-slate-800">{formatCurrency(item.value)}</span>
-                            <span className="bg-slate-50 border border-slate-100 rounded px-1.5 py-0.5 text-[9px] font-bold text-slate-500">{item.percentage}%</span>
+                            <span className="font-extrabold text-slate-800 dark:text-[#ffffff]">{formatCurrency(item.value)}</span>
+                            <span className="bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded px-1.5 py-0.5 text-[9px] font-bold text-slate-500 dark:text-[#94a3b8]">{item.percentage}%</span>
                           </div>
                         </div>
                         {/* Progress Bar */}
-                        <div className="relative w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="relative w-full h-2 bg-slate-100 dark:bg-[#1C1D2A] rounded-full overflow-hidden">
                           <div
                             className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
                             style={{
@@ -375,9 +375,9 @@ export const InvestmentsPage = () => {
             </div>
 
             {investments.length > 0 && (
-              <div className="border-t border-slate-50 pt-5 mt-6 flex justify-between items-center text-xs text-slate-400 font-semibold">
+              <div className="border-t border-slate-50 dark:border-[rgba(255,255,255,0.07)] pt-5 mt-6 flex justify-between items-center text-xs text-slate-400 dark:text-[#94a3b8] font-semibold">
                 <span>Total de Activos:</span>
-                <span className="font-bold text-slate-800">{investments.length}</span>
+                <span className="font-bold text-slate-800 dark:text-[#ffffff]">{investments.length}</span>
               </div>
             )}
           </Card>

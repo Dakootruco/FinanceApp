@@ -18,15 +18,15 @@ export const TransactionsPage = () => {
       {/* Encabezado de la página */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-4">
-            <ClipboardList className="text-indigo-400 shrink-0" size={24} />
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff] tracking-tight flex items-center gap-4">
+            <ClipboardList className="text-indigo-400 dark:text-[#FB00FF] shrink-0" size={24} />
             Historial de Movimientos
           </h2>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+          <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold mt-1">
             Revisa, filtra y gestiona todos tus registros de ingresos y gastos.
           </p>
-          <p className="text-xs text-slate-400 font-bold mt-1.5 animate-fade-in">
-            Total de transacciones: <span className="text-indigo-600 font-extrabold">{totalCount}</span>
+          <p className="text-xs text-slate-400 dark:text-[#94a3b8] font-bold mt-1.5 animate-fade-in">
+            Total de transacciones: <span className="text-indigo-600 dark:text-[#FB00FF] font-extrabold">{totalCount}</span>
           </p>
         </div>
 
@@ -52,7 +52,7 @@ export const TransactionsPage = () => {
       </div>
 
       {/* Contenedor Principal */}
-      <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm">
         <CardHeader className="!border-none !pb-0 !mb-0">
           <CardTitle>Listado y Filtros</CardTitle>
         </CardHeader>

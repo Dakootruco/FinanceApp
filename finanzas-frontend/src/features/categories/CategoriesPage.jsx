@@ -82,7 +82,7 @@ export const CategoriesPage = () => {
     return (
       <div
         key={cat.id}
-        className="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-slate-100/60 transition-all text-slate-800"
+        className="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-2xl hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A]/60 transition-all text-slate-800 dark:text-[#ffffff]"
       >
         <div className="flex items-center gap-3.5">
           <div
@@ -94,21 +94,21 @@ export const CategoriesPage = () => {
           >
             <IconComp size={18} />
           </div>
-          <span className="font-bold text-sm text-slate-800">{cat.name}</span>
+          <span className="font-bold text-sm text-slate-800 dark:text-[#ffffff]">{cat.name}</span>
         </div>
 
         {/* Acciones */}
         <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={() => handleEdit(cat)}
-            className="p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-200/50 transition-all cursor-pointer inline-flex items-center justify-center"
+            className="p-2 rounded-lg text-slate-500 dark:text-[#94a3b8] hover:text-slate-800 dark:text-[#ffffff] dark:hover:text-white dark:text-[#ffffff] hover:bg-slate-200 dark:bg-[#1C1D2A] dark:hover:bg-white dark:bg-[#12131A]/5 dark:bg-[#1C1D2A] transition-all cursor-pointer inline-flex items-center justify-center"
             title="Editar categoría"
           >
             <Edit3 size={15} />
           </button>
           <button
             onClick={() => handleDelete(cat)}
-            className="p-2 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 transition-all cursor-pointer inline-flex items-center justify-center"
+            className="p-2 rounded-lg text-slate-400 dark:text-[#94a3b8] hover:text-rose-500 hover:bg-rose-500/10 transition-all cursor-pointer inline-flex items-center justify-center"
             title="Eliminar categoría"
           >
             <Trash2 size={15} />
@@ -124,11 +124,11 @@ export const CategoriesPage = () => {
       {/* Encabezado */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <Tags className="text-indigo-400" size={24} />
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff] tracking-tight flex items-center gap-2.5">
+            <Tags className="text-indigo-400 dark:text-[#FB00FF]" size={24} />
             Categorías del Sistema
           </h2>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+          <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold mt-1">
             Administra y personaliza tus categorías para clasificar adecuadamente tus ingresos y gastos.
           </p>
         </div>
@@ -142,13 +142,13 @@ export const CategoriesPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
 
         {/* Categorías de Gastos */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm h-full flex flex-col">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm h-full flex flex-col">
           <CardHeader className="!border-none pb-0">
             <CardTitle className="text-rose-600">Categorías de Gasto</CardTitle>
           </CardHeader>
           <CardContent className="mt-4 flex-grow">
             {expenseCats.length === 0 ? (
-              <p className="text-sm text-slate-400 text-center py-8">No hay categorías de gastos registradas.</p>
+              <p className="text-sm text-slate-400 dark:text-[#94a3b8] text-center py-8">No hay categorías de gastos registradas.</p>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {expenseCats.map(renderCategoryCard)}
@@ -158,13 +158,13 @@ export const CategoriesPage = () => {
         </Card>
 
         {/* Categorías de Ingresos */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm h-full flex flex-col">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm h-full flex flex-col">
           <CardHeader className="!border-none pb-0">
             <CardTitle className="text-emerald-600">Categorías de Ingreso</CardTitle>
           </CardHeader>
           <CardContent className="mt-4 flex-grow">
             {incomeCats.length === 0 ? (
-              <p className="text-sm text-slate-400 text-center py-8">No hay categorías de ingresos registradas.</p>
+              <p className="text-sm text-slate-400 dark:text-[#94a3b8] text-center py-8">No hay categorías de ingresos registradas.</p>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {incomeCats.map(renderCategoryCard)}

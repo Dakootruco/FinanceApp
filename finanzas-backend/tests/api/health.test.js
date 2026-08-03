@@ -1,0 +1,11 @@
+import request from 'supertest';
+import app from '../../src/index.js';
+
+describe('Health Endpoint', () => {
+  it('should return status ok when the API is running', async () => {
+    const res = await request(app).get('/health');
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('status', 'ok');
+    expect(res.body).toHaveProperty('message');
+  });
+});

@@ -127,16 +127,16 @@ export const TransactionModal = () => {
   return (
     <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       {/* Caja de Diálogo */}
-      <div className="bg-white border border-slate-100 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
+      <div className="bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
 
         {/* Encabezado */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-          <h3 className="font-bold text-slate-800 flex items-center gap-2">
-            <PlusCircle size={18} className="text-indigo-500" />
+        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] bg-slate-50 dark:bg-[#1C1D2A]">
+          <h3 className="font-bold text-slate-800 dark:text-[#ffffff] flex items-center gap-2">
+            <PlusCircle size={18} className="text-indigo-500 dark:text-[#FB00FF]" />
             Registrar Movimiento
           </h3>
           <button
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 hover:bg-slate-100 rounded-lg cursor-pointer"
+            className="text-slate-400 dark:text-[#94a3b8] hover:text-slate-600 dark:text-[#94a3b8] transition-colors p-1 hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] rounded-lg cursor-pointer"
             onClick={() => setTransactionModalOpen(false)}
           >
             <X size={18} />
@@ -148,17 +148,17 @@ export const TransactionModal = () => {
 
           {/* Tipo de Transacción */}
           <FormGroup label="Tipo">
-            <div className="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200/50">
+            <div className="grid grid-cols-2 gap-2 bg-slate-100 dark:bg-[#1C1D2A] p-1 rounded-xl border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/50">
               <button
                 type="button"
-                className={`py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${txForm.type === 'expense' ? 'bg-white text-rose-600 shadow-sm border border-slate-200/20' : 'text-slate-500 hover:text-slate-800'}`}
+                className={`py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${txForm.type === 'expense' ? 'bg-white dark:bg-[#12131A] text-rose-600 shadow-sm border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/20' : 'text-slate-500 dark:text-[#94a3b8] hover:text-slate-800 dark:text-[#ffffff] dark:hover:text-white dark:text-[#ffffff]'}`}
                 onClick={() => handleTxTypeChange('expense')}
               >
                 Gasto
               </button>
               <button
                 type="button"
-                className={`py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${txForm.type === 'income' ? 'bg-white text-emerald-600 shadow-sm border border-slate-200/20' : 'text-slate-500 hover:text-slate-800'}`}
+                className={`py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${txForm.type === 'income' ? 'bg-white dark:bg-[#12131A] text-emerald-600 shadow-sm border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/20' : 'text-slate-500 dark:text-[#94a3b8] hover:text-slate-800 dark:text-[#ffffff] dark:hover:text-white dark:text-[#ffffff]'}`}
                 onClick={() => handleTxTypeChange('income')}
               >
                 Ingreso
@@ -219,10 +219,10 @@ export const TransactionModal = () => {
           {/* Categoría */}
           <FormGroup>
             <div className="flex justify-between items-center mb-0.5">
-              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Categoría</span>
+              <span className="text-xs font-bold text-slate-500 dark:text-[#94a3b8] uppercase tracking-wider">Categoría</span>
               <button
                 type="button"
-                className="text-xs font-bold text-indigo-600 hover:text-indigo-700 transition-colors cursor-pointer"
+                className="text-xs font-bold text-indigo-600 dark:text-[#FB00FF] hover:text-indigo-700 dark:hover:text-[#d900dc] dark:text-[#d900dc] transition-colors cursor-pointer"
                 onClick={() => setShowAddCategory(!showAddCategory)}
               >
                 {showAddCategory ? 'Cancelar' : '+ Nueva'}
@@ -243,7 +243,7 @@ export const TransactionModal = () => {
                 }
               </Select>
             ) : (
-              <div className="bg-slate-50 p-4 rounded-xl border border-dashed border-indigo-200 flex flex-col gap-3 animate-fade-in">
+              <div className="bg-slate-50 dark:bg-[#1C1D2A] p-4 rounded-xl border border-dashed border-indigo-200 dark:border-[#FB00FF]/30 flex flex-col gap-3 animate-fade-in">
                 <Input
                   placeholder="Nombre de categoría"
                   value={catForm.name}
@@ -252,7 +252,7 @@ export const TransactionModal = () => {
                 <div className="flex gap-2">
                   <input
                     type="color"
-                    className="w-10 h-10 border border-slate-200 rounded-lg cursor-pointer bg-white p-1"
+                    className="w-10 h-10 border border-slate-200 dark:border-[rgba(255,255,255,0.07)] rounded-lg cursor-pointer bg-white dark:bg-[#12131A] p-1"
                     value={catForm.color}
                     onChange={(e) => setCatForm(prev => ({ ...prev, color: e.target.value }))}
                     title="Color"

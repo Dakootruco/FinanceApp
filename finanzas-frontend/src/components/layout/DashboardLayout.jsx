@@ -19,12 +19,12 @@ export const DashboardLayout = ({ children }) => {
   }, [currentPage]);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#f4f5f7] text-slate-800">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#f4f5f7] dark:bg-[#000000] text-slate-800 dark:text-[#ffffff]">
       {/* Sidebar - Desktop: fijo, Móvil: drawer deslizable */}
       <Sidebar isMobileOpen={isMobileOpen} onCloseMobile={() => setIsMobileOpen(false)} />
 
       {/* Panel principal */}
-      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden bg-[#f4f5f7] dark:bg-[#000000]">
         {/* Header superior */}
         <Header onOpenMobile={() => setIsMobileOpen(true)} />
 

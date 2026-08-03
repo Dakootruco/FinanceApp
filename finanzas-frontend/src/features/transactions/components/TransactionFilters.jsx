@@ -12,7 +12,7 @@ export const TransactionFilters = () => {
   const hasActiveFilters = Object.values(filters).some(val => val !== '');
 
   return (
-    <div className="flex gap-4 flex-wrap bg-slate-50 p-4 border border-slate-100/80 rounded-2xl items-center mb-6">
+    <div className="flex gap-4 flex-wrap bg-slate-50 dark:bg-[#1C1D2A] p-4 border border-slate-100 dark:border-[rgba(255,255,255,0.07)]/80 rounded-2xl items-center mb-6">
       
       {/* Filtro Tipo */}
       <div className="flex-1 min-w-[150px]">
@@ -20,7 +20,7 @@ export const TransactionFilters = () => {
           aria-label="Filtrar por tipo"
           value={filters.type}
           onChange={(e) => handleFilterChange('type', e.target.value)}
-          className="!py-2.5 !bg-white border-slate-200/50"
+          className="!py-2.5 !bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border-slate-200 dark:border-[rgba(255,255,255,0.07)]/50"
         >
           <option value="">Todos los tipos</option>
           <option value="expense">Gastos</option>
@@ -34,7 +34,7 @@ export const TransactionFilters = () => {
           aria-label="Filtrar por categoría"
           value={filters.category_id}
           onChange={(e) => handleFilterChange('category_id', e.target.value)}
-          className="!py-2.5 !bg-white border-slate-200/50"
+          className="!py-2.5 !bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border-slate-200 dark:border-[rgba(255,255,255,0.07)]/50"
         >
           <option value="">Todas las categorías</option>
           {categories.map((c) => (
@@ -52,7 +52,7 @@ export const TransactionFilters = () => {
           type="date"
           value={filters.startDate}
           onChange={(e) => handleFilterChange('startDate', e.target.value)}
-          className="!py-2.5 !bg-white border-slate-200/50"
+          className="!py-2.5 !bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border-slate-200 dark:border-[rgba(255,255,255,0.07)]/50"
         />
       </div>
 
@@ -63,7 +63,7 @@ export const TransactionFilters = () => {
           type="date"
           value={filters.endDate}
           onChange={(e) => handleFilterChange('endDate', e.target.value)}
-          className="!py-2.5 !bg-white border-slate-200/50"
+          className="!py-2.5 !bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border-slate-200 dark:border-[rgba(255,255,255,0.07)]/50"
         />
       </div>
 

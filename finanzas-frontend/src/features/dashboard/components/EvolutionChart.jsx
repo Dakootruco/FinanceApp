@@ -80,7 +80,7 @@ export const EvolutionChart = ({ monthlyHistory = [] }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-slate-900/95 border border-white/10 rounded-2xl p-4 shadow-xl text-white font-sans text-xs flex flex-col gap-2">
-          <p className="font-black tracking-wide uppercase text-slate-400 border-b border-white/10 pb-1 mb-1">{label}</p>
+          <p className="font-black tracking-wide uppercase text-slate-400 dark:text-[#94a3b8] border-b border-white/10 pb-1 mb-1">{label}</p>
           <div className="flex flex-col gap-1.5 font-bold">
             {payload.map((p, idx) => (
               <span key={idx} style={{ color: p.color || p.fill }}>
@@ -98,21 +98,21 @@ export const EvolutionChart = ({ monthlyHistory = [] }) => {
   const finalBalanceDisplay = Math.max(totalSaved, 0);
 
   return (
-    <Card className="flex flex-col h-full !bg-white border border-slate-100 rounded-3xl shadow-sm p-6 hover:shadow-md transition-shadow">
+    <Card className="flex flex-col h-full !bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 hover:shadow-md transition-shadow">
       <CardHeader className="!mb-4 !p-0">
         <div className="flex justify-between items-start w-full">
           <div>
-            <span className="text-base font-extrabold text-slate-800">Flujo de Caja</span>
+            <span className="text-base font-extrabold text-slate-800 dark:text-[#ffffff]">Flujo de Caja</span>
             <div className="flex flex-col gap-0.5 mt-2">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Ahorro Neto Acumulado</span>
-              <span className="text-2xl font-black text-slate-800 tracking-tight">
+              <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Ahorro Neto Acumulado</span>
+              <span className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">
                 {formatCurrency(finalBalanceDisplay)}
               </span>
             </div>
           </div>
           
           <div className="flex flex-col items-end gap-2">
-            <div className="flex items-center gap-1 bg-slate-50 border border-slate-200/60 rounded-xl px-3 py-1.5 text-xs text-slate-600 font-bold cursor-pointer hover:bg-slate-100 transition-colors">
+            <div className="flex items-center gap-1 bg-slate-50 dark:bg-[#1C1D2A] border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/60 dark:border-[rgba(255,255,255,0.07)] rounded-xl px-3 py-1.5 text-xs text-slate-600 dark:text-[#94a3b8] font-bold cursor-pointer hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] transition-colors">
               <span>Mensual</span>
             </div>
           </div>
@@ -121,13 +121,13 @@ export const EvolutionChart = ({ monthlyHistory = [] }) => {
 
       <CardContent className="flex-1 flex flex-col items-center justify-center p-6 min-h-[260px]">
         {monthlyHistory.length === 0 ? (
-          <div className="flex flex-col items-center justify-center text-slate-400 gap-3 text-center py-6">
-            <div className="w-12 h-12 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center border border-slate-100 shadow-sm shrink-0">
+          <div className="flex flex-col items-center justify-center text-slate-400 dark:text-[#94a3b8] gap-3 text-center py-6">
+            <div className="w-12 h-12 bg-slate-50 dark:bg-[#1C1D2A] text-slate-400 dark:text-[#94a3b8] rounded-2xl flex items-center justify-center border border-slate-100 dark:border-[rgba(255,255,255,0.07)] shadow-sm shrink-0">
               <LineChart size={22} />
             </div>
             <div className="flex flex-col gap-0.5">
-              <p className="font-bold text-xs text-slate-700">Sin historial de flujo de caja</p>
-              <span className="text-[10px] text-slate-400 font-semibold leading-relaxed max-w-[200px]">
+              <p className="font-bold text-xs text-slate-700 dark:text-[#ffffff]">Sin historial de flujo de caja</p>
+              <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-semibold leading-relaxed max-w-[200px]">
                 Registra transacciones de ingresos y gastos para generar el gráfico de evolución.
               </span>
             </div>

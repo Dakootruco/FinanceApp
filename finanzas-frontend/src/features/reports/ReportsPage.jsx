@@ -77,7 +77,7 @@ export const ReportsPage = () => {
   // Clasificación del semáforo de la tasa de ahorro
   const getSavingsRateCategory = (rate) => {
     if (rate >= 20) return { label: 'Excelente', color: 'text-emerald-600 bg-emerald-50 border-emerald-100/35' };
-    if (rate >= 10) return { label: 'Saludable', color: 'text-indigo-600 bg-indigo-50 border-indigo-100/35' };
+    if (rate >= 10) return { label: 'Saludable', color: 'text-indigo-600 dark:text-[#FB00FF] bg-indigo-50 dark:bg-[#FB00FF]/10 border-indigo-100 dark:border-[#FB00FF]/20/35' };
     if (rate > 0) return { label: 'Bajo', color: 'text-amber-600 bg-amber-50 border-amber-100/35' };
     return { label: 'Déficit', color: 'text-rose-600 bg-rose-50 border-rose-100/35' };
   };
@@ -99,7 +99,7 @@ export const ReportsPage = () => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-slate-900/95 border border-white/10 rounded-2xl p-4 shadow-xl text-white font-sans text-xs flex flex-col gap-2">
-          {label && <p className="font-black tracking-wide uppercase text-slate-400 border-b border-white/10 pb-1 mb-1">{label}</p>}
+          {label && <p className="font-black tracking-wide uppercase text-slate-400 dark:text-[#94a3b8] border-b border-white/10 pb-1 mb-1">{label}</p>}
           <div className="flex flex-col gap-1.5 font-bold">
             {payload.map((p, idx) => (
               <span key={idx} style={{ color: p.color || p.fill }}>
@@ -163,11 +163,11 @@ export const ReportsPage = () => {
       {/* Cabecera */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 no-print-area">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <BarChart3 className="text-indigo-400" size={24} />
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff] tracking-tight flex items-center gap-2.5">
+            <BarChart3 className="text-indigo-400 dark:text-[#FB00FF]" size={24} />
             Reportes Avanzados
           </h2>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+          <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold mt-1">
             Analiza y visualiza en profundidad la distribución de tus ingresos, gastos y hábitos financieros.
           </p>
         </div>
@@ -184,15 +184,15 @@ export const ReportsPage = () => {
       </div>
 
       {/* Título sólo visible al imprimir en PDF */}
-      <div className="hidden print:block mb-6 border-b border-slate-200 pb-4">
-        <h1 className="text-2xl font-black text-slate-800 tracking-tight">Finanzas Pro - Reporte Financiero</h1>
-        <p className="text-xs text-slate-500 font-bold mt-1 uppercase tracking-wider">
+      <div className="hidden print:block mb-6 border-b border-slate-200 dark:border-[rgba(255,255,255,0.07)] pb-4">
+        <h1 className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">Finanzas Pro - Reporte Financiero</h1>
+        <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-bold mt-1 uppercase tracking-wider">
           Período: {formatDate(filters.startDate)} al {formatDate(filters.endDate)}
         </p>
       </div>
 
       {/* Contenedor de Filtros (Oculto al imprimir) */}
-      <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 filters-container">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 filters-container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <FormGroup label="Fecha Inicio">
             <Input 
@@ -232,60 +232,60 @@ export const ReportsPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
         {/* KPI: Ingresos */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 flex flex-col justify-between">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 flex flex-col justify-between">
           <CardContent className="p-0 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-emerald-50 text-emerald-500 border border-emerald-100/30">
                 <TrendingUp size={16} />
               </div>
-              <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Ingresos Totales</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] text-[10px] font-bold uppercase tracking-wider">Ingresos Totales</span>
             </div>
             <div>
-              <div className="text-xl font-black text-slate-800 tracking-tight font-sans">
+              <div className="text-xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight font-sans">
                 {formatCurrency(summary.totalIncome)}
               </div>
-              <p className="text-[10px] text-slate-400 font-bold mt-1">Capital ingresado en el período</p>
+              <p className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold mt-1">Capital ingresado en el período</p>
             </div>
           </CardContent>
         </Card>
 
         {/* KPI: Gastos */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 flex flex-col justify-between">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 flex flex-col justify-between">
           <CardContent className="p-0 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-rose-50 text-rose-500 border border-rose-100/30">
                 <TrendingDown size={16} />
               </div>
-              <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Gastos Totales</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] text-[10px] font-bold uppercase tracking-wider">Gastos Totales</span>
             </div>
             <div>
-              <div className="text-xl font-black text-slate-800 tracking-tight font-sans">
+              <div className="text-xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight font-sans">
                 {formatCurrency(summary.totalExpenses)}
               </div>
-              <p className="text-[10px] text-slate-400 font-bold mt-1">Capital debitado en el período</p>
+              <p className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold mt-1">Capital debitado en el período</p>
             </div>
           </CardContent>
         </Card>
 
         {/* KPI: Ahorro y Tasa */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 flex flex-col justify-between">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 flex flex-col justify-between">
           <CardContent className="p-0 flex flex-col gap-2">
             <div className="flex justify-between items-center w-full">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-indigo-50 text-indigo-500 border border-indigo-100/30">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] border border-indigo-100 dark:border-[#FB00FF]/20/30">
                   <Activity size={16} />
                 </div>
-                <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Tasa de Ahorro</span>
+                <span className="text-slate-400 dark:text-[#94a3b8] text-[10px] font-bold uppercase tracking-wider">Tasa de Ahorro</span>
               </div>
               <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full font-bold text-[9px] border ${savingsRateInfo.color}`}>
                 {savingsRateInfo.label}
               </span>
             </div>
             <div>
-              <div className="text-xl font-black text-slate-800 tracking-tight font-sans">
+              <div className="text-xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight font-sans">
                 {summary.savingsRate}%
               </div>
-              <p className="text-[10px] text-slate-400 font-bold mt-1">
+              <p className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold mt-1">
                 Ahorrado: {formatCurrency(summary.savings)}
               </p>
             </div>
@@ -293,19 +293,19 @@ export const ReportsPage = () => {
         </Card>
 
         {/* KPI: Gasto Promedio y Top */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-5 flex flex-col justify-between">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-5 flex flex-col justify-between">
           <CardContent className="p-0 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-amber-50 text-amber-500 border border-amber-100/30">
                 <DollarSign size={16} />
               </div>
-              <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Promedio Diario</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] text-[10px] font-bold uppercase tracking-wider">Promedio Diario</span>
             </div>
             <div>
-              <div className="text-xl font-black text-slate-800 tracking-tight font-sans">
+              <div className="text-xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight font-sans">
                 {formatCurrency(summary.avgDailySpend)}
               </div>
-              <p className="text-[10px] text-slate-400 font-bold mt-1 truncate" title={`Mayor Gasto: ${summary.topCategory.name}`}>
+              <p className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold mt-1 truncate" title={`Mayor Gasto: ${summary.topCategory.name}`}>
                 Max: {summary.topCategory.name} ({formatCurrency(summary.topCategory.amount)})
               </p>
             </div>
@@ -318,13 +318,13 @@ export const ReportsPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 print-page-break">
         
         {/* Gráfico 1 (Barras Agrupadas): Flujo Histórico */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 lg:col-span-8 flex flex-col min-h-[380px]">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 lg:col-span-8 flex flex-col min-h-[380px]">
           <CardHeader className="!p-0 !mb-5">
-            <CardTitle className="text-sm font-extrabold text-slate-800">Comparativa Mensual (Ingresos vs Gastos)</CardTitle>
+            <CardTitle className="text-sm font-extrabold text-slate-800 dark:text-[#ffffff]">Comparativa Mensual (Ingresos vs Gastos)</CardTitle>
           </CardHeader>
           <CardContent className="p-0 flex-grow relative w-full h-[290px] min-h-[290px]">
             {monthly.length === 0 ? (
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 text-xs font-semibold">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 dark:text-[#94a3b8] text-xs font-semibold">
                 Sin datos históricos para el rango seleccionado
               </div>
             ) : (
@@ -363,13 +363,13 @@ export const ReportsPage = () => {
         </Card>
 
         {/* Gráfico 2 (Pie/Dona): Distribución de Gastos */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 lg:col-span-4 flex flex-col min-h-[380px]">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 lg:col-span-4 flex flex-col min-h-[380px]">
           <CardHeader className="!p-0 !mb-5">
-            <CardTitle className="text-sm font-extrabold text-slate-800">Distribución de Gastos</CardTitle>
+            <CardTitle className="text-sm font-extrabold text-slate-800 dark:text-[#ffffff]">Distribución de Gastos</CardTitle>
           </CardHeader>
           <CardContent className="p-0 flex-grow flex flex-col justify-center relative w-full h-[290px] min-h-[290px]">
             {pieData.length === 0 ? (
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 text-xs font-semibold">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 dark:text-[#94a3b8] text-xs font-semibold">
                 No hay consumos de gastos en este período
               </div>
             ) : (
@@ -397,16 +397,16 @@ export const ReportsPage = () => {
                 {/* Leyenda Detallada */}
                 <div className="w-full sm:w-1/2 flex flex-col gap-2 max-h-[220px] overflow-y-auto pr-1">
                   {pieData.slice(0, 5).map((entry, index) => (
-                    <div key={index} className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+                    <div key={index} className="flex items-center justify-between text-[11px] font-bold text-slate-600 dark:text-[#94a3b8]">
                       <div className="flex items-center gap-1.5 truncate max-w-[90px]">
                         <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: entry.color }} />
                         <span className="truncate" title={entry.name}>{entry.name}</span>
                       </div>
-                      <span className="text-slate-800">{formatCurrency(entry.value)}</span>
+                      <span className="text-slate-800 dark:text-[#ffffff]">{formatCurrency(entry.value)}</span>
                     </div>
                   ))}
                   {pieData.length > 5 && (
-                    <div className="text-[9px] text-slate-400 font-extrabold text-right mt-1">
+                    <div className="text-[9px] text-slate-400 dark:text-[#94a3b8] font-extrabold text-right mt-1">
                       + {pieData.length - 5} categorías más
                     </div>
                   )}
@@ -419,19 +419,19 @@ export const ReportsPage = () => {
       </div>
 
       {/* Tabla Desglose Detallado por Categoría */}
-      <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 print-page-break">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 print-page-break">
         <CardHeader className="!p-0 !mb-5">
-          <CardTitle className="text-sm font-extrabold text-slate-800">Eficiencia por Categoría de Gasto</CardTitle>
+          <CardTitle className="text-sm font-extrabold text-slate-800 dark:text-[#ffffff]">Eficiencia por Categoría de Gasto</CardTitle>
         </CardHeader>
         <CardContent className="!p-0 overflow-x-auto">
           {categories.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-10 text-slate-400 text-xs font-semibold">
+            <div className="flex flex-col items-center justify-center py-10 text-slate-400 dark:text-[#94a3b8] text-xs font-semibold">
               Ningún gasto registrado para clasificar en categorías
             </div>
           ) : (
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <tr className="border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] text-[10px] font-bold text-slate-400 dark:text-[#94a3b8] uppercase tracking-wider">
                   <th className="py-3 px-4">Categoría</th>
                   <th className="py-3 px-4 text-center">Transacciones</th>
                   <th className="py-3 px-4 text-right">Gastado</th>
@@ -440,12 +440,12 @@ export const ReportsPage = () => {
                   <th className="py-3 px-4 text-center">Estado</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50 text-slate-800 text-xs font-semibold">
+              <tbody className="divide-y divide-slate-50 dark:divide-[rgba(255,255,255,0.07)] text-slate-800 dark:text-[#ffffff] text-xs font-semibold">
                 {categories.map((cat, idx) => {
                   const spentPercent = summary.totalExpenses > 0 ? Math.round((cat.total / summary.totalExpenses) * 100) : 0;
                   const isOverBudget = cat.limit_amount && cat.total > cat.limit_amount;
                   
-                  let budgetStatus = { label: 'Sin Limite', color: 'text-slate-500 bg-slate-50 border-slate-200/40' };
+                  let budgetStatus = { label: 'Sin Limite', color: 'text-slate-500 dark:text-[#94a3b8] bg-slate-50 dark:bg-[#1C1D2A] border-slate-200 dark:border-[rgba(255,255,255,0.07)]/40' };
                   if (cat.limit_amount) {
                     budgetStatus = isOverBudget
                       ? { label: 'Excedido', color: 'text-rose-600 bg-rose-50 border-rose-100/30' }
@@ -453,28 +453,28 @@ export const ReportsPage = () => {
                   }
 
                   return (
-                    <tr key={cat.id} className="hover:bg-slate-50/50 transition-colors">
+                    <tr key={cat.id} className="hover:bg-slate-50 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A]/50 transition-colors">
                       {/* Categoría */}
                       <td className="py-3.5 px-4 flex items-center gap-2.5">
                         <span 
                           className="w-3 h-3 rounded-full border border-black/5 shrink-0" 
                           style={{ backgroundColor: cat.color }} 
                         />
-                        <span className="text-[13px] font-bold text-slate-800">{cat.name}</span>
+                        <span className="text-[13px] font-bold text-slate-800 dark:text-[#ffffff]">{cat.name}</span>
                       </td>
 
                       {/* Transacciones */}
-                      <td className="py-3.5 px-4 text-center text-slate-500 font-bold">
+                      <td className="py-3.5 px-4 text-center text-slate-500 dark:text-[#94a3b8] font-bold">
                         {cat.count}
                       </td>
 
                       {/* Gastado */}
-                      <td className="py-3.5 px-4 text-right text-slate-800 font-black">
+                      <td className="py-3.5 px-4 text-right text-slate-800 dark:text-[#ffffff] font-black">
                         {formatCurrency(cat.total)}
                       </td>
 
                       {/* Porcentaje */}
-                      <td className="py-3.5 px-4 text-right text-slate-500 font-bold">
+                      <td className="py-3.5 px-4 text-right text-slate-500 dark:text-[#94a3b8] font-bold">
                         {spentPercent}%
                       </td>
 

@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { useFinanceStore } from '../../store/useFinanceStore.js';
 import { supabase } from '../../services/supabase.js';
-import logoImg from '../../assets/logo viatigo copia.png';
+import logoImg from '../../assets/viatigoapplogo.png';
 
 export const Sidebar = ({ isMobileOpen, onCloseMobile }) => {
   const { currentPage, setCurrentPage } = useFinanceStore();
@@ -72,18 +72,18 @@ export const Sidebar = ({ isMobileOpen, onCloseMobile }) => {
         `}
       >
         {/* Brand Logo & Toggle Header */}
-        <div className="w-full flex items-center mb-6 shrink-0 justify-between px-2 md:justify-center md:px-0">
-          <div className="flex items-center gap-3">
-            <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 shadow-[0_0_15px_rgba(114,165,228,0.15)] flex items-center justify-center">
+        <div className="w-full flex items-center mb-6 shrink-0 justify-between px-4 md:justify-center md:px-0 relative">
+          <div className="flex flex-col items-center gap-1.5 md:mx-auto">
+            <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0 flex items-center justify-center bg-[#000000]">
               <img
                 src={logoImg}
                 alt="Logo"
-                className="w-11 h-full object-cover"
+                className="w-full h-full object-cover"
                 style={{ transform: 'scale(1.42)' }}
               />
             </div>
-            <span className={`text-white font-black text-[32px] tracking-wide animate-fade-in-right whitespace-nowrap md:hidden ${isExpanded ? 'md:block' : 'md:hidden'}`}>
-              Viati<span className="text-[#10b981]">Go</span>
+            <span className={`text-[#ffffff] font-black text-lg tracking-wide animate-fade-in whitespace-nowrap ${isExpanded ? 'block' : 'block md:hidden'}`}>
+              Viati<span className="text-[#FB00FF]">Go</span>
             </span>
           </div>
 

@@ -91,16 +91,16 @@ export const InvestmentModal = ({ isOpen, onClose, investmentToEdit = null }) =>
 
   return (
     <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white border border-slate-100 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
+      <div className="bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
         
         {/* Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-          <h3 className="font-bold text-slate-800 flex items-center gap-2">
-            <TrendingUp size={18} className="text-indigo-500" />
+        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] bg-slate-50 dark:bg-[#1C1D2A]">
+          <h3 className="font-bold text-slate-800 dark:text-[#ffffff] flex items-center gap-2">
+            <TrendingUp size={18} className="text-indigo-500 dark:text-[#FB00FF]" />
             {investmentToEdit ? 'Editar Inversión' : 'Nueva Inversión'}
           </h3>
           <button 
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 hover:bg-slate-100 rounded-lg cursor-pointer"
+            className="text-slate-400 dark:text-[#94a3b8] hover:text-slate-600 dark:text-[#94a3b8] transition-colors p-1 hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] rounded-lg cursor-pointer"
             onClick={onClose}
           >
             <X size={18} />

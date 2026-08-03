@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+/* Enable class-based dark mode in Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-income: #10b981;
   --color-income-bg: rgba(16, 185, 129, 0.08);
@@ -31,6 +34,18 @@
   background: #fafafa;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+}
+
+/* Dark mode card overrides */
+.dark .glass-card {
+  background: #12131A;
+  border-color: rgba(255,255,255,0.07);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+
+.dark .glass-card:hover {
+  background: #1C1D2A;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 
 body {
@@ -114,23 +129,22 @@ body {
   }
 }
 
-/* Soporte global para Modo Oscuro en cascada */
-html.dark {
-  filter: invert(0.9) hue-rotate(180deg);
+/* ─── Dark Mode Native Overrides ─────────────────────────────────────────── */
+/* Activated when <html> has class="dark" */
+.dark body {
+  background-color: #000000;
+  color: #ffffff;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(251, 0, 255, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(18, 19, 26, 0.8) 0%, transparent 45%);
 }
 
-/* Revertir inversión en elementos multimedia, gráficos e iconos para mantener colores originales */
-html.dark img,
-html.dark svg,
-html.dark canvas,
-html.dark iframe,
-html.dark .no-invert,
-html.dark [style*="background-image"] {
-  filter: invert(1) hue-rotate(180deg);
-}
+.dark ::-webkit-scrollbar-track { background: #000000; }
+.dark ::-webkit-scrollbar-thumb { background: rgba(251, 0, 255, 0.25); border-radius: 4px; }
+.dark ::-webkit-scrollbar-thumb:hover { background: rgba(251, 0, 255, 0.45); }
 
-/* Asegurar transiciones suaves al cambiar de tema */
-html, body, header, aside, main, .card, Card {
+/* Transiciones suaves globales */
+html, body, header, aside, main, .card {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 

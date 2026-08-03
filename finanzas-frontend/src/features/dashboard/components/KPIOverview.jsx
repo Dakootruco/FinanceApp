@@ -25,21 +25,21 @@ export const KPIOverview = ({ summary = {}, investments = [], bankAccounts = [] 
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {/* Ingresos Card */}
-      <Card className="!bg-white border border-slate-100 text-slate-800 rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] text-slate-800 dark:text-[#ffffff] rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
         <CardContent className="p-0 flex flex-col gap-2.5">
           <div className="flex justify-between items-center w-full">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-emerald-50 text-emerald-500 border border-emerald-100/50">
                 <ArrowUpRight size={16} />
               </div>
-              <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">Ingresos</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] text-xs font-bold uppercase tracking-wider">Ingresos</span>
             </div>
           </div>
           <div>
-            <div className="text-2xl font-extrabold tracking-tight text-slate-800 font-sans">
+            <div className="text-2xl font-extrabold tracking-tight text-slate-800 dark:text-[#ffffff] font-sans">
               {formatCurrency(totalIncome)}
             </div>
-            <div className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-wider">
+            <div className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold mt-1 uppercase tracking-wider">
               Total de ingresos registrados
             </div>
           </div>
@@ -47,21 +47,21 @@ export const KPIOverview = ({ summary = {}, investments = [], bankAccounts = [] 
       </Card>
 
       {/* Gastos Card */}
-      <Card className="!bg-white border border-slate-100 text-slate-800 rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] text-slate-800 dark:text-[#ffffff] rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
         <CardContent className="p-0 flex flex-col gap-2.5">
           <div className="flex justify-between items-center w-full">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-rose-50 text-rose-500 border border-rose-100/50">
                 <ArrowDownRight size={16} />
               </div>
-              <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">Gastos</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] text-xs font-bold uppercase tracking-wider">Gastos</span>
             </div>
           </div>
           <div>
-            <div className="text-2xl font-extrabold tracking-tight text-slate-800 font-sans">
+            <div className="text-2xl font-extrabold tracking-tight text-slate-800 dark:text-[#ffffff] font-sans">
               {formatCurrency(totalExpenses)}
             </div>
-            <div className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-wider">
+            <div className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold mt-1 uppercase tracking-wider">
               Total de gastos registrados
             </div>
           </div>
@@ -69,21 +69,21 @@ export const KPIOverview = ({ summary = {}, investments = [], bankAccounts = [] 
       </Card>
 
       {/* Balance Total Card (replaces Savings/Ahorros) */}
-      <Card className="!bg-white border border-slate-100 text-slate-800 rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] text-slate-800 dark:text-[#ffffff] rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
         <CardContent className="p-0 flex flex-col gap-2.5">
           <div className="flex justify-between items-center w-full">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-indigo-50 text-indigo-500 border border-indigo-100/50">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] border border-indigo-100 dark:border-[#FB00FF]/20/50 dark:border-[#FB00FF]/20">
                 <DollarSign size={16} />
               </div>
-              <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">Balance Total</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] text-xs font-bold uppercase tracking-wider">Balance Total</span>
             </div>
           </div>
           <div>
-            <div className="text-2xl font-extrabold tracking-tight text-slate-800 font-sans">
+            <div className="text-2xl font-extrabold tracking-tight text-slate-800 dark:text-[#ffffff] font-sans">
               {formatCurrency(savingsValue)}
             </div>
-            <div className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-wider">
+            <div className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold mt-1 uppercase tracking-wider">
               Saldo disponible consolidado
             </div>
           </div>
@@ -91,14 +91,14 @@ export const KPIOverview = ({ summary = {}, investments = [], bankAccounts = [] 
       </Card>
 
       {/* Inversiones Card */}
-      <Card className="!bg-white border border-slate-100 text-slate-800 rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] text-slate-800 dark:text-[#ffffff] rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition-shadow">
         <CardContent className="p-0 flex flex-col gap-2.5">
           <div className="flex justify-between items-center w-full">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-sky-50 text-sky-500 border border-sky-100/50">
                 <LineChart size={16} />
               </div>
-              <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">Inversiones</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] text-xs font-bold uppercase tracking-wider">Inversiones</span>
             </div>
             <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full font-bold text-[10px] border ${
               isInvestmentPositive 
@@ -109,10 +109,10 @@ export const KPIOverview = ({ summary = {}, investments = [], bankAccounts = [] 
             </span>
           </div>
           <div>
-            <div className="text-2xl font-extrabold tracking-tight text-slate-800 font-sans">
+            <div className="text-2xl font-extrabold tracking-tight text-slate-800 dark:text-[#ffffff] font-sans">
               {formatCurrency(totalCurrentValue)}
             </div>
-            <div className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-wider">
+            <div className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold mt-1 uppercase tracking-wider">
               {isInvestmentPositive ? '+' : '-'}{formatCurrency(Math.abs(totalReturn))} de rendimiento neto
             </div>
           </div>

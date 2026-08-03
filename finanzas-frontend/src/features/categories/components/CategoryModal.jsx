@@ -118,16 +118,16 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
   return (
     <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       {/* Diálogo */}
-      <div className="bg-white border border-slate-100 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
+      <div className="bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
         
         {/* Encabezado */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-          <h3 className="font-bold text-slate-800 flex items-center gap-2">
-            <Tags size={18} className="text-indigo-500" />
+        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] bg-slate-50 dark:bg-[#1C1D2A]">
+          <h3 className="font-bold text-slate-800 dark:text-[#ffffff] flex items-center gap-2">
+            <Tags size={18} className="text-indigo-500 dark:text-[#FB00FF]" />
             {categoryToEdit ? 'Editar Categoría' : 'Nueva Categoría'}
           </h3>
           <button 
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 hover:bg-slate-100 rounded-lg cursor-pointer"
+            className="text-slate-400 dark:text-[#94a3b8] hover:text-slate-600 dark:text-[#94a3b8] transition-colors p-1 hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] rounded-lg cursor-pointer"
             onClick={onClose}
           >
             <X size={18} />
@@ -154,14 +154,14 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
 
           {/* Tipo (Solo disponible al crear) */}
           <FormGroup label="Tipo de Categoría">
-            <div className="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200/50">
+            <div className="grid grid-cols-2 gap-2 bg-slate-100 dark:bg-[#1C1D2A] p-1 rounded-xl border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/50">
               <button 
                 type="button" 
                 disabled={!!categoryToEdit}
                 className={`py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${
                   form.type === 'expense' 
-                    ? 'bg-white text-rose-650 shadow-sm border border-slate-200/20' 
-                    : 'text-slate-500 hover:text-slate-800 disabled:opacity-50'
+                    ? 'bg-white dark:bg-[#12131A] text-rose-650 shadow-sm border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/20' 
+                    : 'text-slate-500 dark:text-[#94a3b8] hover:text-slate-800 dark:text-[#ffffff] dark:hover:text-white dark:text-[#ffffff] disabled:opacity-50'
                 }`}
                 onClick={() => setForm(prev => ({ ...prev, type: 'expense' }))}
               >
@@ -172,8 +172,8 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
                 disabled={!!categoryToEdit}
                 className={`py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${
                   form.type === 'income' 
-                    ? 'bg-white text-emerald-650 shadow-sm border border-slate-200/20' 
-                    : 'text-slate-500 hover:text-slate-800 disabled:opacity-50'
+                    ? 'bg-white dark:bg-[#12131A] text-emerald-650 shadow-sm border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/20' 
+                    : 'text-slate-500 dark:text-[#94a3b8] hover:text-slate-800 dark:text-[#ffffff] dark:hover:text-white dark:text-[#ffffff] disabled:opacity-50'
                 }`}
                 onClick={() => setForm(prev => ({ ...prev, type: 'income' }))}
               >
@@ -181,7 +181,7 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
               </button>
             </div>
             {categoryToEdit && (
-              <span className="text-[10px] font-semibold text-slate-400 mt-1">
+              <span className="text-[10px] font-semibold text-slate-400 dark:text-[#94a3b8] mt-1">
                 El tipo no se puede cambiar en edición para mantener consistencia histórica.
               </span>
             )}
@@ -189,7 +189,7 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
 
           {/* Selector de Iconos */}
           <FormGroup label="Icono Representativo">
-            <div className="grid grid-cols-6 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200/50">
+            <div className="grid grid-cols-6 gap-2 bg-slate-50 dark:bg-[#1C1D2A] p-3 rounded-xl border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/50">
               {ICON_OPTIONS.map((opt) => {
                 const IconComp = opt.icon;
                 const isSelected = form.icon === opt.name;
@@ -201,8 +201,8 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
                     onClick={() => setForm(prev => ({ ...prev, icon: opt.name }))}
                     className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all cursor-pointer ${
                       isSelected 
-                        ? 'bg-indigo-600 text-white shadow-md scale-105' 
-                        : 'bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-850 border border-slate-200/40'
+                        ? 'bg-indigo-600 dark:bg-[#FB00FF] text-white shadow-md scale-105' 
+                        : 'bg-white dark:bg-[#12131A] text-slate-600 dark:text-[#94a3b8] hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] hover:text-slate-850 border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/40'
                     }`}
                   >
                     <IconComp size={18} />
@@ -214,7 +214,7 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
 
           {/* Selector de Colores */}
           <FormGroup label="Color Temático">
-            <div className="flex flex-wrap gap-2.5 bg-slate-50 p-3 rounded-xl border border-slate-200/50 items-center justify-between">
+            <div className="flex flex-wrap gap-2.5 bg-slate-50 dark:bg-[#1C1D2A] p-3 rounded-xl border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/50 items-center justify-between">
               <div className="flex flex-wrap gap-2">
                 {PRESET_COLORS.map((col) => {
                   const isSelected = form.color.toLowerCase() === col.toLowerCase();
@@ -227,7 +227,7 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
                       style={{ backgroundColor: col }}
                     >
                       {isSelected && (
-                        <div className="w-2 h-2 rounded-full bg-white shadow-sm" />
+                        <div className="w-2 h-2 rounded-full bg-white dark:bg-[#12131A] shadow-sm" />
                       )}
                     </button>
                   );
@@ -235,10 +235,10 @@ export const CategoryModal = ({ isOpen, onClose, categoryToEdit = null }) => {
               </div>
               
               {/* Selector personalizado */}
-              <div className="flex items-center gap-1.5 border-l border-slate-200 pl-3">
+              <div className="flex items-center gap-1.5 border-l border-slate-200 dark:border-[rgba(255,255,255,0.07)] pl-3">
                 <input 
                   type="color" 
-                  className="w-8 h-8 border border-slate-200 rounded-lg cursor-pointer bg-white p-1"
+                  className="w-8 h-8 border border-slate-200 dark:border-[rgba(255,255,255,0.07)] rounded-lg cursor-pointer bg-white dark:bg-[#12131A] p-1"
                   value={form.color}
                   onChange={(e) => setForm(prev => ({ ...prev, color: e.target.value }))}
                   title="Color personalizado"

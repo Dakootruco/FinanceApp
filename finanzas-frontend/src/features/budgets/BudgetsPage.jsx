@@ -100,11 +100,11 @@ export const BudgetsPage = () => {
       {/* Encabezado */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <Wallet className="text-indigo-400" size={24} />
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff] tracking-tight flex items-center gap-2.5">
+            <Wallet className="text-indigo-400 dark:text-[#FB00FF]" size={24} />
             Límites de Presupuesto
           </h2>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+          <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold mt-1">
             Controla tus consumos mensuales por categoría y evita exceder tus límites financieros.
           </p>
         </div>
@@ -118,16 +118,16 @@ export const BudgetsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
         {/* KPI: Progreso Consolidado */}
-        <Card className="md:col-span-2 !bg-white border border-slate-100 rounded-3xl shadow-sm">
+        <Card className="md:col-span-2 !bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm">
           <CardContent className="flex flex-col gap-4">
-            <div className="flex justify-between items-center text-slate-500 text-xs font-bold uppercase tracking-wider">
+            <div className="flex justify-between items-center text-slate-500 dark:text-[#94a3b8] text-xs font-bold uppercase tracking-wider">
               <span>Consumo Global de Presupuestos</span>
-              <span className="text-xs font-black text-slate-800">{globalPercentage}%</span>
+              <span className="text-xs font-black text-slate-800 dark:text-[#ffffff]">{globalPercentage}%</span>
             </div>
 
             <Progress value={totalSpent} max={totalLimit} colorClass="bg-indigo-550" />
 
-            <div className="flex justify-between items-center text-xs font-semibold text-slate-500">
+            <div className="flex justify-between items-center text-xs font-semibold text-slate-500 dark:text-[#94a3b8]">
               <span>Gastado total presupuestado: {formatCurrency(totalSpent)}</span>
               <span>Límite total: {formatCurrency(totalLimit)}</span>
             </div>
@@ -135,18 +135,18 @@ export const BudgetsPage = () => {
         </Card>
 
         {/* KPI: Alertas de Desvíos */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm">
           <CardContent className="flex flex-col justify-between h-full gap-4">
-            <div className="flex justify-between items-center text-slate-500 text-xs font-bold uppercase tracking-wider">
+            <div className="flex justify-between items-center text-slate-500 dark:text-[#94a3b8] text-xs font-bold uppercase tracking-wider">
               <span>Estado de Presupuestos</span>
-              <ShieldAlert className={exceededBudgetsCount > 0 ? 'text-rose-500 animate-bounce' : 'text-slate-500'} size={18} />
+              <ShieldAlert className={exceededBudgetsCount > 0 ? 'text-rose-500 animate-bounce' : 'text-slate-500 dark:text-[#94a3b8]'} size={18} />
             </div>
 
             <div className="flex flex-col gap-1 mt-1">
-              <span className="text-2xl font-extrabold text-slate-900">
+              <span className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff]">
                 {exceededBudgetsCount}
               </span>
-              <span className="text-xs font-semibold text-slate-500">
+              <span className="text-xs font-semibold text-slate-500 dark:text-[#94a3b8]">
                 {exceededBudgetsCount === 1
                   ? 'Presupuesto excedido este mes'
                   : 'Presupuestos excedidos este mes'
@@ -160,13 +160,13 @@ export const BudgetsPage = () => {
 
       {/* Grid de Presupuestos por Categoría */}
       {activeBudgets.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-slate-500 gap-3.5 bg-white border border-slate-100 rounded-3xl shadow-sm animate-fade-in">
-          <div className="w-14 h-14 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center border border-indigo-100 shadow-sm">
+        <div className="flex flex-col items-center justify-center py-16 text-slate-500 dark:text-[#94a3b8] gap-3.5 bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm animate-fade-in">
+          <div className="w-14 h-14 bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-[#FB00FF]/20 shadow-sm">
             <Wallet size={28} />
           </div>
           <div className="text-center flex flex-col gap-0.5 mt-1">
-            <p className="font-bold text-sm text-slate-800">No hay presupuestos configurados</p>
-            <span className="text-xs text-slate-400 font-semibold">Configura límites mensuales para monitorear tus consumos.</span>
+            <p className="font-bold text-sm text-slate-800 dark:text-[#ffffff]">No hay presupuestos configurados</p>
+            <span className="text-xs text-slate-400 dark:text-[#94a3b8] font-semibold">Configura límites mensuales para monitorear tus consumos.</span>
           </div>
           <Button variant="primary" onClick={handleCreate} className="mt-2">
             <Plus size={16} />

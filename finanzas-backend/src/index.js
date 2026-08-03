@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import pool from './config/db.js';
 
 import categoryRoutes from './routes/categoryRoutes.js';
@@ -24,7 +26,16 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares globales
+// Configuración de Rate Limit
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 200, // Limitar a 200 peticiones por IP cada 15 minutos
+  message: { error: 'Demasiadas peticiones desde esta IP, por favor intenta de nuevo más tarde.' }
+});
+
+// Middlewares globales de Seguridad y Básicos
+app.use(helmet()); // Protege cabeceras HTTP
+app.use(limiter);  // Aplica rate-limit a todas las rutas
 app.use(cors());
 app.use(express.json());
 
@@ -115,6 +126,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  });
+}
+
+export default app;

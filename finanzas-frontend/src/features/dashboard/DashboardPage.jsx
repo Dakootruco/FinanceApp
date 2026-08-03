@@ -174,32 +174,32 @@ export const DashboardPage = () => {
     const totalExpenseDisplay = totalAllExpenses;
 
     return (
-      <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
         <div className="flex justify-between items-center w-full mb-4">
-          <span className="text-base font-extrabold text-slate-800">Desglose de Gastos</span>
+          <span className="text-base font-extrabold text-slate-800 dark:text-[#ffffff]">Desglose de Gastos</span>
           <div className="relative">
             <select
               value={filterPeriod}
               onChange={(e) => setFilterPeriod(e.target.value)}
-              className="appearance-none bg-slate-50 border border-slate-200/60 rounded-xl pl-3 pr-8 py-1.5 text-xs text-slate-700 font-bold cursor-pointer outline-none focus:border-indigo-400 transition-all select-none"
+              className="appearance-none bg-slate-50 dark:bg-[#1C1D2A] border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/60 dark:border-[rgba(255,255,255,0.07)] rounded-xl pl-3 pr-8 py-1.5 text-xs text-slate-700 dark:text-[#ffffff] font-bold cursor-pointer outline-none focus:border-indigo-400 dark:border-[#FB00FF]/50 transition-all select-none"
             >
               <option value="hoy">Hoy</option>
               <option value="semana">Semana</option>
               <option value="mes">Mes</option>
               <option value="todo">Todo</option>
             </select>
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-slate-400 pointer-events-none">▼</span>
+            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-slate-400 dark:text-[#94a3b8] pointer-events-none">▼</span>
           </div>
         </div>
 
         {topExpenses.length === 0 ? (
           <div className="flex-grow flex flex-col items-center justify-center text-center py-8 gap-3.5">
-            <div className="w-12 h-12 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center border border-slate-100/60 shadow-sm shrink-0">
-              <TrendingDown size={22} className="text-slate-400" />
+            <div className="w-12 h-12 bg-slate-50 dark:bg-[#1C1D2A] text-slate-400 dark:text-[#94a3b8] rounded-xl flex items-center justify-center border border-slate-100 dark:border-[rgba(255,255,255,0.07)]/60 dark:border-[rgba(255,255,255,0.07)] shadow-sm shrink-0">
+              <TrendingDown size={22} className="text-slate-400 dark:text-[#94a3b8]" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-700">Sin gastos registrados</h4>
-              <p className="text-[10px] text-slate-400 font-semibold max-w-[180px] mt-0.5 mx-auto leading-relaxed">
+              <h4 className="text-xs font-bold text-slate-700 dark:text-[#ffffff]">Sin gastos registrados</h4>
+              <p className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-semibold max-w-[180px] mt-0.5 mx-auto leading-relaxed">
                 Tus consumos se desglosarán automáticamente por categoría aquí.
               </p>
             </div>
@@ -238,8 +238,8 @@ export const DashboardPage = () => {
 
                 {/* Centered Total */}
                 <div className="absolute flex flex-col items-center justify-center text-center pointer-events-none">
-                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 leading-none">Gasto Total</span>
-                  <span className="text-base font-black text-slate-800 mt-1 leading-none">
+                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-slate-400 dark:text-[#94a3b8] leading-none">Gasto Total</span>
+                  <span className="text-base font-black text-slate-800 dark:text-[#ffffff] mt-1 leading-none">
                     {formatCurrency(totalExpenseDisplay)}
                   </span>
                 </div>
@@ -252,11 +252,11 @@ export const DashboardPage = () => {
                 <div key={i} className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: cat.color }}></span>
-                    <span className="text-xs font-bold text-slate-600 truncate max-w-[140px]" title={cat.name}>{cat.name}</span>
+                    <span className="text-xs font-bold text-slate-600 dark:text-[#94a3b8] truncate max-w-[140px]" title={cat.name}>{cat.name}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-extrabold text-slate-800">{formatCurrency(cat.total)}</span>
-                    <span className="bg-slate-50 border border-slate-100 rounded px-1.5 py-0.5 text-[9px] font-bold text-slate-500">{cat.percentage}%</span>
+                    <span className="text-xs font-extrabold text-slate-800 dark:text-[#ffffff]">{formatCurrency(cat.total)}</span>
+                    <span className="bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded px-1.5 py-0.5 text-[9px] font-bold text-slate-500 dark:text-[#94a3b8]">{cat.percentage}%</span>
                   </div>
                 </div>
               ))}
@@ -272,29 +272,29 @@ export const DashboardPage = () => {
     const totalSaved = savingsGoals.reduce((sum, g) => sum + parseFloat(g.current_amount || 0), 0);
 
     return (
-    <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+    <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
       <div className="flex justify-between items-center w-full mb-4">
-        <span className="text-base font-extrabold text-slate-800">Planes de Ahorro</span>
+        <span className="text-base font-extrabold text-slate-800 dark:text-[#ffffff]">Planes de Ahorro</span>
         <button 
           onClick={() => setCurrentPage('savings-goals')}
-          className="text-[11px] font-extrabold text-indigo-600 hover:text-indigo-700 cursor-pointer"
+          className="text-[11px] font-extrabold text-indigo-600 dark:text-[#FB00FF] hover:text-indigo-700 dark:hover:text-[#d900dc] dark:text-[#d900dc] cursor-pointer"
         >
           + Añadir Plan
         </button>
       </div>
 
       <div className="flex flex-col gap-1.5 mb-5">
-        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Ahorro Total</span>
-        <span className="text-2xl font-black text-slate-800 tracking-tight">{formatCurrency(totalSaved)}</span>
+        <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Ahorro Total</span>
+        <span className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">{formatCurrency(totalSaved)}</span>
       </div>
 
       {savingsGoals.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-6 text-slate-400 gap-2 text-center">
-          <Target size={28} className="text-indigo-300" />
-          <p className="text-xs font-semibold text-slate-500">Sin planes de ahorro activos</p>
+        <div className="flex flex-col items-center justify-center py-6 text-slate-400 dark:text-[#94a3b8] gap-2 text-center">
+          <Target size={28} className="text-indigo-300 dark:text-[#FB00FF]/60" />
+          <p className="text-xs font-semibold text-slate-500 dark:text-[#94a3b8]">Sin planes de ahorro activos</p>
           <button
             onClick={() => setCurrentPage('savings-goals')}
-            className="mt-1 py-1.5 px-3 rounded-xl text-[10px] font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100/80 transition-all cursor-pointer"
+            className="mt-1 py-1.5 px-3 rounded-xl text-[10px] font-bold text-indigo-600 dark:text-[#FB00FF] hover:text-indigo-700 dark:hover:text-[#d900dc] dark:text-[#d900dc] bg-indigo-50 dark:bg-[#FB00FF]/10 hover:bg-indigo-100 dark:bg-[#FB00FF]/15/80 dark:hover:bg-[#FB00FF]/20 dark:bg-[#FB00FF]/20 transition-all cursor-pointer"
           >
             Crear Plan
           </button>
@@ -310,10 +310,10 @@ export const DashboardPage = () => {
             return (
               <div key={goal.id} className="flex flex-col gap-1.5">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-bold text-slate-700">{goal.name}</span>
-                  <span className="text-slate-400 font-bold text-[9px]">{formatCurrency(current)} / {formatCurrency(target)}</span>
+                  <span className="font-bold text-slate-700 dark:text-[#ffffff]">{goal.name}</span>
+                  <span className="text-slate-400 dark:text-[#94a3b8] font-bold text-[9px]">{formatCurrency(current)} / {formatCurrency(target)}</span>
                 </div>
-                <div className="relative w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div className="relative w-full h-2 bg-slate-100 dark:bg-[#1C1D2A] rounded-full overflow-hidden">
                   <div 
                     className="absolute left-0 top-0 h-full rounded-full transition-all duration-500" 
                     style={{ width: `${Math.min(percentage, 100)}%`, backgroundColor: colorTheme }} 
@@ -376,29 +376,29 @@ export const DashboardPage = () => {
     const activeBudgets = budgetsData.filter(b => b.limit !== null);
 
     return (
-      <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
         <div className="flex justify-between items-center w-full mb-4">
-          <span className="text-base font-extrabold text-slate-800">Límites de Presupuesto</span>
+          <span className="text-base font-extrabold text-slate-800 dark:text-[#ffffff]">Límites de Presupuesto</span>
           <button
             onClick={() => setCurrentPage('budgets')}
-            className="text-[11px] font-extrabold text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100/80 px-2.5 py-1 rounded-xl transition-all cursor-pointer"
+            className="text-[11px] font-extrabold text-indigo-600 dark:text-[#FB00FF] hover:text-indigo-700 dark:hover:text-[#d900dc] dark:text-[#d900dc] bg-indigo-50 dark:bg-[#FB00FF]/10 hover:bg-indigo-100 dark:bg-[#FB00FF]/15/80 dark:hover:bg-[#FB00FF]/20 dark:bg-[#FB00FF]/20 px-2.5 py-1 rounded-xl transition-all cursor-pointer"
           >
             Ver Todos
           </button>
         </div>
 
         {activeBudgets.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-6 text-slate-400 gap-3 text-center">
-            <div className="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-xl flex items-center justify-center border border-indigo-100 shadow-sm shrink-0">
+          <div className="flex flex-col items-center justify-center py-6 text-slate-400 dark:text-[#94a3b8] gap-3 text-center">
+            <div className="w-10 h-10 bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] rounded-xl flex items-center justify-center border border-indigo-100 dark:border-[#FB00FF]/20 shadow-sm shrink-0">
               <Wallet size={20} />
             </div>
             <div className="flex flex-col gap-0.5">
-              <p className="font-bold text-xs text-slate-800">Sin presupuestos activos</p>
-              <span className="text-[10px] text-slate-400 font-semibold leading-relaxed">Configura límites mensuales para monitorear tus consumos.</span>
+              <p className="font-bold text-xs text-slate-800 dark:text-[#ffffff]">Sin presupuestos activos</p>
+              <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-semibold leading-relaxed">Configura límites mensuales para monitorear tus consumos.</span>
             </div>
             <button
               onClick={() => setCurrentPage('budgets')}
-              className="mt-2 py-1.5 px-3 rounded-xl text-[10px] font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100/80 transition-all cursor-pointer flex items-center justify-center gap-1"
+              className="mt-2 py-1.5 px-3 rounded-xl text-[10px] font-bold text-indigo-600 dark:text-[#FB00FF] hover:text-indigo-700 dark:hover:text-[#d900dc] dark:text-[#d900dc] bg-indigo-50 dark:bg-[#FB00FF]/10 hover:bg-indigo-100 dark:bg-[#FB00FF]/15/80 dark:hover:bg-[#FB00FF]/20 dark:bg-[#FB00FF]/20 transition-all cursor-pointer flex items-center justify-center gap-1"
             >
               <Plus size={12} />
               Configurar
@@ -414,7 +414,7 @@ export const DashboardPage = () => {
               return (
                 <div
                   key={b.category_id}
-                  className="border border-slate-100 bg-slate-50/10 rounded-2xl p-3 flex flex-col gap-2 hover:border-slate-200 transition-colors"
+                  className="border border-slate-100 dark:border-[rgba(255,255,255,0.07)] bg-slate-50 dark:bg-[#1C1D2A] rounded-2xl p-3 flex flex-col gap-2 hover:border-slate-200 dark:border-[rgba(255,255,255,0.07)] transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
@@ -428,29 +428,29 @@ export const DashboardPage = () => {
                         <IconComponent size={16} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-xs text-slate-800">{b.name}</h4>
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Límite mensual</span>
+                        <h4 className="font-bold text-xs text-slate-800 dark:text-[#ffffff]">{b.name}</h4>
+                        <span className="text-[9px] font-bold text-slate-400 dark:text-[#94a3b8] uppercase tracking-wider">Límite mensual</span>
                       </div>
                     </div>
-                    <span className="text-xs font-black text-slate-800">
+                    <span className="text-xs font-black text-slate-800 dark:text-[#ffffff]">
                       {formatCurrency(b.limit)}
                     </span>
                   </div>
 
                   {/* Barra de Progreso */}
                   <div className="flex flex-col gap-1.5">
-                    <div className="relative w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="relative w-full h-1.5 bg-slate-100 dark:bg-[#1C1D2A] rounded-full overflow-hidden">
                       <div
-                        className={`absolute left-0 top-0 h-full rounded-full transition-all duration-500 ${isOverBudget ? 'bg-rose-500' : 'bg-indigo-500'
+                        className={`absolute left-0 top-0 h-full rounded-full transition-all duration-500 ${isOverBudget ? 'bg-rose-500' : 'bg-indigo-500 dark:bg-[#FB00FF]'
                           }`}
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
                     <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-wider">
-                      <span className={isOverBudget ? 'text-rose-600 font-extrabold' : 'text-slate-400'}>
+                      <span className={isOverBudget ? 'text-rose-600 font-extrabold' : 'text-slate-400 dark:text-[#94a3b8]'}>
                         {percentage}% {isOverBudget ? 'excedido' : 'consumido'}
                       </span>
-                      <span className="text-slate-500">
+                      <span className="text-slate-500 dark:text-[#94a3b8]">
                         Gastado: {formatCurrency(b.spent)}
                       </span>
                     </div>
@@ -469,12 +469,12 @@ export const DashboardPage = () => {
     const totalBankBalance = bankAccounts.reduce((sum, acc) => sum + parseFloat(acc.balance || 0), 0);
 
     return (
-      <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
         <div className="flex justify-between items-center w-full mb-4">
-          <span className="text-base font-extrabold text-slate-800">Cuentas Bancarias</span>
+          <span className="text-base font-extrabold text-slate-800 dark:text-[#ffffff]">Cuentas Bancarias</span>
           <button 
             onClick={() => setCurrentPage('bank-accounts')}
-            className="text-slate-400 hover:text-indigo-500 font-extrabold text-lg transition-colors cursor-pointer"
+            className="text-slate-400 dark:text-[#94a3b8] hover:text-indigo-500 dark:text-[#FB00FF] font-extrabold text-lg transition-colors cursor-pointer"
             title="Administrar cuentas"
           >
             ···
@@ -483,12 +483,12 @@ export const DashboardPage = () => {
 
         {bankAccounts.length === 0 ? (
           <div className="flex-grow flex flex-col items-center justify-center text-center py-6 gap-3.5">
-            <div className="w-12 h-12 bg-indigo-50 text-indigo-500 rounded-xl flex items-center justify-center border border-indigo-100/50">
+            <div className="w-12 h-12 bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] rounded-xl flex items-center justify-center border border-indigo-100 dark:border-[#FB00FF]/20/50 dark:border-[#FB00FF]/20">
               <Landmark size={22} />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-700">Sin cuentas asociadas</h4>
-              <p className="text-[10px] text-slate-400 font-semibold max-w-[200px] mt-0.5 mx-auto leading-relaxed">
+              <h4 className="text-xs font-bold text-slate-700 dark:text-[#ffffff]">Sin cuentas asociadas</h4>
+              <p className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-semibold max-w-[200px] mt-0.5 mx-auto leading-relaxed">
                 Asocia tus cuentas bancarias para ver tus saldos en tiempo real.
               </p>
             </div>
@@ -503,8 +503,8 @@ export const DashboardPage = () => {
         ) : (
           <>
             <div className="flex flex-col gap-1 mb-5">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Saldo Total en Bancos</span>
-              <span className="text-2xl font-black text-slate-800 tracking-tight">{formatCurrency(totalBankBalance)}</span>
+              <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Saldo Total en Bancos</span>
+              <span className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">{formatCurrency(totalBankBalance)}</span>
             </div>
 
             <div className="grid grid-cols-2 gap-4 max-h-[300px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -552,12 +552,12 @@ export const DashboardPage = () => {
     const totalCreditCardsBalance = creditCards.reduce((sum, card) => sum + parseFloat(card.balance || 0), 0);
 
     return (
-      <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
         <div className="flex justify-between items-center w-full mb-4">
-          <span className="text-base font-extrabold text-slate-800">Tarjetas de Crédito</span>
+          <span className="text-base font-extrabold text-slate-800 dark:text-[#ffffff]">Tarjetas de Crédito</span>
           <button 
             onClick={() => setCurrentPage('credit-cards')}
-            className="text-slate-400 hover:text-indigo-500 font-extrabold text-lg transition-colors cursor-pointer"
+            className="text-slate-400 dark:text-[#94a3b8] hover:text-indigo-500 dark:text-[#FB00FF] font-extrabold text-lg transition-colors cursor-pointer"
             title="Administrar tarjetas"
           >
             ···
@@ -566,12 +566,12 @@ export const DashboardPage = () => {
 
         {creditCards.length === 0 ? (
           <div className="flex-grow flex flex-col items-center justify-center text-center py-6 gap-3.5">
-            <div className="w-12 h-12 bg-indigo-50 text-indigo-500 rounded-xl flex items-center justify-center border border-indigo-100/50">
+            <div className="w-12 h-12 bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] rounded-xl flex items-center justify-center border border-indigo-100 dark:border-[#FB00FF]/20/50 dark:border-[#FB00FF]/20">
               <CreditCard size={22} />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-700">Sin tarjetas asociadas</h4>
-              <p className="text-[10px] text-slate-400 font-semibold max-w-[200px] mt-0.5 mx-auto leading-relaxed">
+              <h4 className="text-xs font-bold text-slate-700 dark:text-[#ffffff]">Sin tarjetas asociadas</h4>
+              <p className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-semibold max-w-[200px] mt-0.5 mx-auto leading-relaxed">
                 Asocia tus tarjetas de crédito para ver tus saldos en tiempo real.
               </p>
             </div>
@@ -586,8 +586,8 @@ export const DashboardPage = () => {
         ) : (
           <>
             <div className="flex flex-col gap-1 mb-5">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Saldo Deudor Total</span>
-              <span className="text-2xl font-black text-slate-800 tracking-tight">{formatCurrency(totalCreditCardsBalance)}</span>
+              <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Saldo Deudor Total</span>
+              <span className="text-2xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">{formatCurrency(totalCreditCardsBalance)}</span>
             </div>
 
             <div className="flex flex-col gap-4 max-h-[320px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -631,8 +631,8 @@ export const DashboardPage = () => {
                     style={{ backgroundColor: card.color_theme || '#121620' }}
                   >
                     {/* Capa de división curva bicolor */}
-                    <div className="absolute right-0 top-0 bottom-0 w-[40%] bg-white/[0.04] rounded-l-full pointer-events-none" />
-                    <div className="absolute right-[-10%] top-[-20%] w-[50%] h-[140%] rounded-full bg-white/[0.02] blur-xl pointer-events-none" />
+                    <div className="absolute right-0 top-0 bottom-0 w-[40%] bg-white dark:bg-[#12131A]/[0.04] rounded-l-full pointer-events-none" />
+                    <div className="absolute right-[-10%] top-[-20%] w-[50%] h-[140%] rounded-full bg-white dark:bg-[#12131A]/[0.02] blur-xl pointer-events-none" />
 
                     {/* Fila Superior: Banco y Nombre de Tarjeta */}
                     <div className="flex justify-between items-start z-10 w-full">
@@ -717,32 +717,32 @@ export const DashboardPage = () => {
     });
 
     return (
-      <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+      <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm p-6 flex flex-col h-full hover:shadow-md transition-shadow">
         <div className="flex justify-between items-center w-full mb-5">
-          <span className="text-base font-extrabold text-slate-800">Actividades Recientes</span>
-          <button className="text-slate-400 hover:text-slate-600 font-extrabold text-lg">···</button>
+          <span className="text-base font-extrabold text-slate-800 dark:text-[#ffffff]">Actividades Recientes</span>
+          <button className="text-slate-400 dark:text-[#94a3b8] hover:text-slate-600 dark:text-[#94a3b8] font-extrabold text-lg">···</button>
         </div>
 
         {activeActivities.length === 0 ? (
           <div className="flex-grow flex flex-col items-center justify-center text-center py-6 gap-3.5">
-            <div className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center border border-slate-100/60 shadow-sm shrink-0">
+            <div className="w-10 h-10 bg-slate-50 dark:bg-[#1C1D2A] text-slate-400 dark:text-[#94a3b8] rounded-xl flex items-center justify-center border border-slate-100 dark:border-[rgba(255,255,255,0.07)]/60 dark:border-[rgba(255,255,255,0.07)] shadow-sm shrink-0">
               <Activity size={18} />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-700">Sin actividades recientes</h4>
-              <p className="text-[10px] text-slate-400 font-semibold max-w-[180px] mt-0.5 mx-auto leading-relaxed">
+              <h4 className="text-xs font-bold text-slate-700 dark:text-[#ffffff]">Sin actividades recientes</h4>
+              <p className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-semibold max-w-[180px] mt-0.5 mx-auto leading-relaxed">
                 Tus transacciones y eventos recientes se mostrarán aquí.
               </p>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-5 text-slate-800">
+          <div className="flex flex-col gap-5 text-slate-800 dark:text-[#ffffff]">
             <div className="flex flex-col gap-3.5">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Historial Reciente</span>
+              <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider">Historial Reciente</span>
               {activeActivities.map((act, idx) => (
                 <div key={act.id} className="flex gap-3 relative">
                   {idx < activeActivities.length - 1 && (
-                    <div className="absolute left-[13px] top-[26px] bottom-[-22px] w-[2px] bg-slate-100" />
+                    <div className="absolute left-[13px] top-[26px] bottom-[-22px] w-[2px] bg-slate-100 dark:bg-[#1C1D2A]" />
                   )}
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 z-10 border ${
                     act.type === 'income' 
@@ -752,8 +752,8 @@ export const DashboardPage = () => {
                     <Activity size={12} />
                   </div>
                   <div className="flex flex-col justify-center">
-                    <span className="text-xs font-bold text-slate-800">{act.title}</span>
-                    <span className="text-[9px] text-slate-400 font-bold mt-0.5">{act.time}</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-[#ffffff]">{act.title}</span>
+                    <span className="text-[9px] text-slate-400 dark:text-[#94a3b8] font-bold mt-0.5">{act.time}</span>
                   </div>
                 </div>
               ))}
@@ -767,14 +767,14 @@ export const DashboardPage = () => {
   // --- Sub-componente: Tabla de Transacciones Recientes (Recent Transactions Card) ---
   const RecentTransactionsCard = () => {
     return (
-      <Card className="flex flex-col h-full !bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+      <Card className="flex flex-col h-full !bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm hover:shadow-md transition-shadow">
         <CardHeader className="flex justify-between items-center w-full !mb-4 !p-6">
           <CardTitle>Transacciones Recientes</CardTitle>
         </CardHeader>
         <CardContent className="!p-0 overflow-x-auto">
           {latestTransactions.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-slate-400 gap-3 text-center">
-              <MinusCircle size={36} className="text-slate-500" />
+            <div className="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-[#94a3b8] gap-3 text-center">
+              <MinusCircle size={36} className="text-slate-500 dark:text-[#94a3b8]" />
               <p className="text-sm">No hay movimientos registrados.</p>
               <Button variant="secondary" onClick={() => setImportModalOpen(true)} className="!py-2 !px-4 mt-2">
                 Añadir Uno
@@ -783,14 +783,14 @@ export const DashboardPage = () => {
           ) : (
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <tr className="border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] text-[10px] font-bold text-slate-400 dark:text-[#94a3b8] uppercase tracking-wider">
                   <th className="py-3.5 px-6">Nombre de Transacción</th>
                   <th className="py-3.5 px-4">Cuenta</th>
                   <th className="py-3.5 px-4">Fecha y Hora</th>
                   <th className="py-3.5 px-4">Monto</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50 text-slate-800 text-xs font-semibold">
+              <tbody className="divide-y divide-slate-50 dark:divide-[rgba(255,255,255,0.07)] text-slate-800 dark:text-[#ffffff] text-xs font-semibold">
                 {latestTransactions.map((tx) => {
                   const isIncome = tx.type === 'income';
                   const hasAccount = !!tx.bank_account_name;
@@ -802,12 +802,12 @@ export const DashboardPage = () => {
                   const catName = cat ? cat.name : (isIncome ? 'Ingresos' : 'Gastos');
 
                   return (
-                    <tr key={tx.id} className="hover:bg-slate-50/50 transition-colors">
+                    <tr key={tx.id} className="hover:bg-slate-50 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A]/50 transition-colors">
                       <td className="py-4 px-6 flex items-center gap-3">
                         {renderCategoryIcon(tx.category_icon, tx.category_color)}
                         <div className="flex flex-col">
-                          <span className="font-bold text-slate-800 text-[13px]">{tx.description}</span>
-                          <span className="text-[10px] text-slate-400 font-bold tracking-wide mt-0.5">{catName}</span>
+                          <span className="font-bold text-slate-800 dark:text-[#ffffff] text-[13px]">{tx.description}</span>
+                          <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold tracking-wide mt-0.5">{catName}</span>
                         </div>
                       </td>
                       <td className="py-4 px-4">
@@ -816,8 +816,8 @@ export const DashboardPage = () => {
                             !hasAccount 
                               ? 'bg-emerald-50 text-emerald-600 border border-emerald-100/30' 
                               : hasAccount 
-                              ? 'bg-indigo-50 text-indigo-600 border border-indigo-100/30' 
-                              : 'bg-slate-100 text-slate-55 border border-slate-200/30'
+                              ? 'bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-600 dark:text-[#FB00FF] border border-indigo-100 dark:border-[#FB00FF]/20/30' 
+                              : 'bg-slate-100 dark:bg-[#1C1D2A] text-slate-55 border border-slate-200 dark:border-[rgba(255,255,255,0.07)]/30'
                             }`}>
                             {accountLabel.type}
                           </span>
@@ -826,7 +826,7 @@ export const DashboardPage = () => {
                           </span>
                         </div>
                       </td>
-                      <td className="py-4 px-4 text-slate-400 font-bold text-[11px]">
+                      <td className="py-4 px-4 text-slate-400 dark:text-[#94a3b8] font-bold text-[11px]">
                         {formatDate(tx.date)}
                       </td>
                       <td className={`py-4 px-4 font-bold text-sm ${isIncome ? 'text-emerald-500' : 'text-rose-500'}`}>

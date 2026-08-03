@@ -16,7 +16,7 @@ export const getBankStyles = (bankName = '') => {
       textColor: 'text-amber-400',
       tagColor: 'bg-amber-400/10 text-amber-400 border-amber-400/20',
       logo: (
-        <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white/10 p-0.5 border border-white/5 shrink-0">
+        <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white dark:bg-[#12131A]/10 p-0.5 border border-white/5 shrink-0">
           <img src={reservasLogo} className="w-full h-full object-contain select-none" alt="Banreservas" />
         </div>
       )
@@ -29,7 +29,7 @@ export const getBankStyles = (bankName = '') => {
       textColor: 'text-sky-300',
       tagColor: 'bg-sky-300/10 text-sky-300 border-sky-300/20',
       logo: (
-        <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white/10 p-0.5 border border-white/5 shrink-0">
+        <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white dark:bg-[#12131A]/10 p-0.5 border border-white/5 shrink-0">
           <img src={popularLogo} className="w-full h-full object-contain select-none" alt="Popular" />
         </div>
       )
@@ -42,7 +42,7 @@ export const getBankStyles = (bankName = '') => {
       textColor: 'text-emerald-300',
       tagColor: 'bg-emerald-300/10 text-emerald-300 border-emerald-300/20',
       logo: (
-        <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white/10 p-0.5 border border-white/5 shrink-0">
+        <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white dark:bg-[#12131A]/10 p-0.5 border border-white/5 shrink-0">
           <img src={bhdLogo} className="w-full h-full object-contain select-none" alt="BHD" />
         </div>
       )
@@ -55,7 +55,7 @@ export const getBankStyles = (bankName = '') => {
       textColor: 'text-sky-300',
       tagColor: 'bg-sky-300/10 text-sky-300 border-sky-300/20',
       logo: (
-        <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white p-0.5 shrink-0">
+        <div className="w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden bg-white dark:bg-[#12131A] p-0.5 shrink-0">
           <img src={qikLogo} className="w-full h-full object-contain select-none" alt="Qik" />
         </div>
       )
@@ -78,10 +78,10 @@ export const getBankStyles = (bankName = '') => {
   // Fallback / Genérico
   return {
     gradient: 'from-[#1e293b] to-[#0f172a] text-white border-slate-900/50 shadow-[0_4px_20px_rgba(15,23,42,0.15)]',
-    textColor: 'text-indigo-400',
-    tagColor: 'bg-indigo-400/10 text-indigo-400 border-indigo-400/20',
+    textColor: 'text-indigo-400 dark:text-[#FB00FF]',
+    tagColor: 'bg-indigo-400/10 text-indigo-400 dark:text-[#FB00FF] border-indigo-400 dark:border-[#FB00FF]/50/20',
     logo: (
-      <div className="w-7 h-7 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-300 shrink-0">
+      <div className="w-7 h-7 rounded-xl bg-indigo-500 dark:bg-[#FB00FF]/10 border border-indigo-500 dark:border-[#FB00FF]/50/20 flex items-center justify-center text-indigo-300 dark:text-[#FB00FF]/60 shrink-0">
         <Landmark size={14} />
       </div>
     )

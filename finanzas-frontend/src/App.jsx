@@ -102,9 +102,9 @@ function App() {
   // 1. Cargando Estado de Autenticación
   if (authChecking) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen bg-[#f4f5f7] text-slate-800">
-        <RefreshCw size={40} className="animate-spin text-indigo-600" />
-        <p className="mt-4 text-sm font-bold text-slate-500">Verificando sesión...</p>
+      <div className="flex flex-col justify-center items-center min-h-screen bg-[#f4f5f7] dark:bg-[#000000] text-slate-800 dark:text-[#ffffff]">
+        <RefreshCw size={40} className="animate-spin text-indigo-600 dark:text-[#FB00FF]" />
+        <p className="mt-4 text-sm font-bold text-slate-500 dark:text-[#94a3b8]">Verificando sesión...</p>
       </div>
     );
   }
@@ -117,9 +117,9 @@ function App() {
   // 3. Cargando Datos Financieros (después de autenticar)
   if (loading) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen bg-[#f4f5f7] text-slate-800">
-        <RefreshCw size={40} className="animate-spin text-indigo-600" />
-        <p className="mt-4 text-sm font-bold text-slate-500">Cargando tu panel de finanzas...</p>
+      <div className="flex flex-col justify-center items-center min-h-screen bg-[#f4f5f7] dark:bg-[#000000] text-slate-800 dark:text-[#ffffff]">
+        <RefreshCw size={40} className="animate-spin text-indigo-600 dark:text-[#FB00FF]" />
+        <p className="mt-4 text-sm font-bold text-slate-500 dark:text-[#94a3b8]">Cargando tu panel de finanzas...</p>
       </div>
     );
   }
@@ -127,13 +127,13 @@ function App() {
   // 4. Estado de Error de Red con el Servidor
   if (error || !apiOnline) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen bg-[#f4f5f7] px-6">
-        <div className="bg-white border border-slate-100 p-8 rounded-3xl max-w-md w-full shadow-2xl flex flex-col items-center text-center gap-4">
+      <div className="flex flex-col justify-center items-center min-h-screen bg-[#f4f5f7] dark:bg-[#000000] px-6">
+        <div className="bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] p-8 rounded-3xl max-w-md w-full shadow-2xl flex flex-col items-center text-center gap-4">
           <div className="w-14 h-14 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center border border-rose-100 shadow-sm">
             <AlertCircle size={32} />
           </div>
-          <h2 className="text-xl font-extrabold text-slate-800 mt-2">Error de Conexión</h2>
-          <p className="text-slate-500 text-xs font-semibold leading-relaxed">
+          <h2 className="text-xl font-extrabold text-slate-800 dark:text-[#ffffff] mt-2">Error de Conexión</h2>
+          <p className="text-slate-500 dark:text-[#94a3b8] text-xs font-semibold leading-relaxed">
             {error || 'No pudimos conectarnos al servidor de la base de datos local. Por favor verifica que tu API Express esté corriendo.'}
           </p>
           <div className="flex flex-col gap-2 w-full mt-2">

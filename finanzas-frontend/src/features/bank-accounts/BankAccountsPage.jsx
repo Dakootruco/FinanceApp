@@ -119,11 +119,11 @@ export const BankAccountsPage = () => {
       {/* Encabezado */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <Landmark className="text-indigo-400" size={24} />
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff] tracking-tight flex items-center gap-2.5">
+            <Landmark className="text-indigo-400 dark:text-[#FB00FF]" size={24} />
             Cuentas de Banco
           </h2>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+          <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold mt-1">
             Administra tus cuentas bancarias y balances iniciales para conciliar movimientos.
           </p>
         </div>
@@ -137,35 +137,35 @@ export const BankAccountsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
         {/* KPI: Balance Total */}
-        <Card className="md:col-span-2 !bg-white border border-slate-100 rounded-3xl shadow-sm">
+        <Card className="md:col-span-2 !bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm">
           <CardContent className="flex flex-col justify-between h-full gap-4">
-            <div className="text-slate-500 text-xs font-bold uppercase tracking-wider">
+            <div className="text-slate-500 dark:text-[#94a3b8] text-xs font-bold uppercase tracking-wider">
               Capital Neto Total
             </div>
             <div>
-              <div className="text-3xl font-black text-slate-800 tracking-tight">
+              <div className="text-3xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">
                 {formatCurrency(totalBalance)}
               </div>
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mt-1">
+              <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider block mt-1">
                 Efectivo Disponible
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-semibold leading-relaxed">
+            <p className="text-[11px] text-slate-400 dark:text-[#94a3b8] font-semibold leading-relaxed">
               Suma agregada del saldo líquido disponible en todas tus cuentas de ahorro y corrientes.
             </p>
           </CardContent>
         </Card>
 
         {/* Cantidad de Cuentas */}
-        <Card className="!bg-white border border-slate-100 rounded-3xl shadow-sm">
+        <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm">
           <CardContent className="flex flex-col justify-between h-full gap-4">
-            <div className="text-slate-500 text-xs font-bold uppercase tracking-wider">
+            <div className="text-slate-500 dark:text-[#94a3b8] text-xs font-bold uppercase tracking-wider">
               Cuentas Registradas
             </div>
-            <div className="text-3xl font-black text-slate-800 tracking-tight">
+            <div className="text-3xl font-black text-slate-800 dark:text-[#ffffff] tracking-tight">
               {totalAccountsCount}
             </div>
-            <p className="text-[11px] text-slate-400 font-semibold leading-relaxed">
+            <p className="text-[11px] text-slate-400 dark:text-[#94a3b8] font-semibold leading-relaxed">
               Cuentas activas con las que puedes asociar estados de cuenta PDF y movimientos mensuales.
             </p>
           </CardContent>
@@ -175,13 +175,13 @@ export const BankAccountsPage = () => {
 
       {/* Listado de Cuentas */}
       {bankAccounts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-slate-500 gap-3.5 bg-white border border-slate-100 rounded-3xl shadow-sm min-h-[320px]">
-          <div className="w-14 h-14 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center border border-indigo-100 shadow-sm shrink-0">
+        <div className="flex flex-col items-center justify-center py-20 text-slate-500 dark:text-[#94a3b8] gap-3.5 bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl shadow-sm min-h-[320px]">
+          <div className="w-14 h-14 bg-indigo-50 dark:bg-[#FB00FF]/10 text-indigo-500 dark:text-[#FB00FF] rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-[#FB00FF]/20 shadow-sm shrink-0">
             <Landmark size={28} />
           </div>
           <div className="text-center flex flex-col gap-0.5">
-            <p className="font-bold text-sm text-slate-800">No hay cuentas bancarias registradas</p>
-            <span className="text-xs text-slate-400 font-semibold leading-relaxed">
+            <p className="font-bold text-sm text-slate-800 dark:text-[#ffffff]">No hay cuentas bancarias registradas</p>
+            <span className="text-xs text-slate-400 dark:text-[#94a3b8] font-semibold leading-relaxed">
               Registra tu primera cuenta bancaria para organizar tus movimientos y balances.
             </span>
           </div>
@@ -239,14 +239,14 @@ export const BankAccountsPage = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleOpenEdit(acc)}
-                      className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/5 text-white/90 transition-all cursor-pointer inline-flex items-center justify-center"
+                      className="p-1.5 rounded-lg bg-white dark:bg-[#12131A]/10 hover:bg-white dark:bg-[#12131A] dark:hover:bg-[#1C1D2A]/20 border border-white/5 text-white/90 transition-all cursor-pointer inline-flex items-center justify-center"
                       title="Editar cuenta"
                     >
                       <Edit3 size={13} />
                     </button>
                     <button
                       onClick={() => handleDelete(acc.id, acc.name)}
-                      className="p-1.5 rounded-lg bg-white/10 hover:bg-rose-500/80 border border-white/5 text-white/90 hover:text-white transition-all cursor-pointer inline-flex items-center justify-center"
+                      className="p-1.5 rounded-lg bg-white dark:bg-[#12131A]/10 hover:bg-rose-500/80 border border-white/5 text-white/90 hover:text-white transition-all cursor-pointer inline-flex items-center justify-center"
                       title="Eliminar cuenta"
                     >
                       <Trash2 size={13} />
@@ -262,16 +262,16 @@ export const BankAccountsPage = () => {
       {/* Modal de CRUD de Cuentas */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-100 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
+          <div className="bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
 
             {/* Cabecera */}
-            <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-              <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                <Landmark size={18} className="text-indigo-500" />
+            <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] bg-slate-50 dark:bg-[#1C1D2A]">
+              <h3 className="font-bold text-slate-800 dark:text-[#ffffff] flex items-center gap-2">
+                <Landmark size={18} className="text-indigo-500 dark:text-[#FB00FF]" />
                 {editingAccount ? 'Editar Cuenta Bancaria' : 'Registrar Cuenta Bancaria'}
               </h3>
               <button
-                className="text-slate-400 hover:text-slate-600 transition-colors p-1 hover:bg-slate-100 rounded-lg cursor-pointer"
+                className="text-slate-400 dark:text-[#94a3b8] hover:text-slate-600 dark:text-[#94a3b8] transition-colors p-1 hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] rounded-lg cursor-pointer"
                 onClick={() => {
                   setIsModalOpen(false);
                   setError(null);
@@ -369,7 +369,7 @@ export const BankAccountsPage = () => {
               </div>
 
               {/* Botones de acción */}
-              <div className="flex gap-3 justify-end mt-4 border-t border-slate-100 pt-4">
+              <div className="flex gap-3 justify-end mt-4 border-t border-slate-100 dark:border-[rgba(255,255,255,0.07)] pt-4">
                 <Button
                   type="button"
                   variant="secondary"

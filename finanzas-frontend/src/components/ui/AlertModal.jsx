@@ -26,11 +26,11 @@ export const AlertModal = () => {
 
   return (
     <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
-      <div className="bg-white border border-slate-100 w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
+      <div className="bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
         {/* Cabecera */}
         <div className="flex justify-end p-4 pb-0">
           <button 
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 hover:bg-slate-100 rounded-lg cursor-pointer outline-none"
+            className="text-slate-400 dark:text-[#94a3b8] hover:text-slate-600 dark:text-[#94a3b8] transition-colors p-1 hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] rounded-lg cursor-pointer outline-none"
             onClick={hideAlert}
           >
             <X size={16} />
@@ -44,10 +44,10 @@ export const AlertModal = () => {
           </div>
 
           <div className="flex flex-col gap-1.5 w-full">
-            <h3 className="font-extrabold text-slate-800 text-base leading-tight">
+            <h3 className="font-extrabold text-slate-800 dark:text-[#ffffff] text-base leading-tight">
               {title}
             </h3>
-            <p className="text-xs text-slate-500 font-semibold leading-relaxed break-words max-h-[150px] overflow-y-auto pr-1">
+            <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold leading-relaxed break-words max-h-[150px] overflow-y-auto pr-1">
               {description}
             </p>
           </div>

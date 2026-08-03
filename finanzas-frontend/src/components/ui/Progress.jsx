@@ -6,7 +6,7 @@
  * 
  * @param {number} value - Valor actual consumido (e.g. 4500)
  * @param {number} max - Límite de presupuesto (e.g. 10000)
- * @param {string} colorClass - Color opcional de Tailwind (e.g. 'bg-indigo-500')
+ * @param {string} colorClass - Color opcional de Tailwind (e.g. 'bg-indigo-500 dark:bg-[#FB00FF]')
  */
 export const Progress = ({ value = 0, max = 100, colorClass = '', className = '' }) => {
   const percentage = max > 0 ? Math.min(Math.round((value / max) * 100), 100) : 0;
@@ -22,7 +22,7 @@ export const Progress = ({ value = 0, max = 100, colorClass = '', className = ''
   return (
     <div className={`w-full ${className}`}>
       {/* Track */}
-      <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
+      <div className="w-full h-2.5 bg-white dark:bg-[#12131A]/5 rounded-full overflow-hidden border border-white/5">
         {/* Progress Bar */}
         <div 
           className={`h-full rounded-full transition-all duration-500 ease-out ${getDynamicColor()}`}

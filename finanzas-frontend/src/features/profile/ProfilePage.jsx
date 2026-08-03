@@ -151,13 +151,13 @@ export const ProfilePage = () => {
     <div className="flex flex-col gap-6 font-sans max-w-4xl mx-auto w-full">
       {/* Encabezado */}
       <div>
-        <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+        <h2 className="text-2xl font-extrabold text-slate-900 dark:text-[#ffffff] tracking-tight flex items-center gap-3">
           Mi Perfil de Usuario
           <span className="bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-emerald-100/30">
             Cuenta
           </span>
         </h2>
-        <p className="text-xs text-slate-500 font-semibold mt-1">
+        <p className="text-xs text-slate-500 dark:text-[#94a3b8] font-semibold mt-1">
           Administra la información de tu cuenta, credenciales de acceso y visualiza tus estadísticas generales.
         </p>
       </div>
@@ -181,9 +181,9 @@ export const ProfilePage = () => {
         
         {/* Columna Izquierda: Tarjeta de Avatar y Stats */}
         <div className="md:col-span-4 flex flex-col gap-6">
-          <Card className="!bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex flex-col items-center text-center">
+          <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl p-6 shadow-sm flex flex-col items-center text-center">
             {/* Avatar Círculo */}
-            <div className="w-24 h-24 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-3xl shadow-lg border-4 border-slate-100 relative group overflow-hidden">
+            <div className="w-24 h-24 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-3xl shadow-lg border-4 border-slate-100 dark:border-[rgba(255,255,255,0.07)] relative group overflow-hidden">
               {userName ? userName.substring(0, 2).toUpperCase() : 'US'}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                 <User size={18} className="text-white" />
@@ -192,23 +192,23 @@ export const ProfilePage = () => {
 
             {/* Nombre y Nombre de Usuario */}
             <div className="mt-4">
-              <h3 className="font-extrabold text-slate-800 text-lg leading-tight">{userName}</h3>
-              <p className="text-slate-400 text-xs font-bold mt-1">
+              <h3 className="font-extrabold text-slate-800 dark:text-[#ffffff] text-lg leading-tight">{userName}</h3>
+              <p className="text-slate-400 dark:text-[#94a3b8] text-xs font-bold mt-1">
                 @{userUsername || 'sin_usuario'}
               </p>
             </div>
 
             {/* Divisor */}
-            <div className="w-full border-t border-slate-100/80 my-5"></div>
+            <div className="w-full border-t border-slate-100 dark:border-[rgba(255,255,255,0.07)]/80 my-5"></div>
 
             {/* Enlaces / Info Base */}
-            <div className="w-full flex flex-col gap-3.5 text-left text-xs font-semibold text-slate-600">
+            <div className="w-full flex flex-col gap-3.5 text-left text-xs font-semibold text-slate-600 dark:text-[#94a3b8]">
               <div className="flex items-center gap-2.5">
-                <Mail size={14} className="text-slate-400 shrink-0" />
+                <Mail size={14} className="text-slate-400 dark:text-[#94a3b8] shrink-0" />
                 <span className="truncate" title={userEmail}>{userEmail || 'Cargando...'}</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Calendar size={14} className="text-slate-400 shrink-0" />
+                <Calendar size={14} className="text-slate-400 dark:text-[#94a3b8] shrink-0" />
                 <span>Miembro desde: {joinedDate || 'Cargando...'}</span>
               </div>
             </div>
@@ -232,9 +232,9 @@ export const ProfilePage = () => {
           
           {/* MODO EDICIÓN (FORMULARIO AJUSTES DE PERFIL) */}
           {isEditing ? (
-            <Card className="!bg-white border border-slate-100 rounded-3xl p-6 shadow-sm h-full flex flex-col justify-between">
+            <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl p-6 shadow-sm h-full flex flex-col justify-between">
               <div>
-                <h4 className="font-extrabold text-slate-800 text-base border-b border-slate-100 pb-3 mb-5">
+                <h4 className="font-extrabold text-slate-800 dark:text-[#ffffff] text-base border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] pb-3 mb-5">
                   Ajustes de Perfil
                 </h4>
                 
@@ -262,11 +262,11 @@ export const ProfilePage = () => {
                   </div>
 
                   {/* Divisor */}
-                  <div className="border-t border-slate-100 my-2"></div>
+                  <div className="border-t border-slate-100 dark:border-[rgba(255,255,255,0.07)] my-2"></div>
                   
                   {/* Sección Cambiar Contraseña */}
                   <div>
-                    <h5 className="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-3">
+                    <h5 className="font-extrabold text-slate-800 dark:text-[#ffffff] text-xs uppercase tracking-wider mb-3">
                       Cambiar Contraseña (Opcional)
                     </h5>
                     
@@ -282,7 +282,7 @@ export const ProfilePage = () => {
                           <button
                             type="button"
                             onClick={() => setShowNewPassword(!showNewPassword)}
-                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-650 outline-none cursor-pointer"
+                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#94a3b8] hover:text-slate-650 outline-none cursor-pointer"
                           >
                             {showNewPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                           </button>
@@ -300,7 +300,7 @@ export const ProfilePage = () => {
                           <button
                             type="button"
                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-650 outline-none cursor-pointer"
+                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#94a3b8] hover:text-slate-650 outline-none cursor-pointer"
                           >
                             {showConfirmPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                           </button>
@@ -310,7 +310,7 @@ export const ProfilePage = () => {
                   </div>
 
                   {/* Acciones del formulario */}
-                  <div className="flex justify-end gap-3 mt-6 border-t border-slate-100 pt-5">
+                  <div className="flex justify-end gap-3 mt-6 border-t border-slate-100 dark:border-[rgba(255,255,255,0.07)] pt-5">
                     <Button 
                       type="button" 
                       onClick={() => setIsEditing(false)} 
@@ -336,66 +336,66 @@ export const ProfilePage = () => {
             <div className="flex flex-col gap-6 h-full">
               {/* MODO LECTURA (INFORMACIÓN GENERAL Y ESTADÍSTICAS) */}
               {/* Tarjeta de Información General */}
-              <Card className="!bg-white border border-slate-100 rounded-3xl p-6 shadow-sm">
-                <h4 className="font-extrabold text-slate-800 text-base border-b border-slate-100 pb-3 mb-5">
+              <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl p-6 shadow-sm">
+                <h4 className="font-extrabold text-slate-800 dark:text-[#ffffff] text-base border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] pb-3 mb-5">
                   Información General de la Cuenta
                 </h4>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-xs font-semibold text-slate-600">
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-400 flex items-center gap-2"><User size={13} /> Nombre Completo:</span>
-                    <span className="text-slate-800 font-bold">{userName}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-xs font-semibold text-slate-600 dark:text-[#94a3b8]">
+                  <div className="flex items-center justify-between border-b border-slate-50 dark:border-[rgba(255,255,255,0.07)] pb-2">
+                    <span className="text-slate-400 dark:text-[#94a3b8] flex items-center gap-2"><User size={13} /> Nombre Completo:</span>
+                    <span className="text-slate-800 dark:text-[#ffffff] font-bold">{userName}</span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-400 flex items-center gap-2"><User size={13} /> Nombre de Usuario:</span>
-                    <span className="text-slate-800 font-bold">@{userUsername || 'No asignado'}</span>
+                  <div className="flex items-center justify-between border-b border-slate-50 dark:border-[rgba(255,255,255,0.07)] pb-2">
+                    <span className="text-slate-400 dark:text-[#94a3b8] flex items-center gap-2"><User size={13} /> Nombre de Usuario:</span>
+                    <span className="text-slate-800 dark:text-[#ffffff] font-bold">@{userUsername || 'No asignado'}</span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-400 flex items-center gap-2"><Mail size={13} /> Correo Electrónico:</span>
-                    <span className="text-slate-800 font-bold">{userEmail || 'No disponible'}</span>
+                  <div className="flex items-center justify-between border-b border-slate-50 dark:border-[rgba(255,255,255,0.07)] pb-2">
+                    <span className="text-slate-400 dark:text-[#94a3b8] flex items-center gap-2"><Mail size={13} /> Correo Electrónico:</span>
+                    <span className="text-slate-800 dark:text-[#ffffff] font-bold">{userEmail || 'No disponible'}</span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-400 flex items-center gap-2"><DollarSign size={13} /> Divisa Base:</span>
+                  <div className="flex items-center justify-between border-b border-slate-50 dark:border-[rgba(255,255,255,0.07)] pb-2">
+                    <span className="text-slate-400 dark:text-[#94a3b8] flex items-center gap-2"><DollarSign size={13} /> Divisa Base:</span>
                     <span className="text-indigo-650 font-bold uppercase">{userCurrency}</span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-slate-50 pb-2 sm:col-span-2">
-                    <span className="text-slate-400 flex items-center gap-2"><Palette size={13} /> Tema de Apariencia Activo:</span>
-                    <span className="text-slate-800 font-bold capitalize">{userTheme === 'light' ? 'Modo Claro' : 'Modo Oscuro'}</span>
+                  <div className="flex items-center justify-between border-b border-slate-50 dark:border-[rgba(255,255,255,0.07)] pb-2 sm:col-span-2">
+                    <span className="text-slate-400 dark:text-[#94a3b8] flex items-center gap-2"><Palette size={13} /> Tema de Apariencia Activo:</span>
+                    <span className="text-slate-800 dark:text-[#ffffff] font-bold capitalize">{userTheme === 'light' ? 'Modo Claro' : 'Modo Oscuro'}</span>
                   </div>
                 </div>
               </Card>
 
               {/* Tarjeta de Estadísticas "Mis Números" */}
-              <Card className="!bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex-grow">
-                <h4 className="font-extrabold text-slate-800 text-base border-b border-slate-100 pb-3 mb-5 flex items-center gap-2">
-                  <Activity size={16} className="text-indigo-600" />
+              <Card className="!bg-white dark:!bg-[#12131A] dark:bg-[#12131A] dark:!bg-[#12131A] dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-3xl p-6 shadow-sm flex-grow">
+                <h4 className="font-extrabold text-slate-800 dark:text-[#ffffff] text-base border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] pb-3 mb-5 flex items-center gap-2">
+                  <Activity size={16} className="text-indigo-600 dark:text-[#FB00FF]" />
                   Resumen de mi Plataforma
                 </h4>
                 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {/* Transacciones */}
-                  <div className="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl flex flex-col items-center justify-center text-center">
+                  <div className="bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] p-4 rounded-2xl flex flex-col items-center justify-center text-center">
                     <TrendingUp size={20} className="text-emerald-500 mb-2" />
-                    <span className="text-xl font-black text-slate-800">{transactions.length}</span>
-                    <span className="text-[10px] font-bold text-slate-400 mt-1 uppercase">Movimientos</span>
+                    <span className="text-xl font-black text-slate-800 dark:text-[#ffffff]">{transactions.length}</span>
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-[#94a3b8] mt-1 uppercase">Movimientos</span>
                   </div>
                   {/* Cuentas Bancarias */}
-                  <div className="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl flex flex-col items-center justify-center text-center">
+                  <div className="bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] p-4 rounded-2xl flex flex-col items-center justify-center text-center">
                     <Wallet size={20} className="text-blue-500 mb-2" />
-                    <span className="text-xl font-black text-slate-800">{bankAccounts.length}</span>
-                    <span className="text-[10px] font-bold text-slate-400 mt-1 uppercase">Cuentas</span>
+                    <span className="text-xl font-black text-slate-800 dark:text-[#ffffff]">{bankAccounts.length}</span>
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-[#94a3b8] mt-1 uppercase">Cuentas</span>
                   </div>
                   {/* Presupuestos */}
-                  <div className="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl flex flex-col items-center justify-center text-center">
+                  <div className="bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] p-4 rounded-2xl flex flex-col items-center justify-center text-center">
                     <Activity size={20} className="text-violet-500 mb-2" />
-                    <span className="text-xl font-black text-slate-800">{budgets.length}</span>
-                    <span className="text-[10px] font-bold text-slate-400 mt-1 uppercase">Presupuestos</span>
+                    <span className="text-xl font-black text-slate-800 dark:text-[#ffffff]">{budgets.length}</span>
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-[#94a3b8] mt-1 uppercase">Presupuestos</span>
                   </div>
                   {/* Metas de Ahorro */}
-                  <div className="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl flex flex-col items-center justify-center text-center">
+                  <div className="bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] p-4 rounded-2xl flex flex-col items-center justify-center text-center">
                     <Target size={20} className="text-rose-500 mb-2" />
-                    <span className="text-xl font-black text-slate-800">{savingsGoals.length}</span>
-                    <span className="text-[10px] font-bold text-slate-400 mt-1 uppercase">Metas Ahorro</span>
+                    <span className="text-xl font-black text-slate-800 dark:text-[#ffffff]">{savingsGoals.length}</span>
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-[#94a3b8] mt-1 uppercase">Metas Ahorro</span>
                   </div>
                 </div>
               </Card>

@@ -50,19 +50,19 @@ export const CapitalModal = ({ isOpen, onClose, investment = null }) => {
 
   return (
     <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white border border-slate-100 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
+      <div className="bg-white dark:bg-[#12131A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
         
         {/* Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 dark:border-[rgba(255,255,255,0.07)] bg-slate-50 dark:bg-[#1C1D2A]">
           <div className="flex flex-col">
-            <h3 className="font-bold text-slate-800 flex items-center gap-2">
-              <DollarSign size={18} className="text-indigo-500" />
+            <h3 className="font-bold text-slate-800 dark:text-[#ffffff] flex items-center gap-2">
+              <DollarSign size={18} className="text-indigo-500 dark:text-[#FB00FF]" />
               Ajustar Capital Invertido
             </h3>
-            <span className="text-[10px] text-slate-400 font-semibold mt-0.5">{investment.name}</span>
+            <span className="text-[10px] text-slate-400 dark:text-[#94a3b8] font-semibold mt-0.5">{investment.name}</span>
           </div>
           <button 
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 hover:bg-slate-100 rounded-lg cursor-pointer"
+            className="text-slate-400 dark:text-[#94a3b8] hover:text-slate-600 dark:text-[#94a3b8] transition-colors p-1 hover:bg-slate-100 dark:bg-[#1C1D2A] dark:hover:bg-[#1C1D2A] dark:bg-[#1C1D2A] rounded-lg cursor-pointer"
             onClick={onClose}
           >
             <X size={18} />
@@ -77,14 +77,14 @@ export const CapitalModal = ({ isOpen, onClose, investment = null }) => {
             </div>
           )}
 
-          <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex justify-between items-center text-xs">
+          <div className="bg-slate-50 dark:bg-[#1C1D2A] border border-slate-100 dark:border-[rgba(255,255,255,0.07)] rounded-2xl p-4 flex justify-between items-center text-xs">
             <div>
-              <span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px]">Capital Invertido Actual</span>
-              <span className="text-base font-black text-slate-800 mt-0.5 block">{formatCurrency(investment.amount_invested)}</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider block text-[10px]">Capital Invertido Actual</span>
+              <span className="text-base font-black text-slate-800 dark:text-[#ffffff] mt-0.5 block">{formatCurrency(investment.amount_invested)}</span>
             </div>
             <div className="text-right">
-              <span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px]">Valor de Mercado</span>
-              <span className="text-base font-black text-slate-800 mt-0.5 block">{formatCurrency(investment.current_value)}</span>
+              <span className="text-slate-400 dark:text-[#94a3b8] font-bold uppercase tracking-wider block text-[10px]">Valor de Mercado</span>
+              <span className="text-base font-black text-slate-800 dark:text-[#ffffff] mt-0.5 block">{formatCurrency(investment.current_value)}</span>
             </div>
           </div>
 
